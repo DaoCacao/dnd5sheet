@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.data.storage.local
+package dao.cacao.dnd5sheet.data.storage.local.room.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

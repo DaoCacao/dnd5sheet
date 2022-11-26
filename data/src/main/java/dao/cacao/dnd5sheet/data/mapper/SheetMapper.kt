@@ -1,6 +1,6 @@
-package dao.cacao.dnd5sheet.data
+package dao.cacao.dnd5sheet.data.mapper
 
-import dao.cacao.dnd5sheet.data.storage.local.SheetEntity
+import dao.cacao.dnd5sheet.data.storage.local.room.model.SheetEntity
 import dao.cacao.dnd5sheet.domain.model.Sheet
 import javax.inject.Inject
 

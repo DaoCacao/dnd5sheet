@@ -1,12 +1,10 @@
-package dao.cacao.dnd5sheet.data.storage.local
+package dao.cacao.dnd5sheet.data.storage.local.room.dao
 
-import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.Update
 
 interface BaseDao<T> {
-//    @Insert
-//    suspend fun insert(entity: T): Long
+    @Insert
+    suspend fun insert(entity: T): Long
 //
 //    @Insert
 //    suspend fun insert(entities: List<T>): List<Long>
