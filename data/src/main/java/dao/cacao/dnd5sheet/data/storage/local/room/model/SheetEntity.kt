@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "sheet")
 data class SheetEntity(
-    @ColumnInfo(name = "sheet_id") @PrimaryKey val sheetId: Long = 0,
+    @ColumnInfo(name = "sheet_id") @PrimaryKey(autoGenerate = true) val sheetId: Long = 0,
     @ColumnInfo(name = "character_name") val characterName: String? = null,
 )

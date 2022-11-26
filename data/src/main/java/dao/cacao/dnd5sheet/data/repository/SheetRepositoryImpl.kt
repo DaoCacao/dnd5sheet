@@ -10,7 +10,7 @@ class SheetRepositoryImpl @Inject constructor(
     private val sheetLocalStorage: SheetLocalStorage,
 ) : SheetRepository {
 
-    override fun createSheet(): Flow<Sheet> {
+    override suspend fun createSheet(): Flow<Sheet> {
         return sheetLocalStorage.createSheet()
     }
 

@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class CreateSheetUseCase @Inject constructor(
     private val sheetRepository: SheetRepository,
-) : () -> Flow<Sheet> {
-    override fun invoke() = sheetRepository.createSheet()
+) : suspend () -> Flow<Sheet> {
+    override suspend fun invoke() = sheetRepository.createSheet()
 }

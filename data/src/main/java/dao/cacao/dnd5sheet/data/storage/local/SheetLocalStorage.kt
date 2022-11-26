@@ -6,8 +6,6 @@ import dao.cacao.dnd5sheet.data.storage.local.room.model.SheetEntity
 import dao.cacao.dnd5sheet.domain.model.Sheet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -15,10 +13,10 @@ class SheetLocalStorage @Inject constructor(
     private val database: AppDatabase,
     private val sheetMapper: SheetMapper,
 ) {
-    fun createSheet(): Flow<Sheet> {
-        return flowOf(SheetEntity())
-            .map { database.sheetDao().insert(it) }
-            .flatMapLatest { database.sheetDao().getById(it) }
+    suspend fun createSheet(): Flow<Sheet> {
+        val entity = SheetEntity(characterName = "Draft")
+        val id = database.sheetDao().insert(entity)
+        return database.sheetDao().getById(id)
             .map(sheetMapper::map)
             .distinctUntilChanged()
     }
@@ -32,7 +30,7 @@ class SheetLocalStorage @Inject constructor(
     fun getSheets(): Flow<List<Sheet>> {
         return database.sheetDao().getAll()
             .map { it.map(sheetMapper::map) }
-            .distinctUntilChanged()
+//            .distinctUntilChanged()
     }
 
     suspend fun deleteSheet(sheetId: Long) {
