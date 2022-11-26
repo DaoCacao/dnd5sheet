@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Dnd5Sheet" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="App.Theme.Splash" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/App.Theme.Default</item>
+    </style>
+
+    <style name="App.Theme.Default" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
