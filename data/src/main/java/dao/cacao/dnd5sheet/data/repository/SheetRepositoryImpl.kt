@@ -10,16 +10,32 @@ class SheetRepositoryImpl @Inject constructor(
     private val sheetLocalStorage: SheetLocalStorage,
 ) : SheetRepository {
 
-    override suspend fun createSheet(): Flow<Sheet> {
-        return sheetLocalStorage.createSheet()
-    }
-
     override fun getSheet(sheetId: Long): Flow<Sheet> {
         return sheetLocalStorage.getSheet(sheetId)
     }
 
     override fun getSheets(): Flow<List<Sheet>> {
         return sheetLocalStorage.getSheets()
+    }
+
+    override suspend fun createSheet(): Flow<Sheet> {
+        return sheetLocalStorage.createSheet()
+    }
+
+    override suspend fun updateCharacterName(sheetId: Long, characterName: String): Flow<Sheet> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateLevel(sheetId: Long, level: String): Flow<Sheet> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateClass(sheetId: Long, clazz: String): Flow<Sheet> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateRace(sheetId: Long, race: String): Flow<Sheet> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun deleteSheet(sheetId: Long) {

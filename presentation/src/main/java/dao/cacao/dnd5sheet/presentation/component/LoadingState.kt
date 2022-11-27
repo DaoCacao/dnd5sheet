@@ -1,6 +1,9 @@
 package dao.cacao.dnd5sheet.presentation.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,4 +18,13 @@ fun LoadingState(modifier: Modifier = Modifier) {
             modifier = Modifier.align(Alignment.Center),
         )
     }
+}
+
+@Composable
+fun ScaffoldLoadingState(paddingValues: PaddingValues) {
+    LoadingState(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues),
+    )
 }

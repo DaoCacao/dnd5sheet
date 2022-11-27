@@ -1,6 +1,6 @@
 package dao.cacao.dnd5sheet.domain.model
 
-enum class DndAbilities {
+enum class CharacterAbility {
     Strength,
     Dexterity,
     Constitution,

@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.sceen
+package dao.cacao.dnd5sheet.presentation.sceen.sheet_list
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -19,46 +19,45 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import dao.cacao.dnd5sheet.domain.model.Sheet
-import dao.cacao.dnd5sheet.presentation.component.EmptyState
-import dao.cacao.dnd5sheet.presentation.component.LoadingState
+import dao.cacao.dnd5sheet.presentation.component.ScaffoldEmptyState
+import dao.cacao.dnd5sheet.presentation.component.ScaffoldLoadingState
+import dao.cacao.dnd5sheet.presentation.component.Toolbar
+import dao.cacao.dnd5sheet.presentation.preview.previewSheets
+import dao.cacao.dnd5sheet.presentation.router.Routes
 import dao.cacao.dnd5sheet.presentation.theme.AppTheme
 
 @Composable
 fun SheetListScreen(
-    viewModel: SheetListViewModel = hiltViewModel(),
-    navController: NavController = rememberNavController(),
+    viewModel: SheetListViewModel,
+    navController: NavController,
 ) {
     Content(
-        sheets = viewModel.state,
+        state = viewModel.state,
         onCreateNewSheetClick = viewModel::onCreateNewSheetClick,
         onDeleteSheetClick = viewModel::onDeleteSheetClick,
+        onSheetClick = { navController.navigate(Routes.Sheet.route(it.id)) },
     )
 }
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun Content(
-    sheets: List<Sheet>?,
+    state: SheetListState,
     onCreateNewSheetClick: () -> Unit = {},
-    onDeleteSheetClick: (Long) -> Unit = {},
-    onSheetClick: (Long) -> Unit = {},
+    onDeleteSheetClick: (Sheet) -> Unit = {},
+    onSheetClick: (Sheet) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text("Sheets")
-                },
+            Toolbar(
+                title = "Character sheets",
             )
         },
         floatingActionButton = {
@@ -76,34 +75,31 @@ private fun Content(
             )
         }
     ) {
-        when {
-            sheets == null -> {
-                LoadingState(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it),
-                )
+        when (state) {
+            SheetListState.Loading -> {
+                ScaffoldLoadingState(paddingValues = it)
             }
-            sheets.isEmpty() -> {
-                EmptyState(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it),
-                )
+            SheetListState.Empty -> {
+                ScaffoldEmptyState(paddingValues = it)
             }
-            else -> {
+            is SheetListState.Content -> {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(it),
                 ) {
-                    itemsIndexed(sheets) { index, sheet ->
+                    itemsIndexed(state.sheets) { index, sheet ->
                         SheetListItem(
-                            title = sheet.characterName,
-                            onClick = { onSheetClick(sheet.id) },
-                            onLongClick = { onDeleteSheetClick(sheet.id) },
+                            title = sheet.characterName.ifBlank { "New Character" },
+                            subtitle = buildString {
+                                if (sheet.race.isNotBlank()) append(sheet.race)
+                                if (sheet.race.isNotBlank() && sheet.clazz.isNotBlank()) append("-")
+                                if (sheet.clazz.isNotBlank()) append(sheet.clazz)
+                            },
+                            onClick = { onSheetClick(sheet) },
+                            onLongClick = { onDeleteSheetClick(sheet) },
                         )
-                        if (index != sheets.lastIndex) {
+                        if (index != state.sheets.lastIndex) {
                             Divider()
                         }
                     }
@@ -117,6 +113,7 @@ private fun Content(
 @OptIn(ExperimentalFoundationApi::class)
 fun SheetListItem(
     title: String,
+    subtitle: String,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
@@ -133,13 +130,34 @@ fun SheetListItem(
                 .fillMaxWidth()
                 .padding(16.dp),
         ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = title,
-                style = MaterialTheme.typography.bodyLarge,
-            )
+            if (title.isNotBlank()) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+            }
+            if (subtitle.isNotBlank()) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
         }
+    }
+}
+
+@Composable
+@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+private fun PreviewLoading() {
+    AppTheme {
+        Content(
+            state = SheetListState.Loading,
+        )
     }
 }
 
@@ -149,7 +167,9 @@ fun SheetListItem(
 private fun PreviewContent() {
     AppTheme {
         Content(
-            sheets = buildSheets(5),
+            state = SheetListState.Content(
+                sheets = previewSheets(5),
+            )
         )
     }
 }
@@ -160,14 +180,7 @@ private fun PreviewContent() {
 private fun PreviewEmpty() {
     AppTheme {
         Content(
-            sheets = buildSheets(0),
+            state = SheetListState.Empty,
         )
     }
-}
-
-private fun buildSheets(count: Int) = List(count) {
-    Sheet(
-        id = it.toLong(),
-        characterName = "Character #$it",
-    )
 }
