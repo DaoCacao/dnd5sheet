@@ -18,9 +18,9 @@ class SheetRepositoryImpl @Inject constructor(
 
     override suspend fun updateLevel(sheetId: Long, level: String) = TODO("Not yet implemented")
 
-    override suspend fun updateClass(sheetId: Long, clazz: String) = TODO("Not yet implemented")
+    override suspend fun updateClass(sheetId: Long, classId: String) = TODO("Not yet implemented")
 
-    override suspend fun updateRace(sheetId: Long, race: String) = TODO("Not yet implemented")
+    override suspend fun updateRace(sheetId: Long, raceId: String) = TODO("Not yet implemented")
 
     override suspend fun deleteSheet(sheetId: Long) = sheetLocalStorage.deleteSheet(sheetId)
 }
