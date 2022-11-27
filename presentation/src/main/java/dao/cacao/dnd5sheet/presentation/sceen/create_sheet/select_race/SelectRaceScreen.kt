@@ -16,26 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import dao.cacao.dnd5sheet.domain.model.race.Race
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
 
 @Composable
-fun SelectRaceScreen(
-    viewModel: SelectRaceViewModel,
-    navController: NavController,
-) {
-    Content(
-        state = viewModel.state,
-        onNavigateUp = navController::navigateUp,
-        onRaceClick = { navController.navigateUp() },
-    )
-}
-
-@Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun Content(
+fun SelectRaceScreen(
     state: SelectRaceState,
     onNavigateUp: (() -> Unit)? = null,
     onRaceClick: (Race) -> Unit = {},

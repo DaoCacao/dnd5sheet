@@ -13,26 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
 import dao.cacao.dnd5sheet.presentation.preview.previewSheet
 import dao.cacao.dnd5sheet.presentation.theme.AppTheme
 
 @Composable
-fun SheetScreen(
-    navController: NavController,
-    viewModel: SheetViewModel,
-) {
-    Content(
-        state = viewModel.state,
-        onNavigateUp = navController::navigateUp,
-    )
-}
-
-@Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun Content(
+fun SheetScreen(
     state: SheetState,
     onNavigateUp: (() -> Unit)? = null,
 ) {
@@ -74,7 +62,7 @@ private fun Content(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun PreviewLoading() {
     AppTheme {
-        Content(
+        SheetScreen(
             state = SheetState.Loading,
         )
     }
@@ -85,7 +73,7 @@ private fun PreviewLoading() {
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun PreviewContent() {
     AppTheme {
-        Content(
+        SheetScreen(
             state = SheetState.Content(
                 sheet = previewSheet()
             ),

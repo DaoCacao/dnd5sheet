@@ -22,6 +22,7 @@ class RoomModule {
     ): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "db")
             .addCallback(prepopulateRacesCallback)
+            .fallbackToDestructiveMigration()
             .build()
     }
 }

@@ -7,6 +7,7 @@ import javax.inject.Inject
 class RaceMapper @Inject constructor() {
     fun map(entity: RaceEntity) = Race(
         id = entity.raceId,
+        documentId = entity.documentId ?: 0,
         name = entity.name ?: "",
     )
 }

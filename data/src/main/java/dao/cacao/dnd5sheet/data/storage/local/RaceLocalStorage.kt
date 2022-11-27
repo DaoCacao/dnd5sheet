@@ -11,7 +11,6 @@ class RaceLocalStorage @Inject constructor(
     private val database: AppDatabase,
     private val raceMapper: RaceMapper,
 ) {
-
     fun getRaces(): Flow<List<Race>> {
         return database.raceDao().getAll()
             .map { it.map(raceMapper::map) }

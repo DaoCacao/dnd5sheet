@@ -24,31 +24,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import dao.cacao.dnd5sheet.domain.model.Sheet
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldEmptyState
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
 import dao.cacao.dnd5sheet.presentation.preview.previewSheets
-import dao.cacao.dnd5sheet.presentation.router.Routes
 import dao.cacao.dnd5sheet.presentation.theme.AppTheme
 
 @Composable
-fun SheetListScreen(
-    viewModel: SheetListViewModel,
-    navController: NavController,
-) {
-    Content(
-        state = viewModel.state,
-        onCreateNewSheetClick = viewModel::onCreateNewSheetClick,
-        onDeleteSheetClick = viewModel::onDeleteSheetClick,
-        onSheetClick = { navController.navigate(Routes.sheetRoute(it.id)) },
-    )
-}
-
-@Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun Content(
+fun SheetListScreen(
     state: SheetListState,
     onCreateNewSheetClick: () -> Unit = {},
     onDeleteSheetClick: (Sheet) -> Unit = {},
@@ -155,7 +140,7 @@ fun SheetListItem(
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun PreviewLoading() {
     AppTheme {
-        Content(
+        SheetListScreen(
             state = SheetListState.Loading,
         )
     }
@@ -166,7 +151,7 @@ private fun PreviewLoading() {
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun PreviewContent() {
     AppTheme {
-        Content(
+        SheetListScreen(
             state = SheetListState.Content(
                 sheets = previewSheets(5),
             )
@@ -179,7 +164,7 @@ private fun PreviewContent() {
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 private fun PreviewEmpty() {
     AppTheme {
-        Content(
+        SheetListScreen(
             state = SheetListState.Empty,
         )
     }
