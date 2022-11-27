@@ -15,6 +15,7 @@ fun NavGraphBuilder.selectRaceRoute(
     SelectRaceScreen(
         state = viewModel.state,
         onNavigateUp = navController::navigateUp,
-        onRaceClick = { navController.navigate(Routes.documentPath(it.documentId)) },
+        onRaceClick = { navController.navigate(Routes.sheetListRoute()) { popUpTo(Routes.sheetListRoutePlaceholder) } },
+        onRaceInfoClick = { navController.navigate(Routes.documentPath(it.documentId)) },
     )
 }

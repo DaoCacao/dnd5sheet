@@ -9,12 +9,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import dao.cacao.dnd5sheet.domain.model.race.Race
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
@@ -26,6 +32,7 @@ fun SelectRaceScreen(
     state: SelectRaceState,
     onNavigateUp: (() -> Unit)? = null,
     onRaceClick: (Race) -> Unit = {},
+    onRaceInfoClick: (Race) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -48,7 +55,8 @@ fun SelectRaceScreen(
                     itemsIndexed(state.races) { index, race ->
                         RaceListItem(
                             title = race.name,
-                            onClick = { onRaceClick(race) }
+                            onClick = { onRaceClick(race) },
+                            onIconClick = { onRaceInfoClick(race) },
                         )
                     }
                 }
@@ -62,6 +70,7 @@ fun SelectRaceScreen(
 fun RaceListItem(
     title: String,
     onClick: () -> Unit,
+    onIconClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -70,17 +79,32 @@ fun RaceListItem(
                 onClick = onClick,
             ),
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            if (title.isNotBlank()) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    text = title,
-                    style = MaterialTheme.typography.titleLarge,
+            Column(
+                modifier = Modifier
+                    .weight(1f),
+            ) {
+                if (title.isNotBlank()) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = title,
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
+            }
+            IconButton(
+                onClick = onIconClick,
+            ) {
+                Icon(
+                    painter = rememberVectorPainter(image = Icons.Default.Info),
+                    contentDescription = "Race info",
+                    tint = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
