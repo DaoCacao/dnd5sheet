@@ -1,16 +1,10 @@
-> Her father stood on the first of the three stairs that led down from the portal, unmoving. The scales of his face had grown
-> paler around the edges, but Clanless Mehen still looked as if he could wrestle down a dire bear himself. His familiar well-worn
-> armor was gone, replaced by violet-tinted scale armor with bright silvery tracings. There was a blazon on his arm as well, the
-> mark of some foreign house. The sword at his back was the same, though, the one he had carried since even before he had found
-> the twins left in swaddling at the gates of Arush Vayem.
+> Her father stood on the first of the three stairs that led down from the portal, unmoving. The scales of his face had grown paler around the edges, but Clanless Mehen still looked as if he could wrestle down a dire bear himself. His familiar well-worn armor was gone, replaced by violet-tinted scale armor with bright silvery tracings. There was a blazon on his arm as well, the mark of some foreign house. The sword at his back was the same, though, the one he had carried since even before he had found the twins left in swaddling at the gates of Arush Vayem.
 >
-> For all her life, Farideh had known that reading her father’s face was a skill she’d been fortunate to learn. A human who
-> couldn’t spot the shift of her eyes or Havilar’s would certainly see only the indifference of a dragon in Clanless Mehen’s face.
-> But the shift of scales, the arch of a ridge, the set of his eyes, the gape of his teeth—her father’s face spoke volumes.
+> For all her life, Farideh had known that reading her father’s face was a skill she’d been fortunate to learn. A human who couldn’t spot the shift of her eyes or Havilar’s would certainly see only the indifference of a dragon in Clanless Mehen’s face. But the shift of scales, the arch of a ridge, the set of his eyes, the gape of his teeth—her father’s face spoke volumes.
 >
 > But every scale of it, this time, seemed completely still—the indifference of a dragon, even to Farideh.
 >
-> _— Erin M. Evans, The Adversary_
+> — _Erin M. Evans, The Adversary_
 
 Born of dragons, as their name proclaims, the dragonborn walk proudly through a world that greets them with fearful
 incomprehension. Shaped by draconic gods or the dragons themselves, dragonborn originally hatched from dragon eggs as a unique
@@ -63,7 +57,7 @@ Thava, Uadjit
 Linxakasendalor, Myastan, Nemmonis, Norixius, Ophinshtalajiir, Prexijandilin, Shestendeliath, Turnuroth, Verthisathurgiesh,
 Yarjerit
 
-> DRACONIANS
+> **DRACONIANS**
 >
 > In the Dragonlance setting, the followers of the evil goddess Takhisis learned a dark ritual that let them corrupt the eggs of metallic dragons, producing evil dragonborn called draconians. Five types of draconians, corresponding to the five types of metallic dragons, fought for Takhisis in the War of the Lance: auraks (gold), baaz (brass), bozak (bronze), kapak (copper), and sivak (silver). In place of their draconic breath weapons, they have unique magical abilities.
 
@@ -93,18 +87,18 @@ are determined by the dragon type, as shown in the table.
 
 ### Draconic Ancestry
 
-| Dragon | Damage Type | Breath Weapon                |
-|--------|-------------|------------------------------|
-| Black  | Acid        | 5 by 30 ft. line (Dex. save) |
-| Blue   | Lightning   | 5 by 30 ft. line (Dex. save) |
-| Brass  | Fire        | 5 by 30 ft. line (Dex. save) |
-| Bronze | Lightning   | 5 by 30 ft. line (Dex. save) |
-| Copper | Acid        | 5 by 30 ft. line (Dex. save) |
-| Gold   | Fire        | 15 ft. cone (Dex. save)      |
-| Green  | Poison      | 15 ft. cone (Con. save)      |
-| Red    | Fire        | 15 ft. cone (Dex. save)      |
-| Silver | Cold        | 15 ft. cone (Con. save)      |
-| White  | Cold        | 15 ft. cone (Con. save)      |
+| **Dragon** | **Damage Type** | **Breath Weapon**            |
+|------------|-----------------|------------------------------|
+| Black      | Acid            | 5 by 30 ft. line (Dex. save) |
+| Blue       | Lightning       | 5 by 30 ft. line (Dex. save) |
+| Brass      | Fire            | 5 by 30 ft. line (Dex. save) |
+| Bronze     | Lightning       | 5 by 30 ft. line (Dex. save) |
+| Copper     | Acid            | 5 by 30 ft. line (Dex. save) |
+| Gold       | Fire            | 15 ft. cone (Dex. save)      |
+| Green      | Poison          | 15 ft. cone (Con. save)      |
+| Red        | Fire            | 15 ft. cone (Dex. save)      |
+| Silver     | Cold            | 15 ft. cone (Con. save)      |
+| White      | Cold            | 15 ft. cone (Con. save)      |
 
 ## Breath Weapon
 

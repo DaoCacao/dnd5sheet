@@ -5,7 +5,7 @@ object Routes {
     private const val sheetPath = "/sheet"
     private const val sheetListPath = "/sheet_list"
     private const val selectRacePath = "/select_race"
-    private const val documentPath = "/documentation"
+    private const val documentPath = "/document"
 
     //Args
     const val argSheetId = "sheet_id"
@@ -16,7 +16,7 @@ object Routes {
     val sheetRoutePlaceholder = buildRoutePlaceholder(sheetPath, listOf(argSheetId))
     val sheetListRoutePlaceholder = buildRoutePlaceholder(sheetListPath)
     val selectRaceRoutePlaceholder = buildRoutePlaceholder(selectRacePath)
-    val documentRoutePlaceholder = buildRoutePlaceholder(documentPath)
+    val documentRoutePlaceholder = buildRoutePlaceholder(documentPath, listOf(argDocumentId))
 
     //Routes
     fun sheetRoute(sheetId: Long) = buildRoute(sheetPath, mapOf(argSheetId to sheetId))

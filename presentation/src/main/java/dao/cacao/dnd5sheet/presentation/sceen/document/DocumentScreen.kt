@@ -7,15 +7,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.unit.dp
+import com.halilibo.richtext.markdown.Markdown
+import com.halilibo.richtext.ui.RichText
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
-import io.noties.markwon.Markwon
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,13 +21,13 @@ fun DocumentScreen(
     state: DocumentState,
     onNavigateUp: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val markwon = remember { Markwon.create(context) }
-
     Scaffold(
         topBar = {
             Toolbar(
-                title = "",
+                title = when (state) {
+                    DocumentState.Loading -> "Document"
+                    is DocumentState.Content -> state.document.name
+                },
                 onNavigateUp = onNavigateUp,
             )
         }
@@ -45,11 +43,12 @@ fun DocumentScreen(
                         .padding(it)
                         .verticalScroll(rememberScrollState()),
                 ) {
-                    Text(
-                        text = buildAnnotatedString {
-                            append(markwon.toMarkdown(state.document.text))
-                        },
-                    )
+                    RichText(
+                        modifier = Modifier
+                            .padding(16.dp),
+                    ) {
+                        Markdown(content = state.document.text)
+                    }
                 }
             }
         }
