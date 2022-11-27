@@ -8,13 +8,21 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dao.cacao.dnd5sheet.data.storage.local.room.AppDatabase
+import dao.cacao.dnd5sheet.data.storage.local.room.prepopulation.PrepopulateRacesCallback
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class RoomModule {
     @Provides
-    fun database(@ApplicationContext context: Context): AppDatabase {
+    @Singleton
+    fun database(
+        @ApplicationContext context: Context,
+        prepopulateRacesCallback: PrepopulateRacesCallback,
+    ): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "db")
+            .addCallback(prepopulateRacesCallback)
             .build()
     }
 }
+

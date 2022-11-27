@@ -1,0 +1,10 @@
+package dao.cacao.dnd5sheet.presentation.sceen.create_sheet.select_race
+
+import dao.cacao.dnd5sheet.domain.model.race.Race
+
+sealed class SelectRaceState {
+    object Loading : SelectRaceState()
+    data class Content(
+        val races: List<Race>,
+    ) : SelectRaceState()
+}

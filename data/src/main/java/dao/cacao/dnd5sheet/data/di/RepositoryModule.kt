@@ -4,7 +4,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dao.cacao.dnd5sheet.data.repository.RaceRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.SheetRepositoryImpl
+import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import javax.inject.Singleton
 
@@ -14,4 +16,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun sheetRepository(impl: SheetRepositoryImpl): SheetRepository
+
+    @Binds
+    @Singleton
+    fun raceRepository(impl: RaceRepositoryImpl): RaceRepository
 }

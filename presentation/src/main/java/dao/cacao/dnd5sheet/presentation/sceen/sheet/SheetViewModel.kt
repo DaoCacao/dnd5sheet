@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dao.cacao.dnd5sheet.domain.use_case.GetSheetUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.GetSheetUseCase
 import dao.cacao.dnd5sheet.presentation.router.Routes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -20,6 +20,7 @@ class SheetViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val sheetId = savedStateHandle.get<Long>(Routes.Sheet.ARG_SHEET_ID) ?: error("Required argument")
+
     var state by mutableStateOf<SheetState>(SheetState.Loading)
         private set
 

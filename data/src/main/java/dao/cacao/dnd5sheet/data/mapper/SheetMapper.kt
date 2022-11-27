@@ -16,9 +16,4 @@ class SheetMapper @Inject constructor() {
         clazz = entity.clazz ?: "",
         race = entity.race ?: "",
     )
-
-    fun map(model: Sheet) = SheetEntity(
-        sheetId = model.id,
-        characterName = model.characterName,
-    )
 }

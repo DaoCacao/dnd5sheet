@@ -13,15 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import dao.cacao.dnd5sheet.presentation.component.ScaffoldLoadingState
+import androidx.navigation.NavController
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
+import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
 import dao.cacao.dnd5sheet.presentation.preview.previewSheet
 import dao.cacao.dnd5sheet.presentation.theme.AppTheme
 
 @Composable
 fun SheetScreen(
-    navController: NavHostController,
+    navController: NavController,
     viewModel: SheetViewModel,
 ) {
     Content(

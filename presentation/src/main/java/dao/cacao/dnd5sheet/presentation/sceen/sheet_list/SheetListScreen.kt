@@ -26,9 +26,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dao.cacao.dnd5sheet.domain.model.Sheet
-import dao.cacao.dnd5sheet.presentation.component.ScaffoldEmptyState
-import dao.cacao.dnd5sheet.presentation.component.ScaffoldLoadingState
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
+import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldEmptyState
+import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
 import dao.cacao.dnd5sheet.presentation.preview.previewSheets
 import dao.cacao.dnd5sheet.presentation.router.Routes
 import dao.cacao.dnd5sheet.presentation.theme.AppTheme

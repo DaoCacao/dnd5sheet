@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.domain.use_case
+package dao.cacao.dnd5sheet.domain.use_case.sheet
 
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.model.Sheet
