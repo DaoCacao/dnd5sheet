@@ -12,7 +12,7 @@ fun NavGraphBuilder.sheetListRoute(
     val viewModel = hiltViewModel<SheetListViewModel>()
     SheetListScreen(
         state = viewModel.state,
-        onCreateNewSheetClick = { navController.navigate(Routes.selectRacePath()) },
+        onCreateNewSheetClick = { navController.navigate(Routes.selectRaceRoute()) },
         onDeleteSheetClick = viewModel::onDeleteSheetClick,
         onSheetClick = { navController.navigate(Routes.sheetRoute(it.id)) }
     )

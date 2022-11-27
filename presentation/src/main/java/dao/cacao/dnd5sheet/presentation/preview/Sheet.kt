@@ -12,8 +12,8 @@ fun previewSheet(
     id = id.toLong(),
     characterName = characterName,
     level = level,
-    clazz = clazz,
-    race = race,
+    characterClass = clazz,
+    characterRace = race,
 )
 
 

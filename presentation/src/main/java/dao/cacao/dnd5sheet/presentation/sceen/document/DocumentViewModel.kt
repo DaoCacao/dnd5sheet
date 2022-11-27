@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dao.cacao.dnd5sheet.domain.use_case.document.GetDocumentUseCase
+import dao.cacao.dnd5sheet.domain.boundary.DocumentRepository
 import dao.cacao.dnd5sheet.presentation.router.Routes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DocumentViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getDocumentUseCase: GetDocumentUseCase,
+    private val documentRepository: DocumentRepository,
 ) : ViewModel() {
 
     private val documentId = savedStateHandle.get<Long>(Routes.argDocumentId) ?: error("Required argument")
@@ -25,7 +25,7 @@ class DocumentViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getDocumentUseCase.invoke(documentId).collectLatest {
+            documentRepository.getDocument(documentId).collectLatest {
                 state = DocumentState.Content(
                     document = it,
                 )

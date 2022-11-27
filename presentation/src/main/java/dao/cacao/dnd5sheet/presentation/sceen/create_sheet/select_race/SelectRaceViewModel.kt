@@ -5,8 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
+import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.model.Race
-import dao.cacao.dnd5sheet.domain.use_case.race.GetRacesUseCase
 import dao.cacao.dnd5sheet.presentation.base.BaseViewModel
 import dao.cacao.dnd5sheet.presentation.base.NavigationEvent
 import dao.cacao.dnd5sheet.presentation.router.Routes
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectRaceViewModel @Inject constructor(
-    private val getRacesUseCase: GetRacesUseCase,
+    private val raceRepository: RaceRepository,
+    private val sheetRepository: SheetRepository,
 ) : BaseViewModel() {
 
     var state by mutableStateOf<SelectRaceState>(SelectRaceState.Loading)
@@ -24,7 +26,7 @@ class SelectRaceViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getRacesUseCase.invoke().collectLatest {
+            raceRepository.getRaces().collectLatest {
                 state = SelectRaceState.Content(
                     races = it,
                 )

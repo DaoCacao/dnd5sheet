@@ -15,13 +15,13 @@ object Routes {
     //Route placeholders
     val sheetRoutePlaceholder = buildRoutePlaceholder(sheetPath, listOf(argSheetId))
     val sheetListRoutePlaceholder = buildRoutePlaceholder(sheetListPath)
-    val selectRaceRoutePlaceholder = buildRoutePlaceholder(selectRacePath)
+    val selectRaceRoutePlaceholder = buildRoutePlaceholder(selectRacePath, listOf(argSheetId))
     val documentRoutePlaceholder = buildRoutePlaceholder(documentPath, listOf(argDocumentId))
 
     //Routes
     fun sheetRoute(sheetId: Long) = buildRoute(sheetPath, mapOf(argSheetId to sheetId))
     fun sheetListRoute() = buildRoute(sheetListPath)
-    fun selectRacePath() = buildRoute(selectRacePath)
+    fun selectRaceRoute(sheetId: Long) = buildRoute(selectRacePath, mapOf(argSheetId to sheetId))
     fun documentPath(documentId: Long) = buildRoute(documentPath, mapOf(argDocumentId to documentId))
 
     private fun buildRoutePlaceholder(path: String, args: List<String> = emptyList()) = buildString {

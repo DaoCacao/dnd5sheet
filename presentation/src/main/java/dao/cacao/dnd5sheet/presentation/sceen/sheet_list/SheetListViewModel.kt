@@ -3,19 +3,21 @@ package dao.cacao.dnd5sheet.presentation.sceen.sheet_list
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.model.Sheet
+import dao.cacao.dnd5sheet.presentation.base.BaseViewModel
+import dao.cacao.dnd5sheet.presentation.router.Routes
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SheetListViewModel @Inject constructor(
     private val sheetRepository: SheetRepository,
-) : ViewModel() {
+) : BaseViewModel() {
 
     var state by mutableStateOf<SheetListState>(SheetListState.Loading)
         private set
@@ -35,7 +37,8 @@ class SheetListViewModel @Inject constructor(
 
     fun onCreateNewSheetClick() {
         viewModelScope.launch {
-            sheetRepository.createSheet()
+            val sheet = sheetRepository.createSheet().first()
+            navigateTo(Routes.selectRaceRoute(sheet.id))
         }
     }
 

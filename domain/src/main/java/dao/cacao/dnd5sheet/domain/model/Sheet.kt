@@ -4,9 +4,9 @@ package dao.cacao.dnd5sheet.domain.model
 data class Sheet(
     val id: Long,
     val characterName: String,
-    val level: Int,
-    val clazz: String,
-    val race: String,
+//    val level: Int,
+    val characterClass: CharacterClass?,
+    val characterRace: Race?,
 //    val alignment: String,
 //    val playerName: String,
 //    val background: String,

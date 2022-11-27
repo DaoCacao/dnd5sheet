@@ -9,7 +9,6 @@ interface SheetRepository {
 
     suspend fun createSheet(): Flow<Sheet>
     suspend fun updateCharacterName(sheetId: Long, characterName: String): Flow<Sheet>
-    suspend fun updateLevel(sheetId: Long, level: String): Flow<Sheet>
     suspend fun updateClass(sheetId: Long, classId: String): Flow<Sheet>
     suspend fun updateRace(sheetId: Long, raceId: String): Flow<Sheet>
     suspend fun deleteSheet(sheetId: Long)

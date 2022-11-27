@@ -77,9 +77,9 @@ fun SheetListScreen(
                         SheetListItem(
                             title = sheet.characterName.ifBlank { "New Character" },
                             subtitle = buildString {
-                                if (sheet.race.isNotBlank()) append(sheet.race)
-                                if (sheet.race.isNotBlank() && sheet.clazz.isNotBlank()) append("-")
-                                if (sheet.clazz.isNotBlank()) append(sheet.clazz)
+                                if (sheet.characterRace.isNotBlank()) append(sheet.characterRace)
+                                if (sheet.characterRace.isNotBlank() && sheet.characterClass.isNotBlank()) append("-")
+                                if (sheet.characterClass.isNotBlank()) append(sheet.characterClass)
                             },
                             onClick = { onSheetClick(sheet) },
                             onLongClick = { onDeleteSheetClick(sheet) },
