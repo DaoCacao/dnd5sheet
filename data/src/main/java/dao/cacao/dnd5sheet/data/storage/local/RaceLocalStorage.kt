@@ -2,7 +2,7 @@ package dao.cacao.dnd5sheet.data.storage.local
 
 import dao.cacao.dnd5sheet.data.mapper.RaceMapper
 import dao.cacao.dnd5sheet.data.storage.local.room.AppDatabase
-import dao.cacao.dnd5sheet.domain.model.race.Race
+import dao.cacao.dnd5sheet.domain.model.Race
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

@@ -1,6 +1,6 @@
-package dao.cacao.dnd5sheet.domain.model
+package dao.cacao.dnd5sheet.domain.model.players_handbook
 
-enum class CharacterClass {
+enum class PlayersHandbookClass {
     Barbarian,
     Bard,
     Cleric,

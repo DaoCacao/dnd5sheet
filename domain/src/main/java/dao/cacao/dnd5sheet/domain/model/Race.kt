@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.domain.model.race
+package dao.cacao.dnd5sheet.domain.model
 
 data class Race(
     val id: Long,

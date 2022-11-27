@@ -1,7 +1,7 @@
 package dao.cacao.dnd5sheet.domain.use_case.race
 
 import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
-import dao.cacao.dnd5sheet.domain.model.race.Race
+import dao.cacao.dnd5sheet.domain.model.Race
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

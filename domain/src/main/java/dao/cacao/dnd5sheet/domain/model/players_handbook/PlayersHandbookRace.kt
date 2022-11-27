@@ -1,6 +1,6 @@
-package dao.cacao.dnd5sheet.domain.model.race
+package dao.cacao.dnd5sheet.domain.model.players_handbook
 
-enum class PlayersHandbookRace {
+enum class PlayersHandbookRace{
     Dwarf,
     Elf,
     Halfling,

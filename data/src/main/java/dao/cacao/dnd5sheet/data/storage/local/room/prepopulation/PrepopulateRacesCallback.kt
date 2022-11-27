@@ -7,7 +7,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dao.cacao.dnd5sheet.data.storage.local.room.AppDatabase
 import dao.cacao.dnd5sheet.data.storage.local.room.model.DocumentEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.RaceEntity
-import dao.cacao.dnd5sheet.domain.model.race.PlayersHandbookRace
+import dao.cacao.dnd5sheet.domain.model.players_handbook.PlayersHandbookRace
 import kotlinx.coroutines.runBlocking
 import java.io.BufferedReader
 import java.util.concurrent.Executors
