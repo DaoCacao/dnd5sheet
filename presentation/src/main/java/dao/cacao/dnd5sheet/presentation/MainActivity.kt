@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
 import dao.cacao.dnd5sheet.presentation.router.Routes
+import dao.cacao.dnd5sheet.presentation.sceen.create_sheet.select_race.SelectRaceScreen
 import dao.cacao.dnd5sheet.presentation.sceen.sheet.SheetScreen
 import dao.cacao.dnd5sheet.presentation.sceen.sheet_list.SheetListScreen
 import dao.cacao.dnd5sheet.presentation.theme.AppTheme
@@ -27,10 +28,10 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.SheetList.ROUTE,
+                    startDestination = Routes.sheetListRoute(),
                 ) {
                     composable(
-                        route = Routes.SheetList.ROUTE,
+                        route = Routes.sheetListRoutePlaceholder,
                     ) {
                         SheetListScreen(
                             viewModel = hiltViewModel(),
@@ -38,12 +39,20 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(
-                        route = Routes.Sheet.ROUTE,
+                        route = Routes.sheetRoutePlaceholder,
                         arguments = listOf(
-                            navArgument(Routes.Sheet.ARG_SHEET_ID) { type = NavType.LongType },
+                            navArgument(Routes.argSheetId) { type = NavType.LongType },
                         ),
                     ) {
                         SheetScreen(
+                            viewModel = hiltViewModel(),
+                            navController = navController,
+                        )
+                    }
+                    composable(
+                        route = Routes.selectRacePathPlaceholder,
+                    ) {
+                        SelectRaceScreen(
                             viewModel = hiltViewModel(),
                             navController = navController,
                         )

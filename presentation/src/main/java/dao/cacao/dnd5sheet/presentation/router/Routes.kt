@@ -1,34 +1,38 @@
 package dao.cacao.dnd5sheet.presentation.router
 
 object Routes {
-    object SheetList {
-        const val ROUTE = "/sheet_list"
-        fun route() = "/sheet_list"
-    }
+    //Paths
+    private const val sheetPath = "/sheet"
+    private const val sheetListPath = "/sheet_list"
+    private const val selectRacePath = "/select_race"
 
-    object Sheet {
-        const val ARG_SHEET_ID = "sheet_id"
+    //Args
+    const val argSheetId = "sheet_id"
+    const val argRaceId = "race_id"
 
-        private const val PATH = "/sheet"
-        private const val ARGS = "?$ARG_SHEET_ID={$ARG_SHEET_ID}"
+    //Route placeholders
+    val sheetRoutePlaceholder = buildRoutePlaceholder(sheetPath, listOf(argSheetId))
+    val sheetListRoutePlaceholder = buildRoutePlaceholder(sheetListPath)
+    val selectRacePathPlaceholder = buildRoutePlaceholder(selectRacePath)
 
-        const val ROUTE = PATH + ARGS
-        fun route(sheetId: Long) = buildRoute(PATH, mapOf(
-            ARG_SHEET_ID to sheetId,
-        ))
-    }
+    //Routes
+    fun sheetRoute(sheetId: Long) = buildRoute(sheetPath, mapOf(argSheetId to sheetId))
+    fun sheetListRoute() = buildRoute(sheetListPath)
+    fun selectRacePath() = buildRoute(selectRacePath)
 
-    object SelectRace {
-        const val PATH = "/select_race"
-        const val ROUTE = PATH
-        fun route() = buildRoute(PATH)
+    private fun buildRoutePlaceholder(path: String, args: List<String> = emptyList()) = buildString {
+        append(path)
+        if (args.isNotEmpty()) {
+            append("?")
+            append(args.map { "$it={$it}" }.joinToString("&"))
+        }
     }
 
     private fun buildRoute(path: String, args: Map<String, Any> = emptyMap()) = buildString {
         append(path)
         if (args.isNotEmpty()) {
             append("?")
-            append(args.map { "${it.key}=${it.value}" }.joinToString("&"))
+            append(args.map { (key, value) -> "$key=$value" }.joinToString("&"))
         }
     }
 }

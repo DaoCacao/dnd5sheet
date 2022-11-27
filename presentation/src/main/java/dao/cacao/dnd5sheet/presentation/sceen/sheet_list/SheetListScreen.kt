@@ -42,7 +42,7 @@ fun SheetListScreen(
         state = viewModel.state,
         onCreateNewSheetClick = viewModel::onCreateNewSheetClick,
         onDeleteSheetClick = viewModel::onDeleteSheetClick,
-        onSheetClick = { navController.navigate(Routes.Sheet.route(it.id)) },
+        onSheetClick = { navController.navigate(Routes.sheetRoute(it.id)) },
     )
 }
 

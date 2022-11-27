@@ -19,7 +19,7 @@ class SheetViewModel @Inject constructor(
     private val getSheetUseCase: GetSheetUseCase,
 ) : ViewModel() {
 
-    private val sheetId = savedStateHandle.get<Long>(Routes.Sheet.ARG_SHEET_ID) ?: error("Required argument")
+    private val sheetId = savedStateHandle.get<Long>(Routes.argSheetId) ?: error("Required argument")
 
     var state by mutableStateOf<SheetState>(SheetState.Loading)
         private set
