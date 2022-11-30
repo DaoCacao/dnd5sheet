@@ -1,6 +1,5 @@
 package dao.cacao.dnd5sheet.presentation.sceen.create_sheet.select_race
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -17,16 +16,12 @@ fun NavGraphBuilder.selectRaceRoute(
         navArgument(Routes.argSheetId) { type = NavType.LongType },
     ),
 ) {
-    val viewModel = hiltViewModel<SelectRaceViewModel>()
-    ViewModelRouter(
-        viewModel = viewModel,
-        navController = navController,
-    ) {
+    ViewModelRouter<SelectRaceViewModel>(navController) {
         SelectRaceScreen(
-            state = viewModel.state,
-            onNavigateUp = viewModel::onNavigateUpClick,
-            onRaceClick = viewModel::onRaceClick,
-            onRaceInfoClick = viewModel::onRaceInfoClick,
+            state = it.state,
+            onNavigateUp = it::onNavigateUpClick,
+            onRaceClick = it::onRaceClick,
+            onRaceInfoClick = it::onRaceInfoClick,
         )
     }
 }

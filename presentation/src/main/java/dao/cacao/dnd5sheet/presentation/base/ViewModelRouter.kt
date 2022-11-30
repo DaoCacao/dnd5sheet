@@ -2,14 +2,15 @@ package dao.cacao.dnd5sheet.presentation.base
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun <VM : BaseViewModel> ViewModelRouter(
-    viewModel: VM,
+inline fun <reified VM : BaseViewModel> ViewModelRouter(
     navController: NavController,
-    content: @Composable () -> Unit,
+    viewModel: VM = hiltViewModel(),
+    content: @Composable (VM) -> Unit,
 ) {
     LaunchedEffect("navigation") {
         viewModel.getNavigationEvent().collectLatest {
@@ -28,5 +29,5 @@ fun <VM : BaseViewModel> ViewModelRouter(
             }
         }
     }
-    content()
+    content(viewModel)
 }

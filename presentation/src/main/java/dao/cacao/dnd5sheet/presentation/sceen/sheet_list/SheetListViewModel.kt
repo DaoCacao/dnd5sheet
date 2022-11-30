@@ -38,7 +38,7 @@ class SheetListViewModel @Inject constructor(
     fun onCreateNewSheetClick() {
         viewModelScope.launch {
             val sheet = sheetRepository.createSheet().first()
-            navigateTo(Routes.selectRaceRoute(sheet.id))
+            navigateTo(Routes.sheetRoute(sheet.id))
         }
     }
 
@@ -46,5 +46,9 @@ class SheetListViewModel @Inject constructor(
         viewModelScope.launch {
             sheetRepository.deleteSheet(sheet.id)
         }
+    }
+
+    fun onSheetClick(sheet: Sheet) {
+        navigateTo(Routes.sheetRoute(sheet.id))
     }
 }

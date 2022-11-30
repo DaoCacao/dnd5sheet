@@ -5,15 +5,15 @@ import dao.cacao.dnd5sheet.domain.model.Sheet
 fun previewSheet(
     id: Int = 1,
     characterName: String = "Character #$id",
-    level: Int = id,
+    level: String = id.toString(),
     clazz: String = "Class",
     race: String = "Race",
 ) = Sheet(
     id = id.toLong(),
-    characterName = characterName,
     level = level,
-    characterClass = clazz,
+    characterName = characterName,
     characterRace = race,
+    characterClass = clazz,
 )
 
 

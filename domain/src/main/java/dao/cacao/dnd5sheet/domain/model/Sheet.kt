@@ -3,10 +3,10 @@ package dao.cacao.dnd5sheet.domain.model
 //TODO add deathSaves, attackAndSpellCasting, featuresAndTraits, inventoryAndEquipment, otherProficienciesAndLanguages
 data class Sheet(
     val id: Long,
-    val characterName: String,
-//    val level: Int,
-    val characterClass: CharacterClass?,
-    val characterRace: Race?,
+    val level: String?,
+    val characterName: String?,
+    val characterRace: String?,
+    val characterClass: String?,
 //    val alignment: String,
 //    val playerName: String,
 //    val background: String,

@@ -1,11 +1,11 @@
 package dao.cacao.dnd5sheet.presentation.sceen.sheet
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import dao.cacao.dnd5sheet.presentation.base.ViewModelRouter
 import dao.cacao.dnd5sheet.presentation.router.Routes
 
 fun NavGraphBuilder.sheetRoute(
@@ -16,9 +16,18 @@ fun NavGraphBuilder.sheetRoute(
         navArgument(Routes.argSheetId) { type = NavType.LongType },
     ),
 ) {
-    val viewModel = hiltViewModel<SheetViewModel>()
-    SheetScreen(
-        state = viewModel.state,
-        onNavigateUp = navController::navigateUp
-    )
+    ViewModelRouter<SheetViewModel>(navController) {
+        SheetScreen(
+            state = it.state,
+//            level = it.level,
+//            characterName = it.characterName,
+//            characterRace = it.characterRace,
+//            characterClass = it.characterClass,
+            onNavigateUp = it::onNavigateUpClick,
+            onLevelChange = it::onLevelChange,
+            onCharacterNameChange = it::onCharacterNameChange,
+            onCharacterRaceChange = it::onCharacterRaceChange,
+            onCharacterClassChange = it::onCharacterClassChange,
+        )
+    }
 }

@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "sheet")
 data class SheetEntity(
     @ColumnInfo(name = "sheet_id") @PrimaryKey(autoGenerate = true) val sheetId: Long = 0,
-    @ColumnInfo(name = "class_id") val classId: Long = 0,
-    @ColumnInfo(name = "race_id") val raceId: Long = 0,
+    @ColumnInfo(name = "level") val level: String? = null,
     @ColumnInfo(name = "character_name") val characterName: String? = null,
+    @ColumnInfo(name = "character_race") val characterRace: String? = null,
+    @ColumnInfo(name = "character_class") val characterClass: String? = null,
 )

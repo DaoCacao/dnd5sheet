@@ -29,7 +29,7 @@ import dao.cacao.dnd5sheet.presentation.component.Toolbar
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldEmptyState
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
 import dao.cacao.dnd5sheet.presentation.preview.previewSheets
-import dao.cacao.dnd5sheet.presentation.theme.AppTheme
+import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,11 +75,11 @@ fun SheetListScreen(
                 ) {
                     itemsIndexed(state.sheets) { index, sheet ->
                         SheetListItem(
-                            title = sheet.characterName.ifBlank { "New Character" },
+                            title = sheet.characterName?.ifBlank { "New Character" } ?: "New Character",
                             subtitle = buildString {
-                                if (sheet.characterRace.isNotBlank()) append(sheet.characterRace)
-                                if (sheet.characterRace.isNotBlank() && sheet.characterClass.isNotBlank()) append("-")
-                                if (sheet.characterClass.isNotBlank()) append(sheet.characterClass)
+                                if (sheet.characterRace?.isNotBlank() == true) append(sheet.characterRace)
+                                if (sheet.characterRace?.isNotBlank() == true && sheet.characterClass?.isNotBlank() == true) append("-")
+                                if (sheet.characterClass?.isNotBlank() == true) append(sheet.characterClass)
                             },
                             onClick = { onSheetClick(sheet) },
                             onLongClick = { onDeleteSheetClick(sheet) },

@@ -12,7 +12,7 @@ import dao.cacao.dnd5sheet.presentation.sceen.create_sheet.select_race.selectRac
 import dao.cacao.dnd5sheet.presentation.sceen.document.documentScreen
 import dao.cacao.dnd5sheet.presentation.sceen.sheet.sheetRoute
 import dao.cacao.dnd5sheet.presentation.sceen.sheet_list.sheetListRoute
-import dao.cacao.dnd5sheet.presentation.theme.AppTheme
+import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.theme
+package dao.cacao.dnd5sheet.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
