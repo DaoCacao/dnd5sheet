@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.sceen.sheet
+package dao.cacao.dnd5sheet.presentation.screen.sheet
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,15 +28,21 @@ class SheetViewModel @Inject constructor(
         viewModelScope.launch {
             val sheet = sheetRepository.getSheet(sheetId).first()
             state = SheetState.Content(
-                level = sheet.level ?: "",
+                level = sheet.level ?: 0,
                 characterName = sheet.characterName ?: "",
                 characterRace = sheet.characterRace ?: "",
                 characterClass = sheet.characterClass ?: "",
+                strength = sheet.strength ?: 0,
+                dexterity = sheet.dexterity ?: 0,
+                constitution = sheet.constitution ?: 0,
+                intelligence = sheet.intelligence ?: 0,
+                wisdom = sheet.wisdom ?: 0,
+                charisma = sheet.charisma ?: 0,
             )
         }
     }
 
-    fun onLevelChange(level: String) {
+    fun onLevelChange(level: Int) {
         state = state.ifContent { it.copy(level = level) }
         viewModelScope.launch {
             sheetRepository.updateLevel(sheetId, level)
@@ -61,6 +67,48 @@ class SheetViewModel @Inject constructor(
         state = state.ifContent { it.copy(characterClass = characterClass) }
         viewModelScope.launch {
             sheetRepository.updateCharacterClass(sheetId, characterClass)
+        }
+    }
+
+    fun onStrengthChange(value: Int) {
+        state = state.ifContent { it.copy(strength = value) }
+        viewModelScope.launch {
+            sheetRepository.updateStrength(sheetId, value)
+        }
+    }
+
+    fun onDexterityChange(value: Int) {
+        state = state.ifContent { it.copy(dexterity = value) }
+        viewModelScope.launch {
+            sheetRepository.updateDexterity(sheetId, value)
+        }
+    }
+
+    fun onConstitutionChange(value: Int) {
+        state = state.ifContent { it.copy(constitution = value) }
+        viewModelScope.launch {
+            sheetRepository.updateConstitution(sheetId, value)
+        }
+    }
+
+    fun onIntelligenceChange(value: Int) {
+        state = state.ifContent { it.copy(intelligence = value) }
+        viewModelScope.launch {
+            sheetRepository.updateIntelligence(sheetId, value)
+        }
+    }
+
+    fun onWisdomChange(value: Int) {
+        state = state.ifContent { it.copy(wisdom = value) }
+        viewModelScope.launch {
+            sheetRepository.updateWisdom(sheetId, value)
+        }
+    }
+
+    fun onCharismaChange(value: Int) {
+        state = state.ifContent { it.copy(charisma = value) }
+        viewModelScope.launch {
+            sheetRepository.updateCharisma(sheetId, value)
         }
     }
 

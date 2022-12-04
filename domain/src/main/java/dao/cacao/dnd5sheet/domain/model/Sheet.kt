@@ -1,9 +1,8 @@
 package dao.cacao.dnd5sheet.domain.model
 
-//TODO add deathSaves, attackAndSpellCasting, featuresAndTraits, inventoryAndEquipment, otherProficienciesAndLanguages
 data class Sheet(
     val id: Long,
-    val level: String?,
+    val level: Int?,
     val characterName: String?,
     val characterRace: String?,
     val characterClass: String?,
@@ -12,7 +11,12 @@ data class Sheet(
 //    val background: String,
 //    val inspiration: Boolean,
 //    val proficiencyBonus: Int,
-//    val abilities: List<Ability>,
+    val strength: Int?,
+    val dexterity: Int?,
+    val constitution: Int?,
+    val intelligence: Int?,
+    val wisdom: Int?,
+    val charisma: Int?,
 //    val savingThrows: List<Boolean>,
 //    val skills: List<Skill>,
 //    val passivePerception: Int,
@@ -23,4 +27,9 @@ data class Sheet(
 //    val currentHitPoInts: Int,
 //    val initiative: Int,
 //    val speed: Int,
+//     val deathSaves,
+//     val attackAndSpellCasting,
+//     val featuresAndTraits,
+//     val inventoryAndEquipment,
+//     val otherProficienciesAndLanguages
 )

@@ -2,6 +2,8 @@ package dao.cacao.dnd5sheet.data.storage.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import dao.cacao.dnd5sheet.data.storage.local.room.converter.Converters
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.ClassDao
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.DocumentDao
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.RaceDao
@@ -20,6 +22,7 @@ import dao.cacao.dnd5sheet.data.storage.local.room.model.SheetEntity
         DocumentEntity::class,
     ],
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sheetDao(): SheetDao
     abstract fun raceDao(): RaceDao

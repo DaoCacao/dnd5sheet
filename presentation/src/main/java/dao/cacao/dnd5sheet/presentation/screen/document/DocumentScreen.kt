@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.sceen.document
+package dao.cacao.dnd5sheet.presentation.screen.document
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

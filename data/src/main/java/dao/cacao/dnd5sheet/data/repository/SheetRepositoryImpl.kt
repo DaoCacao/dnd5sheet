@@ -32,7 +32,7 @@ class SheetRepositoryImpl @Inject constructor(
         return getSheet(id)
     }
 
-    override suspend fun updateLevel(sheetId: Long, level: String): Flow<Sheet> {
+    override suspend fun updateLevel(sheetId: Long, level: Int): Flow<Sheet> {
         database.sheetDao().updateLevel(sheetId, level)
         return getSheet(sheetId)
     }
@@ -50,6 +50,30 @@ class SheetRepositoryImpl @Inject constructor(
     override suspend fun updateCharacterRace(sheetId: Long, characterRace: String): Flow<Sheet> {
         database.sheetDao().updateCharacterRace(sheetId, characterRace)
         return getSheet(sheetId)
+    }
+
+    override suspend fun updateStrength(sheetId: Long, value: Int) {
+        database.sheetDao().updateStrength(sheetId, value)
+    }
+
+    override suspend fun updateDexterity(sheetId: Long, value: Int) {
+        database.sheetDao().updateDexterity(sheetId, value)
+    }
+
+    override suspend fun updateConstitution(sheetId: Long, value: Int) {
+        database.sheetDao().updateConstitution(sheetId, value)
+    }
+
+    override suspend fun updateIntelligence(sheetId: Long, value: Int) {
+        database.sheetDao().updateIntelligence(sheetId, value)
+    }
+
+    override suspend fun updateWisdom(sheetId: Long, value: Int) {
+        database.sheetDao().updateWisdom(sheetId, value)
+    }
+
+    override suspend fun updateCharisma(sheetId: Long, value: Int) {
+        database.sheetDao().updateCharisma(sheetId, value)
     }
 
     override suspend fun deleteSheet(sheetId: Long) {

@@ -8,10 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dao.cacao.dnd5sheet.presentation.router.Routes
-import dao.cacao.dnd5sheet.presentation.sceen.create_sheet.select_race.selectRaceRoute
-import dao.cacao.dnd5sheet.presentation.sceen.document.documentScreen
-import dao.cacao.dnd5sheet.presentation.sceen.sheet.sheetRoute
-import dao.cacao.dnd5sheet.presentation.sceen.sheet_list.sheetListRoute
+import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race.selectRaceRoute
+import dao.cacao.dnd5sheet.presentation.screen.document.documentScreen
+import dao.cacao.dnd5sheet.presentation.screen.sheet.sheetRoute
+import dao.cacao.dnd5sheet.presentation.screen.sheet_list.sheetListRoute
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @AndroidEntryPoint

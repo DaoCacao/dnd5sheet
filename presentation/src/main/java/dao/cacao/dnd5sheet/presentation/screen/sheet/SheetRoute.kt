@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.sceen.sheet
+package dao.cacao.dnd5sheet.presentation.screen.sheet
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -28,6 +28,12 @@ fun NavGraphBuilder.sheetRoute(
             onCharacterNameChange = it::onCharacterNameChange,
             onCharacterRaceChange = it::onCharacterRaceChange,
             onCharacterClassChange = it::onCharacterClassChange,
+            onStrengthChange = it::onStrengthChange,
+            onDexterityChange = it::onDexterityChange,
+            onConstitutionChange = it::onConstitutionChange,
+            onIntelligenceChange = it::onIntelligenceChange,
+            onWisdomChange = it::onWisdomChange,
+            onCharismaChange = it::onCharismaChange,
         )
     }
 }

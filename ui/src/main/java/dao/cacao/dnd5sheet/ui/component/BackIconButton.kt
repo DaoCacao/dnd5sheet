@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.ui.atomic.atom
+package dao.cacao.dnd5sheet.ui.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack

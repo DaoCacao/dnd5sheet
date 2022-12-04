@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.sceen.sheet_list
+package dao.cacao.dnd5sheet.presentation.screen.sheet_list
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

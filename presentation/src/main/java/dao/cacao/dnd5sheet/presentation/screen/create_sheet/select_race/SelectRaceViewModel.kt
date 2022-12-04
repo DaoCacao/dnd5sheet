@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.sceen.create_sheet.select_race
+package dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

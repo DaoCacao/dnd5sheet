@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.sceen.sheet_list
+package dao.cacao.dnd5sheet.presentation.screen.sheet_list
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -24,11 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dao.cacao.dnd5sheet.domain.model.Sheet
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldEmptyState
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
-import dao.cacao.dnd5sheet.presentation.preview.previewSheets
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
@@ -36,8 +34,8 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 fun SheetListScreen(
     state: SheetListState,
     onCreateNewSheetClick: () -> Unit = {},
-    onDeleteSheetClick: (Sheet) -> Unit = {},
-    onSheetClick: (Sheet) -> Unit = {},
+    onDeleteSheetClick: (Long) -> Unit = {},
+    onSheetClick: (Long) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -73,18 +71,24 @@ fun SheetListScreen(
                         .fillMaxSize()
                         .padding(it),
                 ) {
-                    itemsIndexed(state.sheets) { index, sheet ->
+                    itemsIndexed(state.items) { index, item ->
                         SheetListItem(
-                            title = sheet.characterName?.ifBlank { "New Character" } ?: "New Character",
+                            title = item.characterName.ifBlank { "New Character" },
                             subtitle = buildString {
-                                if (sheet.characterRace?.isNotBlank() == true) append(sheet.characterRace)
-                                if (sheet.characterRace?.isNotBlank() == true && sheet.characterClass?.isNotBlank() == true) append("-")
-                                if (sheet.characterClass?.isNotBlank() == true) append(sheet.characterClass)
+                                val showRace = item.characterRace.isNotBlank()
+                                val showClass = item.characterClass.isNotBlank()
+                                val showLevel = item.level > 0
+
+                                if (showRace) append(item.characterRace)
+                                if (showRace && showClass) append("-")
+                                if (showClass) append(item.characterClass)
+                                if ((showRace || showClass) && showLevel) append(", ")
+                                if (showLevel) append("${item.level} level")
                             },
-                            onClick = { onSheetClick(sheet) },
-                            onLongClick = { onDeleteSheetClick(sheet) },
+                            onClick = { onSheetClick(item.id) },
+                            onLongClick = { onDeleteSheetClick(item.id) },
                         )
-                        if (index != state.sheets.lastIndex) {
+                        if (index != state.items.lastIndex) {
                             Divider()
                         }
                     }
@@ -153,7 +157,15 @@ private fun PreviewContent() {
     AppTheme {
         SheetListScreen(
             state = SheetListState.Content(
-                sheets = previewSheets(5),
+                items = List(5) {
+                    SheetListState.Content.Item(
+                        id = it.toLong(),
+                        level = it,
+                        characterName = "CharacterName",
+                        characterRace = "Race",
+                        characterClass = "Class",
+                    )
+                }
             )
         )
     }

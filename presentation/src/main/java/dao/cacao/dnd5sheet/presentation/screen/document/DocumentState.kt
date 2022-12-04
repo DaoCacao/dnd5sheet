@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.presentation.sceen.document
+package dao.cacao.dnd5sheet.presentation.screen.document
 
 import dao.cacao.dnd5sheet.domain.model.Document
 

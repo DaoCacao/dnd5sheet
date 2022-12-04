@@ -13,5 +13,11 @@ class SheetMapper @Inject constructor() {
         characterName = sheet.characterName,
         characterRace = sheet.characterRace,
         characterClass = sheet.characterClass,
+        strength = sheet.strength,
+        dexterity = sheet.dexterity,
+        constitution = sheet.constitution,
+        intelligence = sheet.intelligence,
+        wisdom = sheet.wisdom,
+        charisma = sheet.charisma,
     )
 }
