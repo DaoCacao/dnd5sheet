@@ -1,6 +1,5 @@
 package dao.cacao.dnd5sheet.ui.component
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -14,16 +13,17 @@ fun TextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
+    singleLine: Boolean = true,
 ) {
     OutlinedTextField(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         label = {
             Text(
                 text = label,
             )
-        }
+        },
+        singleLine = singleLine,
     )
 }

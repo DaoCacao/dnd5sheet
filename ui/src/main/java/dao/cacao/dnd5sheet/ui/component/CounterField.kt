@@ -1,6 +1,5 @@
 package dao.cacao.dnd5sheet.ui.component
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -22,8 +21,7 @@ fun CounterField(
     label: String,
 ) {
     OutlinedTextField(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier,
         value = value.toString(),
         onValueChange = {},
         label = {
