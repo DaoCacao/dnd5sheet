@@ -1,8 +1,11 @@
 package dao.cacao.dnd5sheet.presentation.screen.sheet
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dao.cacao.dnd5sheet.presentation.component.state.LoadingState
+import dao.cacao.dnd5sheet.ui.component.CounterField
 import dao.cacao.dnd5sheet.ui.component.Screen
 import dao.cacao.dnd5sheet.ui.page.BlockAbilities
 import dao.cacao.dnd5sheet.ui.page.BlockCommon
@@ -17,12 +20,7 @@ fun SheetScreen(
     onCharacterNameChange: (String) -> Unit = {},
     onCharacterRaceChange: (String) -> Unit = {},
     onCharacterClassChange: (String) -> Unit = {},
-    onStrengthChange: (Int) -> Unit = {},
-    onDexterityChange: (Int) -> Unit = {},
-    onConstitutionChange: (Int) -> Unit = {},
-    onIntelligenceChange: (Int) -> Unit = {},
-    onWisdomChange: (Int) -> Unit = {},
-    onCharismaChange: (Int) -> Unit = {},
+    onAbilityChange: (abilityId: Long, value: Int) -> Unit = { _, _ -> },
 ) {
     Screen(
         title = "Character sheet",
@@ -48,18 +46,15 @@ fun SheetScreen(
                     },
                     abilities = {
                         BlockAbilities(
-                            strength = state.strength,
-                            dexterity = state.dexterity,
-                            constitution = state.constitution,
-                            intelligence = state.intelligence,
-                            wisdom = state.wisdom,
-                            charisma = state.charisma,
-                            onStrengthChange = onStrengthChange,
-                            onDexterityChange = onDexterityChange,
-                            onConstitutionChange = onConstitutionChange,
-                            onIntelligenceChange = onIntelligenceChange,
-                            onWisdomChange = onWisdomChange,
-                            onCharismaChange = onCharismaChange,
+                            items = state.abilities,
+                            content = { ability ->
+                                CounterField(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    value = ability.value,
+                                    label = ability.name,
+                                    onValueChange = { onAbilityChange(ability.id, it) },
+                                )
+                            }
                         )
                     },
                 )
@@ -78,12 +73,13 @@ private fun Preview() {
                 characterName = "name",
                 characterRace = "race",
                 characterClass = "class",
-                strength = 20,
-                dexterity = 20,
-                constitution = 20,
-                intelligence = 20,
-                wisdom = 20,
-                charisma = 20,
+                abilities = List(6) {
+                    SheetState.Content.Ability(
+                        id = it.toLong(),
+                        name = "Ability",
+                        value = 20,
+                    )
+                }
             ),
         )
     }

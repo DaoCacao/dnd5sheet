@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 fun CounterField(
     modifier: Modifier = Modifier,
     value: Int,
-    onValueChange: (Int) -> Unit,
     label: String,
+    onValueChange: (Int) -> Unit,
 ) {
     OutlinedTextField(
         modifier = modifier,

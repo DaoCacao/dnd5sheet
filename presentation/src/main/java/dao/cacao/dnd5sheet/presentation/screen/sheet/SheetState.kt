@@ -7,11 +7,12 @@ sealed class SheetState {
         val characterName: String,
         val characterRace: String,
         val characterClass: String,
-        val strength: Int,
-        val dexterity: Int,
-        val constitution: Int,
-        val intelligence: Int,
-        val wisdom: Int,
-        val charisma: Int,
-    ) : SheetState()
+        val abilities: List<Ability>,
+    ) : SheetState() {
+        data class Ability(
+            val id: Long,
+            val name: String,
+            val value: Int,
+        )
+    }
 }

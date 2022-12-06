@@ -4,10 +4,12 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dao.cacao.dnd5sheet.data.repository.AbilityRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.ClassRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.DocumentRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.RaceRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.SheetRepositoryImpl
+import dao.cacao.dnd5sheet.domain.boundary.AbilityRepository
 import dao.cacao.dnd5sheet.domain.boundary.ClassRepository
 import dao.cacao.dnd5sheet.domain.boundary.DocumentRepository
 import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
@@ -20,6 +22,10 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun sheetRepository(impl: SheetRepositoryImpl): SheetRepository
+
+    @Binds
+    @Singleton
+    fun abilityRepository(impl: AbilityRepositoryImpl): AbilityRepository
 
     @Binds
     @Singleton

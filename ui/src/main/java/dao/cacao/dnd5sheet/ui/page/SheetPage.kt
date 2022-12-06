@@ -71,6 +71,22 @@ fun BlockCommon(
 }
 
 @Composable
+fun <T> BlockAbilities(
+    items: List<T>,
+    content: @Composable (T) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        for (item in items) {
+            content(item)
+        }
+    }
+}
+
+@Composable
 fun BlockAbilities(
     strength: Int = 0,
     dexterity: Int = 0,

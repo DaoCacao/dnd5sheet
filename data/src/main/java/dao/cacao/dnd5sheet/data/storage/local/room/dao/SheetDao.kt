@@ -2,6 +2,8 @@ package dao.cacao.dnd5sheet.data.storage.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
+import dao.cacao.dnd5sheet.data.storage.local.room.model.FullSheetEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.SheetEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -11,8 +13,9 @@ interface SheetDao : BaseDao<SheetEntity> {
     @Query("SELECT * FROM sheet")
     fun getAll(): Flow<List<SheetEntity>>
 
+    @Transaction
     @Query("SELECT * FROM sheet WHERE sheet_id == :sheetId")
-    fun getById(sheetId: Long): Flow<SheetEntity>
+    fun getById(sheetId: Long): Flow<FullSheetEntity>
 
     @Query("UPDATE sheet SET level = :level WHERE sheet_id == :sheetId")
     suspend fun updateLevel(sheetId: Long, level: Int)
@@ -25,24 +28,6 @@ interface SheetDao : BaseDao<SheetEntity> {
 
     @Query("UPDATE sheet SET character_class = :characterClass WHERE sheet_id == :sheetId")
     suspend fun updateCharacterClass(sheetId: Long, characterClass: String)
-
-    @Query("UPDATE sheet SET strength = :value WHERE sheet_id == :sheetId")
-    suspend fun updateStrength(sheetId: Long, value: Int)
-
-    @Query("UPDATE sheet SET dexterity = :value WHERE sheet_id == :sheetId")
-    suspend fun updateDexterity(sheetId: Long, value: Int)
-
-    @Query("UPDATE sheet SET constitution = :value WHERE sheet_id == :sheetId")
-    suspend fun updateConstitution(sheetId: Long, value: Int)
-
-    @Query("UPDATE sheet SET intelligence = :value WHERE sheet_id == :sheetId")
-    suspend fun updateIntelligence(sheetId: Long, value: Int)
-
-    @Query("UPDATE sheet SET wisdom = :value WHERE sheet_id == :sheetId")
-    suspend fun updateWisdom(sheetId: Long, value: Int)
-
-    @Query("UPDATE sheet SET charisma = :value WHERE sheet_id == :sheetId")
-    suspend fun updateCharisma(sheetId: Long, value: Int)
 
     @Query("DELETE FROM sheet WHERE sheet_id == :sheetId")
     suspend fun deleteById(sheetId: Long)

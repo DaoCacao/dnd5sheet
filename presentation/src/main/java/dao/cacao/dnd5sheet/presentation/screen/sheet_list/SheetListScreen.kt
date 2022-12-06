@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import dao.cacao.dnd5sheet.presentation.component.Toolbar
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldEmptyState
 import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
+import dao.cacao.dnd5sheet.ui.component.AlertDialog
+import dao.cacao.dnd5sheet.ui.component.rememberAlertDialogState
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
@@ -34,8 +36,8 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 fun SheetListScreen(
     state: SheetListState,
     onCreateNewSheetClick: () -> Unit = {},
-    onDeleteSheetClick: (Long) -> Unit = {},
-    onSheetClick: (Long) -> Unit = {},
+    onDeleteSheetClick: (sheetId: Long) -> Unit = {},
+    onSheetClick: (sheetId: Long) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -72,6 +74,18 @@ fun SheetListScreen(
                         .padding(it),
                 ) {
                     itemsIndexed(state.items) { index, item ->
+                        val confirmDeleteDialogState = rememberAlertDialogState()
+                        AlertDialog(
+                            state = confirmDeleteDialogState,
+                            title = "Delete sheet",
+                            text = "Are you sure you wish to delete the sheet?",
+                            confirmText = "Delete",
+                            dismissText = "Cancel",
+                            onConfirmClick = {
+                                confirmDeleteDialogState.hide()
+                                onDeleteSheetClick(item.id)
+                            }
+                        )
                         SheetListItem(
                             title = item.characterName.ifBlank { "New Character" },
                             subtitle = buildString {
@@ -86,7 +100,7 @@ fun SheetListScreen(
                                 if (showLevel) append("${item.level} level")
                             },
                             onClick = { onSheetClick(item.id) },
-                            onLongClick = { onDeleteSheetClick(item.id) },
+                            onLongClick = { confirmDeleteDialogState.show() },
                         )
                         if (index != state.items.lastIndex) {
                             Divider()
