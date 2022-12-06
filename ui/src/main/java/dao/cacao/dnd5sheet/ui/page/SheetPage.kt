@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,8 +20,8 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
 fun SheetPage(
-    common: @Composable () -> Unit,
-    abilities: @Composable () -> Unit,
+    common: @Composable LazyItemScope.() -> Unit,
+    abilities: @Composable LazyItemScope.() -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -71,78 +75,29 @@ fun BlockCommon(
 }
 
 @Composable
-fun <T> BlockAbilities(
+fun <T> LazyItemScope.BlockAbilities(
     items: List<T>,
     content: @Composable (T) -> Unit,
 ) {
-    Column(
+    LazyVerticalGrid(
         modifier = Modifier
+            .fillParentMaxHeight()
             .padding(16.dp),
+        columns = GridCells.Fixed(3),
         verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        for (item in items) {
-            content(item)
-        }
+        items(items) { content(it) }
     }
-}
-
-@Composable
-fun BlockAbilities(
-    strength: Int = 0,
-    dexterity: Int = 0,
-    constitution: Int = 0,
-    intelligence: Int = 0,
-    wisdom: Int = 0,
-    charisma: Int = 0,
-    onStrengthChange: (Int) -> Unit = {},
-    onDexterityChange: (Int) -> Unit = {},
-    onConstitutionChange: (Int) -> Unit = {},
-    onIntelligenceChange: (Int) -> Unit = {},
-    onWisdomChange: (Int) -> Unit = {},
-    onCharismaChange: (Int) -> Unit = {},
-) {
-    Column(
-        modifier = Modifier
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        CounterField(
-            modifier = Modifier.fillMaxWidth(),
-            value = strength,
-            onValueChange = onStrengthChange,
-            label = "Strength",
-        )
-        CounterField(
-            modifier = Modifier.fillMaxWidth(),
-            value = dexterity,
-            onValueChange = onDexterityChange,
-            label = "Dexterity",
-        )
-        CounterField(
-            modifier = Modifier.fillMaxWidth(),
-            value = constitution,
-            onValueChange = onConstitutionChange,
-            label = "Constitution",
-        )
-        CounterField(
-            modifier = Modifier.fillMaxWidth(),
-            value = intelligence,
-            onValueChange = onIntelligenceChange,
-            label = "Intelligence",
-        )
-        CounterField(
-            modifier = Modifier.fillMaxWidth(),
-            value = wisdom,
-            onValueChange = onWisdomChange,
-            label = "Wisdom",
-        )
-        CounterField(
-            modifier = Modifier.fillMaxWidth(),
-            value = charisma,
-            onValueChange = onCharismaChange,
-            label = "Charisma",
-        )
-    }
+//    Column(
+//        modifier = Modifier
+//            .padding(16.dp),
+//        verticalArrangement = Arrangement.spacedBy(16.dp),
+//    ) {
+//        for (item in items) {
+//            content(item)
+//        }
+//    }
 }
 
 @Preview
@@ -154,7 +109,15 @@ private fun Preview() {
                 BlockCommon()
             },
             abilities = {
-                BlockAbilities()
+                BlockAbilities(
+                    items = List(6) { it },
+                ) {
+                    CounterField(
+                        value = it,
+                        label = "Ability #$it",
+                        onValueChange = {},
+                    )
+                }
             },
         )
     }
