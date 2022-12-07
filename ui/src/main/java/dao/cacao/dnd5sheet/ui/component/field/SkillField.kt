@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -34,11 +35,12 @@ fun SkillField(
         ),
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(space = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Checkbox(
+                modifier = Modifier.size(24.dp),
                 checked = proficiency,
                 onCheckedChange = onProficiencyChange,
             )
@@ -46,6 +48,7 @@ fun SkillField(
                 value = skillModifier,
             )
             Text(
+                modifier = Modifier.weight(1f),
                 text = skill,
             )
             Text(

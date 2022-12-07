@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -39,15 +40,15 @@ fun AbilityField(
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(space = 8.dp),
+            modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 IconButton(
+                    modifier = Modifier.size(24.dp),
                     onClick = { onScoreChange(score - 1) },
                 ) {
                     Icon(
@@ -55,17 +56,14 @@ fun AbilityField(
                         contentDescription = "Decrement",
                     )
                 }
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    ModifierText(
-                        value = abilityModifier,
-                    )
-                    Text(
-                        text = "($score)",
-                    )
-                }
+                ModifierText(
+                    value = abilityModifier,
+                )
+                Text(
+                    text = "($score)",
+                )
                 IconButton(
+                    modifier = Modifier.size(24.dp),
                     onClick = { onScoreChange(score + 1) },
                 ) {
                     Icon(

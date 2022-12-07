@@ -1,18 +1,18 @@
 package dao.cacao.dnd5sheet.ui.component.field
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,29 +29,24 @@ fun CounterField(
     label: String,
     onValueChange: (Int) -> Unit,
 ) {
-    Column(
+    OutlinedCard(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(space = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        shape = MaterialTheme.shapes.extraSmall,
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outline,
+        )
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    border = BorderStroke(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                    ),
-                    shape = MaterialTheme.shapes.extraSmall,
-                ),
+        Column(
+            modifier = Modifier.padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 IconButton(
+                    modifier = Modifier.size(24.dp),
                     onClick = { onValueChange(value - 1) },
                 ) {
                     Icon(
@@ -63,6 +58,7 @@ fun CounterField(
                     text = value.toString(),
                 )
                 IconButton(
+                    modifier = Modifier.size(24.dp),
                     onClick = { onValueChange(value + 1) },
                 ) {
                     Icon(
@@ -71,10 +67,10 @@ fun CounterField(
                     )
                 }
             }
+            Text(
+                text = label,
+            )
         }
-        Text(
-            text = label,
-        )
     }
 }
 

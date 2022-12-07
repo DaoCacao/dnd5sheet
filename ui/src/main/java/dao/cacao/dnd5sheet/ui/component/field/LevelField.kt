@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -36,15 +37,15 @@ fun LevelField(
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(space = 8.dp),
+            modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 IconButton(
+                    modifier = Modifier.size(24.dp),
                     onClick = { onLevelChange(level - 1) },
                 ) {
                     Icon(
@@ -56,6 +57,7 @@ fun LevelField(
                     text = level.toString(),
                 )
                 IconButton(
+                    modifier = Modifier.size(24.dp),
                     onClick = { onLevelChange(level + 1) },
                 ) {
                     Icon(
@@ -75,11 +77,9 @@ fun LevelField(
 @Preview
 private fun Preview() {
     AppTheme {
-        AbilityField(
-            score = 20,
-            ability = "Ability",
-            abilityModifier = 5,
-            onScoreChange = {},
+        LevelField(
+            level = 5,
+            onLevelChange = {},
         )
     }
 }

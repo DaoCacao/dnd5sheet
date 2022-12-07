@@ -2,6 +2,8 @@ package dao.cacao.dnd5sheet.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -34,17 +36,6 @@ fun BlockCommon(
             onValueChange = onCharacterNameChange,
             label = "Name"
         )
-        LevelField(
-            modifier = Modifier.fillMaxWidth(),
-            level = level,
-            onLevelChange = onLevelChange,
-        )
-        CounterField(
-            modifier = Modifier.fillMaxWidth(),
-            value = proficiencyBonus,
-            onValueChange = onProficiencyBonusChange,
-            label = "Proficiency bonus",
-        )
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = characterRace,
@@ -57,5 +48,22 @@ fun BlockCommon(
             onValueChange = onCharacterClassChange,
             label = "Class"
         )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            LevelField(
+                level = level,
+                onLevelChange = onLevelChange,
+            )
+            Spacer(
+                modifier = Modifier.weight(2f),
+            )
+            CounterField(
+                value = proficiencyBonus,
+                onValueChange = onProficiencyBonusChange,
+                label = "Proficiency bonus",
+            )
+        }
     }
 }

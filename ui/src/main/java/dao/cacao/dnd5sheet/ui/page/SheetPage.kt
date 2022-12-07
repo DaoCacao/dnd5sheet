@@ -1,7 +1,6 @@
 package dao.cacao.dnd5sheet.ui.page
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.runtime.Composable
@@ -43,7 +42,6 @@ private fun Preview() {
                     items = List(6) { it },
                 ) {
                     AbilityField(
-                        modifier = Modifier.fillMaxWidth(),
                         score = it,
                         ability = "Ability #$it",
                         abilityModifier = it,
@@ -56,7 +54,6 @@ private fun Preview() {
                     items = List(6) { it },
                 ) {
                     SkillField(
-                        modifier = Modifier.fillMaxWidth(),
                         skill = "Skill #$it",
                         ability = "Ab.",
                         proficiency = true,
