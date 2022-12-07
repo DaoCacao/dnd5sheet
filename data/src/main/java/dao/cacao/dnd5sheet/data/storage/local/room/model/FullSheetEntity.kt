@@ -10,4 +10,9 @@ data class FullSheetEntity(
         entityColumn = "sheet_id",
     )
     val abilities: List<AbilityEntity>,
+    @Relation(
+        parentColumn = "sheet_id",
+        entityColumn = "sheet_id",
+    )
+    val skills: List<SkillEntity>,
 )

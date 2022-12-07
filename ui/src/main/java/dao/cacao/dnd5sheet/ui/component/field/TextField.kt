@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.ui.component
+package dao.cacao.dnd5sheet.ui.component.field
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField

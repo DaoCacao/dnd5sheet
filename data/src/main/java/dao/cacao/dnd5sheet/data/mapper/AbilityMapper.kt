@@ -7,11 +7,11 @@ import dao.cacao.dnd5sheet.domain.model.players_handbook.PlayersHandbookAbility
 fun AbilityEntity.map() = Ability(
     id = this.abilityId,
     name = this.name ?: "",
-    value = this.value ?: 0,
+    score = this.score ?: 0,
 )
 
 fun PlayersHandbookAbility.map(sheetId: Long) = AbilityEntity(
     sheetId = sheetId,
     name = this.name,
-    value = 0,
+    score = 0,
 )

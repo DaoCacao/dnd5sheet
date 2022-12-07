@@ -9,5 +9,5 @@ data class AbilityEntity(
     @ColumnInfo(name = "ability_id") @PrimaryKey(autoGenerate = true) val abilityId: Long = 0,
     @ColumnInfo(name = "sheet_id") val sheetId: Long = 0,
     @ColumnInfo(name = "name") val name: String? = null,
-    @ColumnInfo(name = "value") val value: Int? = null,
+    @ColumnInfo(name = "score") val score: Int? = null,
 )

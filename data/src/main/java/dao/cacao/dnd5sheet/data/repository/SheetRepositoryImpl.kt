@@ -51,6 +51,11 @@ class SheetRepositoryImpl @Inject constructor(
         return getSheet(sheetId)
     }
 
+    override suspend fun updateProficiencyBonus(sheetId: Long, proficiencyBonus: Int): Flow<Sheet> {
+        database.sheetDao().updateProficiencyBonus(sheetId, proficiencyBonus)
+        return getSheet(sheetId)
+    }
+
     override suspend fun deleteSheet(sheetId: Long) {
         database.sheetDao().deleteById(sheetId)
     }

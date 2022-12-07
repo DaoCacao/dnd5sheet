@@ -12,7 +12,9 @@ fun SheetEntity.map() = Sheet(
     characterName = this.characterName,
     characterRace = this.characterRace,
     characterClass = this.characterClass,
+    proficiencyBonus = this.proficiencyBonus,
     abilities = emptyList(),
+    skills = emptyList(),
 )
 
 fun FullSheetEntity.map() = Sheet(
@@ -21,5 +23,7 @@ fun FullSheetEntity.map() = Sheet(
     characterName = sheet.characterName,
     characterRace = sheet.characterRace,
     characterClass = sheet.characterClass,
-    abilities = abilities.map { it.map() }
+    proficiencyBonus = sheet.proficiencyBonus,
+    abilities = abilities.map { it.map() },
+    skills = skills.map { it.map() },
 )

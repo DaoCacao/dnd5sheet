@@ -11,4 +11,5 @@ data class SheetEntity(
     @ColumnInfo(name = "character_name") val characterName: String? = null,
     @ColumnInfo(name = "character_race") val characterRace: String? = null,
     @ColumnInfo(name = "character_class") val characterClass: String? = null,
+    @ColumnInfo(name = "proficiency_bonus") val proficiencyBonus: Int? = null,
 )

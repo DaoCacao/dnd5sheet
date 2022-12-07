@@ -24,7 +24,9 @@ fun NavGraphBuilder.sheetRoute(
             onCharacterNameChange = it::onCharacterNameChange,
             onCharacterRaceChange = it::onCharacterRaceChange,
             onCharacterClassChange = it::onCharacterClassChange,
-            onAbilityChange = it::onAbilityChange,
+            onProficiencyBonusChange = it::onProficiencyBonusChange,
+            onAbilityScoreChange = it::onAbilityScoreChange,
+            onSkillProficiencyChange = it::onSkillProficiencyChange
         )
     }
 }

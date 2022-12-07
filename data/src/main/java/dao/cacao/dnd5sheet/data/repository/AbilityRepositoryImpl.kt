@@ -10,13 +10,13 @@ class AbilityRepositoryImpl @Inject constructor(
     private val database: AppDatabase,
 ) : AbilityRepository {
 
-    override suspend fun createAbilities(sheetId: Long) {
-        val abilities = PlayersHandbookAbility.values().map { it.map(sheetId) }
-        database.abilityDao().insert(abilities)
+    override suspend fun createAbility(ability: PlayersHandbookAbility, sheetId: Long): Long {
+        val entity = ability.map(sheetId)
+        return database.abilityDao().insert(entity)
     }
 
-    override suspend fun updateAbility(abilityId: Long, value: Int) {
-        database.abilityDao().updateValue(abilityId, value)
+    override suspend fun updateAbilityScore(abilityId: Long, score: Int) {
+        database.abilityDao().updateScore(abilityId, score)
     }
 
     override suspend fun deleteAbilities(sheetId: Long) {

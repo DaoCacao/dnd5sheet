@@ -7,17 +7,20 @@ import dao.cacao.dnd5sheet.data.storage.local.room.dao.ClassDao
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.DocumentDao
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.RaceDao
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.SheetDao
+import dao.cacao.dnd5sheet.data.storage.local.room.dao.SkillDao
 import dao.cacao.dnd5sheet.data.storage.local.room.model.AbilityEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.ClassEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.DocumentEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.RaceEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.SheetEntity
+import dao.cacao.dnd5sheet.data.storage.local.room.model.SkillEntity
 
 @Database(
     version = 1,
     entities = [
         SheetEntity::class,
         AbilityEntity::class,
+        SkillEntity::class,
 
         RaceEntity::class,
         ClassEntity::class,
@@ -27,6 +30,7 @@ import dao.cacao.dnd5sheet.data.storage.local.room.model.SheetEntity
 abstract class AppDatabase : RoomDatabase() {
     abstract fun sheetDao(): SheetDao
     abstract fun abilityDao(): AbilityDao
+    abstract fun skillDao(): SkillDao
 
     abstract fun raceDao(): RaceDao
     abstract fun classDao(): ClassDao

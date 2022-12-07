@@ -26,6 +26,9 @@ interface SheetDao : BaseDao<SheetEntity> {
     @Query("UPDATE sheet SET character_race = :characterRace WHERE sheet_id == :sheetId")
     suspend fun updateCharacterRace(sheetId: Long, characterRace: String)
 
+    @Query("UPDATE sheet SET proficiency_bonus = :proficiencyBonus WHERE sheet_id == :sheetId")
+    suspend fun updateProficiencyBonus(sheetId: Long, proficiencyBonus: Int)
+
     @Query("UPDATE sheet SET character_class = :characterClass WHERE sheet_id == :sheetId")
     suspend fun updateCharacterClass(sheetId: Long, characterClass: String)
 
