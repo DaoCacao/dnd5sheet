@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.DocumentRepository
-import dao.cacao.dnd5sheet.presentation.router.Routes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,13 +18,14 @@ class DocumentViewModel @Inject constructor(
     private val documentRepository: DocumentRepository,
 ) : ViewModel() {
 
-    private val documentId = savedStateHandle.get<Long>(Routes.argDocumentId) ?: error("Required argument")
+    private val args = DocumentRoute.args(savedStateHandle)
+
     var state by mutableStateOf<DocumentState>(DocumentState.Loading)
         private set
 
     init {
         viewModelScope.launch {
-            documentRepository.getDocument(documentId).collectLatest {
+            documentRepository.getDocument(args.documentId).collectLatest {
                 state = DocumentState.Content(
                     document = it,
                 )

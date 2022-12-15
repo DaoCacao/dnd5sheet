@@ -1,39 +1,57 @@
 package dao.cacao.dnd5sheet.presentation.screen.sheet
 
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import dao.cacao.dnd5sheet.presentation.base.ViewModelRouter
-import dao.cacao.dnd5sheet.presentation.router.Routes
+import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
 
-fun NavGraphBuilder.sheetRoute(
-    navController: NavController,
-) = composable(
-    route = Routes.sheetRoutePlaceholder,
-    arguments = listOf(
-        navArgument(Routes.argSheetId) { type = NavType.LongType },
+private const val sheetId = "sheet_id"
+
+object SheetRoute : RouteWithArgs<SheetRoute.Args>(
+    path = "sheet",
+    navArguments = listOf(
+        navArgument(sheetId) { type = NavType.LongType },
     ),
 ) {
-    ViewModelRouter<SheetViewModel>(navController) {
-        SheetScreen(
-            isLoading = it.isLoading,
-            level = it.level,
-            characterName = it.characterName,
-            characterRace = it.characterRace,
-            characterClass = it.characterClass,
-            proficiencyBonus = it.proficiencyBonus,
-            abilities = it.abilities,
-            skills = it.skills,
-            onNavigateUp = it::onNavigateUpClick,
-            onLevelChange = it::onLevelChange,
-            onCharacterNameChange = it::onCharacterNameChange,
-            onCharacterRaceChange = it::onCharacterRaceChange,
-            onCharacterClassChange = it::onCharacterClassChange,
-            onProficiencyBonusChange = it::onProficiencyBonusChange,
-            onAbilityScoreChange = it::onAbilityScoreChange,
-            onSkillProficiencyChange = it::onSkillProficiencyChange
-        )
-    }
+    class Args(
+        val sheetId: Long,
+    )
+
+    override fun args(savedStateHandle: SavedStateHandle) = Args(
+        sheetId = checkNotNull(savedStateHandle[sheetId]),
+    )
+
+    override fun argsToMap(args: Args) = mapOf(
+        sheetId to args.sheetId,
+    )
+}
+
+fun NavGraphBuilder.sheetRoute(
+    onNavigateUp: (() -> Unit)?,
+) = composable(
+    route = SheetRoute.route,
+    arguments = SheetRoute.navArguments,
+) {
+    val viewModel: SheetViewModel = hiltViewModel()
+    SheetScreen(
+        isLoading = viewModel.isLoading,
+        level = viewModel.level,
+        characterName = viewModel.characterName,
+        characterRace = viewModel.characterRace,
+        characterClass = viewModel.characterClass,
+        proficiencyBonus = viewModel.proficiencyBonus,
+        abilities = viewModel.abilities,
+        skills = viewModel.skills,
+        onNavigateUp = onNavigateUp,
+        onLevelChange = viewModel::onLevelChange,
+        onCharacterNameChange = viewModel::onCharacterNameChange,
+        onCharacterRaceChange = viewModel::onCharacterRaceChange,
+        onCharacterClassChange = viewModel::onCharacterClassChange,
+        onProficiencyBonusChange = viewModel::onProficiencyBonusChange,
+        onAbilityScoreChange = viewModel::onAbilityScoreChange,
+        onSkillProficiencyChange = viewModel::onSkillProficiencyChange
+    )
 }

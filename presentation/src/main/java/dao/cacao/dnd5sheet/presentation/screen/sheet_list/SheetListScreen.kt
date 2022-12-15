@@ -24,11 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dao.cacao.dnd5sheet.presentation.component.Toolbar
-import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldEmptyState
-import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
 import dao.cacao.dnd5sheet.ui.component.AlertDialog
+import dao.cacao.dnd5sheet.ui.component.TopAppBar
 import dao.cacao.dnd5sheet.ui.component.rememberAlertDialogState
+import dao.cacao.dnd5sheet.ui.component.state.ScaffoldEmptyState
+import dao.cacao.dnd5sheet.ui.component.state.ScaffoldLoadingState
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
@@ -37,11 +37,11 @@ fun SheetListScreen(
     state: SheetListState,
     onCreateNewSheetClick: () -> Unit = {},
     onDeleteSheetClick: (sheetId: Long) -> Unit = {},
-    onSheetClick: (sheetId: Long) -> Unit = {},
+    onSheetClick: (item: SheetListState.Content.Item) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
-            Toolbar(
+            TopAppBar(
                 title = "Character sheets",
             )
         },
@@ -99,7 +99,7 @@ fun SheetListScreen(
                                 if ((showRace || showClass) && showLevel) append(", ")
                                 if (showLevel) append("${item.level} level")
                             },
-                            onClick = { onSheetClick(item.id) },
+                            onClick = { onSheetClick(item) },
                             onLongClick = { confirmDeleteDialogState.show() },
                         )
                         if (index != state.items.lastIndex) {

@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.AbilityRepository
@@ -11,8 +12,6 @@ import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.boundary.SkillRepository
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateAbilityModifierUseCase
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateSkillModifierUseCase
-import dao.cacao.dnd5sheet.presentation.base.BaseViewModel
-import dao.cacao.dnd5sheet.presentation.router.Routes
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,9 +24,9 @@ class SheetViewModel @Inject constructor(
     private val skillRepository: SkillRepository,
     private val calculateAbilityModifierUseCase: CalculateAbilityModifierUseCase,
     private val calculateSkillModifierUseCase: CalculateSkillModifierUseCase,
-) : BaseViewModel() {
+) : ViewModel() {
 
-    private val sheetId = savedStateHandle.get<Long>(Routes.argSheetId) ?: error("Required argument")
+    private val args = SheetRoute.args(savedStateHandle)
 
     var isLoading by mutableStateOf(true)
     var level by mutableStateOf(0)
@@ -40,7 +39,7 @@ class SheetViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val sheet = sheetRepository.getSheet(sheetId).first()
+            val sheet = sheetRepository.getSheet(args.sheetId).first()
             isLoading = false
             level = sheet.level ?: 0
             characterName = sheet.characterName ?: ""
@@ -72,28 +71,28 @@ class SheetViewModel @Inject constructor(
     fun onLevelChange(level: Int) {
         this.level = level
         viewModelScope.launch {
-            sheetRepository.updateLevel(sheetId, level)
+            sheetRepository.updateLevel(args.sheetId, level)
         }
     }
 
     fun onCharacterNameChange(characterName: String) {
         this.characterName = characterName
         viewModelScope.launch {
-            sheetRepository.updateCharacterName(sheetId, characterName)
+            sheetRepository.updateCharacterName(args.sheetId, characterName)
         }
     }
 
     fun onCharacterRaceChange(characterRace: String) {
         this.characterRace = characterRace
         viewModelScope.launch {
-            sheetRepository.updateCharacterRace(sheetId, characterRace)
+            sheetRepository.updateCharacterRace(args.sheetId, characterRace)
         }
     }
 
     fun onCharacterClassChange(characterClass: String) {
         this.characterClass = characterClass
         viewModelScope.launch {
-            sheetRepository.updateCharacterClass(sheetId, characterClass)
+            sheetRepository.updateCharacterClass(args.sheetId, characterClass)
         }
     }
 
@@ -108,7 +107,7 @@ class SheetViewModel @Inject constructor(
             )
         }
         viewModelScope.launch {
-            sheetRepository.updateProficiencyBonus(sheetId, proficiencyBonus)
+            sheetRepository.updateProficiencyBonus(args.sheetId, proficiencyBonus)
         }
     }
 

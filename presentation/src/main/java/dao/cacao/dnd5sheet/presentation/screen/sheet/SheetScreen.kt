@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import dao.cacao.dnd5sheet.presentation.component.state.LoadingState
+import dao.cacao.dnd5sheet.ui.component.state.LoadingState
 import dao.cacao.dnd5sheet.ui.component.block.AbilitiesBlock
 import dao.cacao.dnd5sheet.ui.component.block.CommonBlock
 import dao.cacao.dnd5sheet.ui.component.block.SkillsBlock

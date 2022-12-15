@@ -12,18 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.RichText
-import dao.cacao.dnd5sheet.presentation.component.Toolbar
-import dao.cacao.dnd5sheet.presentation.component.state.ScaffoldLoadingState
+import dao.cacao.dnd5sheet.ui.component.TopAppBar
+import dao.cacao.dnd5sheet.ui.component.state.ScaffoldLoadingState
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun DocumentScreen(
     state: DocumentState,
-    onNavigateUp: () -> Unit,
+    onNavigateUp: (() -> Unit)? = null,
 ) {
     Scaffold(
         topBar = {
-            Toolbar(
+            TopAppBar(
                 title = when (state) {
                     DocumentState.Loading -> "Document"
                     is DocumentState.Content -> state.document.name

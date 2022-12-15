@@ -1,22 +1,28 @@
 package dao.cacao.dnd5sheet.presentation.screen.sheet_list
 
-import androidx.navigation.NavController
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dao.cacao.dnd5sheet.presentation.base.ViewModelRouter
-import dao.cacao.dnd5sheet.presentation.router.Routes
+import dao.cacao.dnd5sheet.presentation.base.Route
+
+object SheetListRoute : Route(
+    path = "sheet_list",
+)
 
 fun NavGraphBuilder.sheetListRoute(
-    navController: NavController,
+    onNavigateToCharacter: (sheetId: Long) -> Unit,
+    onNavigateToCreateCharacter: () -> Unit,
 ) = composable(
-    route = Routes.sheetListRoutePlaceholder,
+    route = SheetListRoute.route,
 ) {
-    ViewModelRouter<SheetListViewModel>(navController) {
-        SheetListScreen(
-            state = it.state,
-            onCreateNewSheetClick = it::onCreateNewSheetClick,
-            onDeleteSheetClick = it::onDeleteSheetClick,
-            onSheetClick = it::onSheetClick,
-        )
-    }
+    val viewModel: SheetListViewModel = hiltViewModel()
+    val scope = rememberCoroutineScope()
+
+    SheetListScreen(
+        state = viewModel.state,
+        onCreateNewSheetClick = { onNavigateToCreateCharacter() },
+        onDeleteSheetClick = viewModel::onDeleteSheetClick,
+        onSheetClick = { onNavigateToCharacter(it.id) },
+    )
 }

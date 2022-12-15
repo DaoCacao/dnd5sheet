@@ -15,6 +15,7 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 fun Screen(
     title: String,
+    subtitle: String = "",
     onNavigateUp: (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
@@ -22,6 +23,7 @@ fun Screen(
         topBar = {
             TopAppBar(
                 title = title,
+                subtitle = subtitle,
                 onNavigateUp = onNavigateUp,
             )
         },
@@ -41,6 +43,7 @@ private fun Preview() {
     AppTheme {
         Screen(
             title = "Title",
+            subtitle = "Subtitle",
             onNavigateUp = {},
         ) {
 

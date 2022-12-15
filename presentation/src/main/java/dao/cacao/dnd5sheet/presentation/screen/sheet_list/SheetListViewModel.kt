@@ -3,13 +3,12 @@ package dao.cacao.dnd5sheet.presentation.screen.sheet_list
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.use_case.CreateNewSheetUseCase
 import dao.cacao.dnd5sheet.domain.use_case.DeleteSheetUseCase
-import dao.cacao.dnd5sheet.presentation.base.BaseViewModel
-import dao.cacao.dnd5sheet.presentation.router.Routes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +18,7 @@ class SheetListViewModel @Inject constructor(
     private val sheetRepository: SheetRepository,
     private val createNewSheetUseCase: CreateNewSheetUseCase,
     private val deleteSheetUseCase: DeleteSheetUseCase,
-) : BaseViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf<SheetListState>(SheetListState.Loading)
         private set
@@ -45,20 +44,13 @@ class SheetListViewModel @Inject constructor(
         }
     }
 
-    fun onCreateNewSheetClick() {
-        viewModelScope.launch {
-            val sheetId = createNewSheetUseCase()
-            navigateTo(Routes.sheetRoute(sheetId))
-        }
+    suspend fun onCreateNewSheetClick(): Long {
+        return createNewSheetUseCase()
     }
 
     fun onDeleteSheetClick(sheetId: Long) {
         viewModelScope.launch {
             deleteSheetUseCase(sheetId)
         }
-    }
-
-    fun onSheetClick(sheetId: Long) {
-        navigateTo(Routes.sheetRoute(sheetId))
     }
 }

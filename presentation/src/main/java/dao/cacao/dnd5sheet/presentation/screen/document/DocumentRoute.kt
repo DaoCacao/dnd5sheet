@@ -1,25 +1,44 @@
 package dao.cacao.dnd5sheet.presentation.screen.document
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import dao.cacao.dnd5sheet.presentation.router.Routes
+import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
+
+private const val documentId = "document_id"
+
+object DocumentRoute : RouteWithArgs<DocumentRoute.Args>(
+    path = "document",
+    navArguments = listOf(
+        navArgument(documentId) { type = NavType.LongType }
+    )
+) {
+    data class Args(
+        val documentId: Long,
+    )
+
+    override fun args(savedStateHandle: SavedStateHandle) = Args(
+        documentId = checkNotNull(savedStateHandle[documentId])
+    )
+
+    override fun argsToMap(args: Args) = mapOf(
+        documentId to args.documentId
+    )
+}
 
 fun NavGraphBuilder.documentScreen(
-    navController: NavController,
+    onNavigateUp: (() -> Unit)?,
 ) = composable(
-    route = Routes.documentRoutePlaceholder,
-    arguments = listOf(
-        navArgument(Routes.argDocumentId) { type = NavType.LongType },
-    ),
+    route = DocumentRoute.route,
+    arguments = DocumentRoute.navArguments,
 ) {
-    val viewModel = hiltViewModel<DocumentViewModel>()
+    val viewModel: DocumentViewModel = hiltViewModel()
     DocumentScreen(
         state = viewModel.state,
-        onNavigateUp = navController::navigateUp,
+        onNavigateUp = onNavigateUp,
     )
 }
 
