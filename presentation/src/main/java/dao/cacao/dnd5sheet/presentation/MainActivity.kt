@@ -9,11 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_class.SelectClassRoute
-import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_class.selectClassRoute
-import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race.SelectRaceRoute
-import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race.selectRaceRoute
-import dao.cacao.dnd5sheet.presentation.screen.document.DocumentRoute
+import dao.cacao.dnd5sheet.presentation.screen.create_sheet.CreateSheetRoute
+import dao.cacao.dnd5sheet.presentation.screen.create_sheet.createSheetGraph
 import dao.cacao.dnd5sheet.presentation.screen.document.documentScreen
 import dao.cacao.dnd5sheet.presentation.screen.sheet.SheetRoute
 import dao.cacao.dnd5sheet.presentation.screen.sheet.sheetRoute
@@ -46,23 +43,16 @@ fun MainNavHost(
     ) {
         sheetListRoute(
             onNavigateToCharacter = { navController.navigate(SheetRoute.route(SheetRoute.Args(it))) },
-            onNavigateToCreateCharacter = { navController.navigate(SelectRaceRoute.route()) }
+            onNavigateToCreateCharacter = { navController.navigate(CreateSheetRoute.route()) }
         )
         sheetRoute(
             onNavigateUp = navController::navigateUp,
         )
-        selectRaceRoute(
-            onNavigateUp = navController::navigateUp,
-            onNavigateToNext = { navController.navigate(SelectClassRoute.route()) },
-            onNavigateToDocument = { navController.navigate(DocumentRoute.route(DocumentRoute.Args(it))) },
-        )
-        selectClassRoute(
-            onNavigateUp = navController::navigateUp,
-            onNavigateToNext = { navController.navigate(SheetListRoute.route()) },
-            onNavigateToDocument = { navController.navigate(DocumentRoute.route(DocumentRoute.Args(it))) },
-        )
         documentScreen(
             onNavigateUp = navController::navigateUp,
+        )
+        createSheetGraph(
+            navController = navController,
         )
     }
 }
