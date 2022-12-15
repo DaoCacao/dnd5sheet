@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import dao.cacao.dnd5sheet.ui.component.BlockAbilities
-import dao.cacao.dnd5sheet.ui.component.BlockCommon
-import dao.cacao.dnd5sheet.ui.component.BlockSkills
+import dao.cacao.dnd5sheet.ui.component.block.AbilitiesBlock
+import dao.cacao.dnd5sheet.ui.component.block.CommonBlock
+import dao.cacao.dnd5sheet.ui.component.block.SkillsBlock
 import dao.cacao.dnd5sheet.ui.component.field.AbilityField
 import dao.cacao.dnd5sheet.ui.component.field.SkillField
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
@@ -35,10 +35,10 @@ private fun Preview() {
     AppTheme {
         SheetPage(
             common = {
-                BlockCommon()
+                CommonBlock()
             },
             abilities = {
-                BlockAbilities(
+                AbilitiesBlock(
                     items = List(6) { it },
                 ) {
                     AbilityField(
@@ -50,7 +50,7 @@ private fun Preview() {
                 }
             },
             skills = {
-                BlockSkills(
+                SkillsBlock(
                     items = List(6) { it },
                 ) {
                     SkillField(

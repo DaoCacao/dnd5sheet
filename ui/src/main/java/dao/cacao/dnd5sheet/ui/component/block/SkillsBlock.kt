@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.ui.component
+package dao.cacao.dnd5sheet.ui.component.block
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun <T> BlockAbilities(
+fun <T> SkillsBlock(
     items: List<T>,
     content: @Composable (T) -> Unit,
 ) {

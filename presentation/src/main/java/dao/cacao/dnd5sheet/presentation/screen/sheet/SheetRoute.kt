@@ -18,7 +18,14 @@ fun NavGraphBuilder.sheetRoute(
 ) {
     ViewModelRouter<SheetViewModel>(navController) {
         SheetScreen(
-            state = it.state,
+            isLoading = it.isLoading,
+            level = it.level,
+            characterName = it.characterName,
+            characterRace = it.characterRace,
+            characterClass = it.characterClass,
+            proficiencyBonus = it.proficiencyBonus,
+            abilities = it.abilities,
+            skills = it.skills,
             onNavigateUp = it::onNavigateUpClick,
             onLevelChange = it::onLevelChange,
             onCharacterNameChange = it::onCharacterNameChange,

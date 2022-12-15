@@ -8,6 +8,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,5 +32,18 @@ fun Screen(
                 .padding(it),
             content = content,
         )
+    }
+}
+
+@Composable
+@Preview
+private fun Preview() {
+    AppTheme {
+        Screen(
+            title = "Title",
+            onNavigateUp = {},
+        ) {
+
+        }
     }
 }

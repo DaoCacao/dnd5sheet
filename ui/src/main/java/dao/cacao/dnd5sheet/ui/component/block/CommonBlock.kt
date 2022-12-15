@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.ui.component
+package dao.cacao.dnd5sheet.ui.component.block
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,7 @@ import dao.cacao.dnd5sheet.ui.component.field.LevelField
 import dao.cacao.dnd5sheet.ui.component.field.TextField
 
 @Composable
-fun BlockCommon(
+fun CommonBlock(
     level: Int = 0,
     characterName: String = "",
     characterRace: String = "",

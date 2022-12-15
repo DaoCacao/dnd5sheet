@@ -29,67 +29,69 @@ class SheetViewModel @Inject constructor(
 
     private val sheetId = savedStateHandle.get<Long>(Routes.argSheetId) ?: error("Required argument")
 
-    private var level: Int = 0
-
-    var state by mutableStateOf<SheetState>(SheetState.Loading)
-        private set
+    var isLoading by mutableStateOf(true)
+    var level by mutableStateOf(0)
+    var characterName by mutableStateOf("")
+    var characterRace by mutableStateOf("")
+    var characterClass by mutableStateOf("")
+    var proficiencyBonus by mutableStateOf(0)
+    var abilities by mutableStateOf<List<Ability>>(emptyList())
+    var skills by mutableStateOf<List<Skill>>(emptyList())
 
     init {
         viewModelScope.launch {
             val sheet = sheetRepository.getSheet(sheetId).first()
-            state = SheetState.Content(
-                level = sheet.level ?: 0,
-                characterName = sheet.characterName ?: "",
-                characterRace = sheet.characterRace ?: "",
-                characterClass = sheet.characterClass ?: "",
-                proficiencyBonus = sheet.proficiencyBonus ?: 0,
-                abilities = sheet.abilities.map { ability ->
-                    SheetState.Content.Ability(
-                        id = ability.id,
-                        name = ability.name,
-                        score = ability.score,
-                        modifier = calculateAbilityModifierUseCase(ability.score),
-                    )
-                },
-                skills = sheet.skills.map { skill ->
-                    val ability = sheet.abilities.first { it.id == skill.abilityId }
-                    SheetState.Content.Skill(
-                        id = skill.id,
-                        abilityId = ability.id,
-                        name = skill.name,
-                        ability = ability.name,
-                        modifier = calculateSkillModifierUseCase(ability.score, sheet.proficiencyBonus ?: 0, skill.proficiency),
-                        proficiency = skill.proficiency,
-                    )
-                },
-            )
+            isLoading = false
+            level = sheet.level ?: 0
+            characterName = sheet.characterName ?: ""
+            characterRace = sheet.characterRace ?: ""
+            characterClass = sheet.characterClass ?: ""
+            proficiencyBonus = sheet.proficiencyBonus ?: 0
+            abilities = sheet.abilities.map { ability ->
+                Ability(
+                    id = ability.id,
+                    name = ability.name,
+                    score = ability.score,
+                    modifier = calculateAbilityModifierUseCase(ability.score),
+                )
+            }
+            skills = sheet.skills.map { skill ->
+                val ability = sheet.abilities.first { it.id == skill.abilityId }
+                Skill(
+                    id = skill.id,
+                    abilityId = ability.id,
+                    name = skill.name,
+                    ability = ability.name,
+                    modifier = calculateSkillModifierUseCase(ability.score, sheet.proficiencyBonus ?: 0, skill.proficiency),
+                    proficiency = skill.proficiency,
+                )
+            }
         }
     }
 
     fun onLevelChange(level: Int) {
-//        this.level = level
-        state = state.ifContent { it.copy(level = level) }
+        this.level = level
         viewModelScope.launch {
             sheetRepository.updateLevel(sheetId, level)
         }
     }
 
     fun onCharacterNameChange(characterName: String) {
-        state = state.ifContent { it.copy(characterName = characterName) }
+        this.characterName = characterName
         viewModelScope.launch {
             sheetRepository.updateCharacterName(sheetId, characterName)
         }
     }
 
     fun onCharacterRaceChange(characterRace: String) {
-        state = state.ifContent { it.copy(characterRace = characterRace) }
+        this.characterRace = characterRace
         viewModelScope.launch {
             sheetRepository.updateCharacterRace(sheetId, characterRace)
         }
     }
 
     fun onCharacterClassChange(characterClass: String) {
-        state = state.ifContent { it.copy(characterClass = characterClass) }
+        this.characterClass = characterClass
         viewModelScope.launch {
             sheetRepository.updateCharacterClass(sheetId, characterClass)
         }
@@ -98,15 +100,11 @@ class SheetViewModel @Inject constructor(
     // update proficiency bonus
     // update depending skill modifiers
     fun onProficiencyBonusChange(proficiencyBonus: Int) {
-        state = state.ifContent {
-            it.copy(
-                proficiencyBonus = proficiencyBonus,
-                skills = it.skills.update({ it.proficiency }) { skill ->
-                    val abilityScore = it.abilities.first { it.id == skill.abilityId }.score
-                    skill.copy(
-                        modifier = calculateSkillModifierUseCase(abilityScore, proficiencyBonus, skill.proficiency)
-                    )
-                }
+        this.proficiencyBonus = proficiencyBonus
+        this.skills = skills.update({ it.proficiency }) { skill ->
+            val abilityScore = abilities.first { it.id == skill.abilityId }.score
+            skill.copy(
+                modifier = calculateSkillModifierUseCase(abilityScore, proficiencyBonus, skill.proficiency)
             )
         }
         viewModelScope.launch {
@@ -118,19 +116,15 @@ class SheetViewModel @Inject constructor(
     // update ability modifier
     // update depending skill modifiers
     fun onAbilityScoreChange(abilityId: Long, score: Int) {
-        state = state.ifContent {
-            it.copy(
-                abilities = it.abilities.update({ it.id == abilityId }) { ability ->
-                    ability.copy(
-                        score = score,
-                        modifier = calculateAbilityModifierUseCase(score),
-                    )
-                },
-                skills = it.skills.update({ it.abilityId == abilityId }) { skill ->
-                    skill.copy(
-                        modifier = calculateSkillModifierUseCase(score, it.proficiencyBonus, skill.proficiency)
-                    )
-                }
+        this.abilities = abilities.update({ it.id == abilityId }) { ability ->
+            ability.copy(
+                score = score,
+                modifier = calculateAbilityModifierUseCase(score),
+            )
+        }
+        this.skills = skills.update({ it.abilityId == abilityId }) { skill ->
+            skill.copy(
+                modifier = calculateSkillModifierUseCase(score, proficiencyBonus, skill.proficiency)
             )
         }
         viewModelScope.launch {
@@ -141,15 +135,11 @@ class SheetViewModel @Inject constructor(
     // update skill proficiency
     // update skill modifier
     fun onSkillProficiencyChange(skillId: Long, proficiency: Boolean) {
-        state = state.ifContent {
-            it.copy(
-                skills = it.skills.update({ it.id == skillId }) { skill ->
-                    val abilityScore = it.abilities.first { it.id == skill.abilityId }.score
-                    skill.copy(
-                        proficiency = proficiency,
-                        modifier = calculateSkillModifierUseCase(abilityScore, it.proficiencyBonus, proficiency),
-                    )
-                },
+        this.skills = skills.update({ it.id == skillId }) { skill ->
+            val abilityScore = abilities.first { it.id == skill.abilityId }.score
+            skill.copy(
+                proficiency = proficiency,
+                modifier = calculateSkillModifierUseCase(abilityScore, proficiencyBonus, proficiency),
             )
         }
         viewModelScope.launch {
@@ -157,11 +147,23 @@ class SheetViewModel @Inject constructor(
         }
     }
 
-    private fun SheetState.ifContent(update: (SheetState.Content) -> SheetState): SheetState {
-        return if (this is SheetState.Content) update(this) else this
-    }
-
     private fun <T> List<T>.update(predicate: (T) -> Boolean, update: (T) -> T): List<T> {
         return map { if (predicate(it)) update(it) else it }
     }
 }
+
+data class Ability(
+    val id: Long,
+    val name: String,
+    val score: Int,
+    val modifier: Int?,
+)
+
+data class Skill(
+    val id: Long,
+    val abilityId: Long,
+    val name: String,
+    val ability: String,
+    val modifier: Int?,
+    val proficiency: Boolean,
+)
