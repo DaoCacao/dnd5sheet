@@ -6,6 +6,8 @@ import androidx.navigation.navigation
 import dao.cacao.dnd5sheet.presentation.base.Route
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_class.SelectClassRoute
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_class.selectClassRoute
+import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_name.SelectNameRoute
+import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_name.selectNameRoute
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race.SelectRaceRoute
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race.selectRaceRoute
 import dao.cacao.dnd5sheet.presentation.screen.document.DocumentRoute
@@ -28,7 +30,11 @@ fun NavGraphBuilder.createSheetGraph(
     )
     selectClassRoute(
         onNavigateUp = navController::navigateUp,
-        onNavigateToNext = { navController.popBackStack(SheetListRoute.route, false) },
+        onNavigateToNext = { navController.navigate(SelectNameRoute.route) },
         onNavigateToDocument = { navController.navigate(DocumentRoute.route(DocumentRoute.Args(it))) },
+    )
+    selectNameRoute(
+        onNavigateUp = navController::navigateUp,
+        onNavigateNext = { navController.popBackStack(SheetListRoute.route, false) },
     )
 }

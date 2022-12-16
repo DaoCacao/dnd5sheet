@@ -25,7 +25,7 @@ private fun buildRoute(path: String, args: List<String> = emptyList()) = buildSt
     append(path)
     if (args.isNotEmpty()) {
         append("?")
-        append(args.joinToString("&") { "$it={$it}" })
+        append(args.joinToString("&") { it.asArgumentPlaceholder })
     }
 }
 
@@ -33,6 +33,9 @@ private fun buildRoute(path: String, args: Map<String, Any> = emptyMap()) = buil
     append(path)
     if (args.isNotEmpty()) {
         append("?")
-        append(args.toList().joinToString("&") { "${it.first}=${it.second}" })
+        append(args.toList().joinToString("&") { it.asArgumentQuery })
     }
 }
+
+private val String.asArgumentPlaceholder get() = "$this={$this}"
+private val Pair<String, Any>.asArgumentQuery get() = "${first}=${second}"
