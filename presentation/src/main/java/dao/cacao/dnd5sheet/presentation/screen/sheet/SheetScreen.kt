@@ -16,14 +16,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import dao.cacao.dnd5sheet.ui.component.state.LoadingState
+import dao.cacao.dnd5sheet.presentation.R
+import dao.cacao.dnd5sheet.ui.component.Screen
 import dao.cacao.dnd5sheet.ui.component.block.AbilitiesBlock
 import dao.cacao.dnd5sheet.ui.component.block.CommonBlock
 import dao.cacao.dnd5sheet.ui.component.block.SkillsBlock
-import dao.cacao.dnd5sheet.ui.component.Screen
 import dao.cacao.dnd5sheet.ui.component.field.AbilityField
 import dao.cacao.dnd5sheet.ui.component.field.SkillField
+import dao.cacao.dnd5sheet.ui.component.state.LoadingState
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
@@ -49,7 +51,7 @@ fun SheetScreen(
     var selectedPage by remember { mutableStateOf(initialPage) }
 
     Screen(
-        title = "Character sheet",
+        title = stringResource(R.string.text_character_sheet),
         onNavigateUp = onNavigateUp,
     ) {
         if (isLoading) {
@@ -74,9 +76,9 @@ fun SheetScreen(
                             },
                             label = {
                                 val text = when (page) {
-                                    SheetScreenPages.Common -> "Common"
-                                    SheetScreenPages.Abilities -> "Abilities"
-                                    SheetScreenPages.Skills -> "Skills"
+                                    SheetScreenPages.Common -> stringResource(R.string.text_common)
+                                    SheetScreenPages.Abilities -> stringResource(R.string.text_abilities)
+                                    SheetScreenPages.Skills -> stringResource(R.string.text_skills)
                                 }
                                 Text(
                                     text = text,

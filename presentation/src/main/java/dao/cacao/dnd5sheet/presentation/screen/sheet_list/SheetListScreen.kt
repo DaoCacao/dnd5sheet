@@ -22,8 +22,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dao.cacao.dnd5sheet.presentation.R
 import dao.cacao.dnd5sheet.ui.component.AlertDialog
 import dao.cacao.dnd5sheet.ui.component.TopAppBar
 import dao.cacao.dnd5sheet.ui.component.rememberAlertDialogState
@@ -42,13 +44,13 @@ fun SheetListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = "Character sheets",
+                title = stringResource(R.string.text_character_sheets),
             )
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 text = {
-                    Text("Create new sheet")
+                    Text(stringResource(R.string.action_create_new_sheet))
                 },
                 icon = {
                     Icon(
@@ -77,17 +79,17 @@ fun SheetListScreen(
                         val confirmDeleteDialogState = rememberAlertDialogState()
                         AlertDialog(
                             state = confirmDeleteDialogState,
-                            title = "Delete sheet",
-                            text = "Are you sure you wish to delete the sheet?",
-                            confirmText = "Delete",
-                            dismissText = "Cancel",
+                            title = stringResource(R.string.action_delete_sheet),
+                            text = stringResource(R.string.confirm_delete_sheet),
+                            confirmText = stringResource(R.string.action_delete),
+                            dismissText = stringResource(R.string.action_cancel),
                             onConfirmClick = {
                                 confirmDeleteDialogState.hide()
                                 onDeleteSheetClick(item.id)
                             }
                         )
                         SheetListItem(
-                            title = item.characterName.ifBlank { "New Character" },
+                            title = item.characterName.ifBlank { stringResource(R.string.text_new_character) },
                             subtitle = buildString {
                                 val showRace = item.characterRace.isNotBlank()
                                 val showClass = item.characterClass.isNotBlank()
@@ -97,7 +99,7 @@ fun SheetListScreen(
                                 if (showRace && showClass) append("-")
                                 if (showClass) append(item.characterClass)
                                 if ((showRace || showClass) && showLevel) append(", ")
-                                if (showLevel) append("${item.level} level")
+                                if (showLevel) append(stringResource(id = R.string.text_n_level, item.level))
                             },
                             onClick = { onSheetClick(item) },
                             onLongClick = { confirmDeleteDialogState.show() },

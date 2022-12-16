@@ -8,8 +8,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dao.cacao.dnd5sheet.domain.model.Race
+import dao.cacao.dnd5sheet.presentation.R
 import dao.cacao.dnd5sheet.ui.component.TopAppBar
 import dao.cacao.dnd5sheet.ui.component.list_item.RaceListItem
 import dao.cacao.dnd5sheet.ui.component.state.ScaffoldLoadingState
@@ -26,8 +28,8 @@ fun SelectRaceScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = "Create character",
-                subtitle = "Select race",
+                title = stringResource(id = R.string.text_create_character),
+                subtitle = stringResource(R.string.text_select_race),
                 onNavigateUp = onNavigateUp,
             )
         }

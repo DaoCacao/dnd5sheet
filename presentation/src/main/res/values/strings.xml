@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_character_sheets">Character sheets</string>
+    <string name="text_character_sheet">Character sheet</string>
+    <string name="text_new_character">New character</string>
+    <string name="text_create_character">Create character</string>
+    <string name="text_select_class">Select class</string>
+    <string name="text_select_race">Select race</string>
+    <string name="text_document">Document</string>
+    <string name="text_abilities">Abilities</string>
+    <string name="text_common">Common</string>
+    <string name="text_skills">Skills</string>
+    <string name="text_n_level">%1$d level</string>
+
+    <string name="action_create_new_sheet">Create new sheet</string>
+    <string name="action_delete_sheet">Delete sheet</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+
+    <string name="confirm_delete_sheet">Are you sure you wish to delete the sheet?</string>
+</resources>

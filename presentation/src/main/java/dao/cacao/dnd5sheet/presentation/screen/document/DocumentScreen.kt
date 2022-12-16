@@ -9,9 +9,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.RichText
+import dao.cacao.dnd5sheet.presentation.R
 import dao.cacao.dnd5sheet.ui.component.TopAppBar
 import dao.cacao.dnd5sheet.ui.component.state.ScaffoldLoadingState
 
@@ -25,7 +27,7 @@ fun DocumentScreen(
         topBar = {
             TopAppBar(
                 title = when (state) {
-                    DocumentState.Loading -> "Document"
+                    DocumentState.Loading -> stringResource(R.string.text_document)
                     is DocumentState.Content -> state.document.name
                 },
                 onNavigateUp = onNavigateUp,
