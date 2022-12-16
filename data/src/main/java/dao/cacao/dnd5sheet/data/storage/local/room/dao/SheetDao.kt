@@ -17,5 +17,8 @@ interface SheetDao : BaseDao<SheetEntity> {
     @Transaction
     @Query("SELECT * FROM sheet WHERE sheet_id == :sheetId")
     fun getById(sheetId: Long): Flow<CharacterSheet>
+
+    @Query("DELETE FROM sheet WHERE sheet_id == :sheetId")
+    fun deleteById(sheetId: Long)
 }
 

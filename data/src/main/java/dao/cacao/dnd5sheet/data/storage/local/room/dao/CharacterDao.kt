@@ -31,5 +31,8 @@ interface CharacterDao : BaseDao<CharacterEntity> {
 
     @Query("DELETE FROM character WHERE character_id == :characterId")
     suspend fun deleteById(characterId: Long)
+
+    @Query("DELETE FROM character WHERE sheet_id == :sheetId")
+    suspend fun deleteBySheetId(sheetId: Long)
 }
 

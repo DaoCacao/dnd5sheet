@@ -1,10 +1,31 @@
 package dao.cacao.dnd5sheet.presentation.screen.document
 
-import dao.cacao.dnd5sheet.domain.model.Document
+data class DocumentState(
+    val isLoading: Boolean,
+    val isError: Boolean,
+    val name: String,
+    val text: String,
+) {
+    companion object {
+        fun loading() = DocumentState(
+            isLoading = true,
+            isError = false,
+            name = "",
+            text = "",
+        )
 
-sealed class DocumentState {
-    object Loading : DocumentState()
-    data class Content(
-        val document: Document,
-    ) : DocumentState()
+        fun error() = DocumentState(
+            isLoading = false,
+            isError = true,
+            name = "",
+            text = "",
+        )
+
+        fun content(name: String, text: String) = DocumentState(
+            isLoading = false,
+            isError = false,
+            name = name,
+            text = text,
+        )
+    }
 }

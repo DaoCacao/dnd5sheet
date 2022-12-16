@@ -1,5 +1,7 @@
 package dao.cacao.dnd5sheet.presentation.screen.document
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
@@ -36,8 +38,9 @@ fun NavGraphBuilder.documentScreen(
     arguments = DocumentRoute.navArguments,
 ) {
     val viewModel: DocumentViewModel = hiltViewModel()
+    val state by viewModel.state.collectAsState()
     DocumentScreen(
-        state = viewModel.state,
+        state = state,
         onNavigateUp = onNavigateUp,
     )
 }

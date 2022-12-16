@@ -35,7 +35,7 @@ fun TopAppBar(
                     Text(
                         text = subtitle,
                         textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleSmall,
                     )
                 }
             }

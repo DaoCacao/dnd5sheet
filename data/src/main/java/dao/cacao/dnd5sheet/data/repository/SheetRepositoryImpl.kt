@@ -5,10 +5,7 @@ import dao.cacao.dnd5sheet.data.mapper.createCharacterDraft
 import dao.cacao.dnd5sheet.data.mapper.createDraftSheet
 import dao.cacao.dnd5sheet.data.mapper.map
 import dao.cacao.dnd5sheet.data.storage.local.room.AppDatabase
-import dao.cacao.dnd5sheet.domain.boundary.AbilityRepository
-import dao.cacao.dnd5sheet.domain.boundary.CharacterRepository
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
-import dao.cacao.dnd5sheet.domain.boundary.SkillRepository
 import dao.cacao.dnd5sheet.domain.model.Sheet
 import dao.cacao.dnd5sheet.domain.model.players_handbook.PlayersHandbookAbility
 import dao.cacao.dnd5sheet.domain.model.players_handbook.PlayersHandbookSkill
@@ -20,9 +17,6 @@ import javax.inject.Inject
 
 class SheetRepositoryImpl @Inject constructor(
     private val database: AppDatabase,
-    private val characterRepository: CharacterRepository,
-    private val abilityRepository: AbilityRepository,
-    private val skillRepository: SkillRepository,
 ) : SheetRepository {
 
     override suspend fun createSheet(): Sheet {
@@ -51,8 +45,12 @@ class SheetRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteSheet(sheetId: Long) {
-        characterRepository.deleteCharacter(sheetId)
-        abilityRepository.deleteAbilities(sheetId)
-        skillRepository.deleteSkills(sheetId)
+        database.withTransaction {
+            database.sheetDao().deleteById(sheetId)
+            database.characterDao().deleteBySheetId(sheetId)
+            database.abilityDao().deleteBySheetId(sheetId)
+            database.skillDao().deleteBySheetId(sheetId)
+            database.characterDao().deleteBySheetId(sheetId)
+        }
     }
 }
