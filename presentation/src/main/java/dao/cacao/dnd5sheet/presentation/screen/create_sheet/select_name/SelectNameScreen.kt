@@ -62,9 +62,7 @@ fun SelectNameScreen(
 private fun PreviewLoading() {
     AppTheme {
         SelectNameScreen(
-            state = SelectNameState(
-                isLoading = true,
-            ),
+            state = SelectNameState.loading(),
         )
     }
 }
@@ -74,8 +72,7 @@ private fun PreviewLoading() {
 private fun PreviewContent() {
     AppTheme {
         SelectNameScreen(
-            state = SelectNameState(
-                isLoading = false,
+            state = SelectNameState.content(
                 name = "Character name",
             ),
         )

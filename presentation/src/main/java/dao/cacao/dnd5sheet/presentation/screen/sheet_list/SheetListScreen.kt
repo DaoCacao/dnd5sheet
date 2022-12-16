@@ -39,7 +39,7 @@ fun SheetListScreen(
     state: SheetListState,
     onCreateNewSheetClick: () -> Unit = {},
     onDeleteSheetClick: (sheetId: Long) -> Unit = {},
-    onSheetClick: (item: SheetListState.Content.Item) -> Unit = {},
+    onSheetClick: (sheetId: Long) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -62,14 +62,14 @@ fun SheetListScreen(
             )
         }
     ) {
-        when (state) {
-            SheetListState.Loading -> {
+        when {
+            state.isLoading -> {
                 ScaffoldLoadingState(paddingValues = it)
             }
-            SheetListState.Empty -> {
+            state.items.isEmpty() -> {
                 ScaffoldEmptyState(paddingValues = it)
             }
-            is SheetListState.Content -> {
+            else -> {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -101,7 +101,7 @@ fun SheetListScreen(
                                 if ((showRace || showClass) && showLevel) append(", ")
                                 if (showLevel) append(stringResource(id = R.string.text_n_level, item.level))
                             },
-                            onClick = { onSheetClick(item) },
+                            onClick = { onSheetClick(item.id) },
                             onLongClick = { confirmDeleteDialogState.show() },
                         )
                         if (index != state.items.lastIndex) {
@@ -161,7 +161,7 @@ fun SheetListItem(
 private fun PreviewLoading() {
     AppTheme {
         SheetListScreen(
-            state = SheetListState.Loading,
+            state = SheetListState.loading(),
         )
     }
 }
@@ -172,9 +172,9 @@ private fun PreviewLoading() {
 private fun PreviewContent() {
     AppTheme {
         SheetListScreen(
-            state = SheetListState.Content(
+            state = SheetListState.content(
                 items = List(5) {
-                    SheetListState.Content.Item(
+                    SheetListState.Item(
                         id = it.toLong(),
                         level = it,
                         characterName = "CharacterName",
@@ -193,7 +193,9 @@ private fun PreviewContent() {
 private fun PreviewEmpty() {
     AppTheme {
         SheetListScreen(
-            state = SheetListState.Empty,
+            state = SheetListState.content(
+                items = emptyList(),
+            ),
         )
     }
 }

@@ -1,11 +1,17 @@
 package dao.cacao.dnd5sheet.domain.model
 
-data class Sheet(
+data class Character(
     val id: Long,
-    val character: Character,
-    val abilities: List<Ability>,
+    val level: Int?,
+    val characterName: String?,
+    val characterRace: String?,
+    val characterClass: String?,
+//    val alignment: String,
+//    val playerName: String,
+//    val background: String,
+//    val inspiration: Boolean,
+    val proficiencyBonus: Int?,
 //    val savingThrows: List<Boolean>,
-    val skills: List<Skill>,
 //    val passivePerception: Int,
 //    val armorClass: Int,
 //    val hitDice: Int,

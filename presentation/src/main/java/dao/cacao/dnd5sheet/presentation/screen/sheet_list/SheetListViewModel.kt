@@ -1,56 +1,58 @@
 package dao.cacao.dnd5sheet.presentation.screen.sheet_list
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
-import dao.cacao.dnd5sheet.domain.use_case.CreateNewSheetUseCase
-import dao.cacao.dnd5sheet.domain.use_case.DeleteSheetUseCase
+import dao.cacao.dnd5sheet.domain.model.Sheet
+import dao.cacao.dnd5sheet.presentation.base.BaseViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SheetListViewModel @Inject constructor(
     private val sheetRepository: SheetRepository,
-    private val createNewSheetUseCase: CreateNewSheetUseCase,
-    private val deleteSheetUseCase: DeleteSheetUseCase,
-) : ViewModel() {
-
-    var state by mutableStateOf<SheetListState>(SheetListState.Loading)
-        private set
+) : BaseViewModel<SheetListState, SheetListEvent>(SheetListState.loading()) {
 
     init {
         viewModelScope.launch {
-            sheetRepository.getSheets().collectLatest {
-                state = when {
-                    it.isEmpty() -> SheetListState.Empty
-                    else -> SheetListState.Content(
-                        items = it.map {
-                            SheetListState.Content.Item(
-                                id = it.id,
-                                level = it.level ?: 0,
-                                characterName = it.characterName ?: "",
-                                characterRace = it.characterRace ?: "",
-                                characterClass = it.characterClass ?: "",
-                            )
-                        },
-                    )
+            sheetRepository
+                .getSheets()
+                .collectLatest { list ->
+                    state.update {
+                        SheetListState.content(
+                            items = list.map { it.map() },
+                        )
+                    }
                 }
-            }
         }
     }
 
-    suspend fun onCreateNewSheetClick(): Long {
-        return createNewSheetUseCase()
+    fun onSheetClick(sheetId: Long) {
+        viewModelScope.launch {
+            event.emit(SheetListEvent.NavigateToSheet(sheetId))
+        }
+    }
+
+    fun onCreateNewSheetClick() {
+        viewModelScope.launch {
+            val sheet = sheetRepository.createSheet()
+            event.emit(SheetListEvent.NavigateToCreateSheet(sheet.id))
+        }
     }
 
     fun onDeleteSheetClick(sheetId: Long) {
         viewModelScope.launch {
-            deleteSheetUseCase(sheetId)
+            sheetRepository.deleteSheet(sheetId)
         }
     }
+
+    private fun Sheet.map() = SheetListState.Item(
+        id = id,
+        level = character.level ?: 0,
+        characterName = character.characterName ?: "",
+        characterRace = character.characterRace ?: "",
+        characterClass = character.characterClass ?: "",
+    )
 }

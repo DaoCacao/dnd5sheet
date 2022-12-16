@@ -1,10 +1,13 @@
 package dao.cacao.dnd5sheet.presentation.screen.sheet_list
 
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dao.cacao.dnd5sheet.presentation.base.Route
+import kotlinx.coroutines.flow.collectLatest
 
 object SheetListRoute : Route(
     path = "sheet_list",
@@ -12,17 +15,30 @@ object SheetListRoute : Route(
 
 fun NavGraphBuilder.sheetListRoute(
     onNavigateToCharacter: (sheetId: Long) -> Unit,
-    onNavigateToCreateCharacter: () -> Unit,
+    onNavigateToCreateCharacter: (sheetId: Long) -> Unit,
 ) = composable(
     route = SheetListRoute.route,
 ) {
     val viewModel: SheetListViewModel = hiltViewModel()
-    val scope = rememberCoroutineScope()
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(viewModel.event) {
+        viewModel.event.collectLatest {
+            when (it) {
+                is SheetListEvent.NavigateToCreateSheet -> {
+                    onNavigateToCreateCharacter(it.sheetId)
+                }
+                is SheetListEvent.NavigateToSheet -> {
+                    onNavigateToCharacter(it.sheetId)
+                }
+            }
+        }
+    }
 
     SheetListScreen(
-        state = viewModel.state,
-        onCreateNewSheetClick = { onNavigateToCreateCharacter() },
+        state = state,
+        onCreateNewSheetClick = viewModel::onCreateNewSheetClick,
         onDeleteSheetClick = viewModel::onDeleteSheetClick,
-        onSheetClick = { onNavigateToCharacter(it.id) },
+        onSheetClick = viewModel::onSheetClick,
     )
 }
