@@ -1,14 +1,16 @@
 package dao.cacao.dnd5sheet.presentation.screen.sheet
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Abc
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.SoupKitchen
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -48,10 +50,61 @@ fun SheetScreen(
                 LoadingState()
             }
             else -> {
-                Row {
-                    NavigationRail {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    Box(
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        when (state.page) {
+                            SheetState.SheetScreenPages.Common -> {
+                                CommonBlock(
+                                    level = state.level,
+                                    characterName = state.name,
+                                    characterRace = state.characterRace,
+                                    characterClass = state.characterClass,
+                                    proficiencyBonus = state.proficiencyBonus,
+                                    onLevelChange = onLevelChange,
+                                    onCharacterNameChange = onCharacterNameChange,
+                                    onCharacterRaceChange = onCharacterRaceChange,
+                                    onCharacterClassChange = onCharacterClassChange,
+                                    onProficiencyBonusChange = onProficiencyBonusChange,
+                                )
+                            }
+                            SheetState.SheetScreenPages.Abilities -> {
+                                AbilitiesBlock(
+                                    items = state.abilities,
+                                    content = { ability ->
+                                        AbilityField(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            score = ability.score,
+                                            ability = ability.name,
+                                            abilityModifier = ability.modifier,
+                                            onScoreChange = { onAbilityScoreChange(ability.id, it) },
+                                        )
+                                    }
+                                )
+                            }
+                            SheetState.SheetScreenPages.Skills -> {
+                                SkillsBlock(
+                                    items = state.skills,
+                                    content = { skill ->
+                                        SkillField(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            skill = skill.name,
+                                            ability = skill.abilityName,
+                                            proficiency = skill.proficiency,
+                                            skillModifier = skill.modifier,
+                                            onProficiencyChange = { onSkillProficiencyChange(skill.id, it) }
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                    NavigationBar {
                         for (page in SheetState.SheetScreenPages.values()) {
-                            NavigationRailItem(
+                            NavigationBarItem(
                                 selected = state.page == page,
                                 onClick = { onPageChange(page) },
                                 icon = {
@@ -78,51 +131,6 @@ fun SheetScreen(
                             )
                         }
                     }
-                    when (state.page) {
-                        SheetState.SheetScreenPages.Common -> {
-                            CommonBlock(
-                                level = state.level,
-                                characterName = state.name,
-                                characterRace = state.characterRace,
-                                characterClass = state.characterClass,
-                                proficiencyBonus = state.proficiencyBonus,
-                                onLevelChange = onLevelChange,
-                                onCharacterNameChange = onCharacterNameChange,
-                                onCharacterRaceChange = onCharacterRaceChange,
-                                onCharacterClassChange = onCharacterClassChange,
-                                onProficiencyBonusChange = onProficiencyBonusChange,
-                            )
-                        }
-                        SheetState.SheetScreenPages.Abilities -> {
-                            AbilitiesBlock(
-                                items = state.abilities,
-                                content = { ability ->
-                                    AbilityField(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        score = ability.score,
-                                        ability = ability.name,
-                                        abilityModifier = ability.modifier,
-                                        onScoreChange = { onAbilityScoreChange(ability.id, it) },
-                                    )
-                                }
-                            )
-                        }
-                        SheetState.SheetScreenPages.Skills -> {
-                            SkillsBlock(
-                                items = state.skills,
-                                content = { skill ->
-                                    SkillField(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        skill = skill.name,
-                                        ability = skill.abilityName,
-                                        proficiency = skill.proficiency,
-                                        skillModifier = skill.modifier,
-                                        onProficiencyChange = { onSkillProficiencyChange(skill.id, it) }
-                                    )
-                                }
-                            )
-                        }
-                    }
                 }
             }
         }
@@ -142,8 +150,9 @@ private fun Preview(@PreviewParameter(StatePreviewProvider::class) state: SheetS
 class StatePreviewProvider : PreviewParameterProvider<SheetState> {
     override val values = sequenceOf(
         SheetState.loading(),
+    ) + SheetState.SheetScreenPages.values().map {
         SheetState.content(
-            page = SheetState.SheetScreenPages.Common,
+            page = it,
             name = "name",
             level = 1,
             characterRace = "race",
@@ -167,6 +176,6 @@ class StatePreviewProvider : PreviewParameterProvider<SheetState> {
                     proficiency = true,
                 )
             },
-        ),
-    )
+        )
+    }.asSequence()
 }
