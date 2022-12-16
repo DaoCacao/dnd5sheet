@@ -1,5 +1,7 @@
 package dao.cacao.dnd5sheet.presentation.screen.sheet
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
@@ -36,16 +38,11 @@ fun NavGraphBuilder.sheetRoute(
     arguments = SheetRoute.navArguments,
 ) {
     val viewModel: SheetViewModel = hiltViewModel()
+    val state by viewModel.state.collectAsState()
     SheetScreen(
-        isLoading = viewModel.isLoading,
-        level = viewModel.level,
-        characterName = viewModel.characterName,
-        characterRace = viewModel.characterRace,
-        characterClass = viewModel.characterClass,
-        proficiencyBonus = viewModel.proficiencyBonus,
-        abilities = viewModel.abilities,
-        skills = viewModel.skills,
+        state = state,
         onNavigateUp = onNavigateUp,
+        onPageChange = viewModel::onPageChange,
         onLevelChange = viewModel::onLevelChange,
         onCharacterNameChange = viewModel::onCharacterNameChange,
         onCharacterRaceChange = viewModel::onCharacterRaceChange,
