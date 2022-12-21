@@ -34,11 +34,11 @@ fun SelectClassScreen(
             )
         }
     ) {
-        when (state) {
-            SelectClassState.Loading -> {
+        when {
+            state.isLoading -> {
                 ScaffoldLoadingState(paddingValues = it)
             }
-            is SelectClassState.Content -> {
+            else -> {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -62,7 +62,10 @@ fun SelectClassScreen(
 private fun Preview1() {
     AppTheme {
         SelectClassScreen(
-            state = SelectClassState.Loading
+            state = SelectClassState(
+                isLoading = false,
+                classes = emptyList(),
+            ),
         )
     }
 }
@@ -72,7 +75,8 @@ private fun Preview1() {
 private fun Preview2() {
     AppTheme {
         SelectClassScreen(
-            state = SelectClassState.Content(
+            state = SelectClassState(
+                isLoading = false,
                 classes = List(5) {
                     CharacterClass(0, 0, "Class $it")
                 },

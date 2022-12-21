@@ -51,6 +51,8 @@ class SheetRepositoryImpl @Inject constructor(
             database.abilityDao().deleteBySheetId(sheetId)
             database.skillDao().deleteBySheetId(sheetId)
             database.characterDao().deleteBySheetId(sheetId)
+            database.sheetToRaceDao().deleteBySheetId(sheetId)
+            database.sheetToClassDao().deleteBySheetId(sheetId)
         }
     }
 }

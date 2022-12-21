@@ -4,8 +4,6 @@ data class Character(
     val id: Long,
     val level: Int?,
     val characterName: String?,
-    val characterRace: String?,
-    val characterClass: String?,
 //    val alignment: String,
 //    val playerName: String,
 //    val background: String,

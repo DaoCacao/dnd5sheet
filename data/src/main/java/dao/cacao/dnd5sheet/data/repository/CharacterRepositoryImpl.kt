@@ -29,16 +29,6 @@ class CharacterRepositoryImpl @Inject constructor(
         return getCharacter(characterId)
     }
 
-    override suspend fun updateCharacterClass(characterId: Long, characterClass: String): Flow<Character> {
-        database.characterDao().updateCharacterClass(characterId, characterClass)
-        return getCharacter(characterId)
-    }
-
-    override suspend fun updateCharacterRace(characterId: Long, characterRace: String): Flow<Character> {
-        database.characterDao().updateCharacterRace(characterId, characterRace)
-        return getCharacter(characterId)
-    }
-
     override suspend fun updateProficiencyBonus(characterId: Long, proficiencyBonus: Int): Flow<Character> {
         database.characterDao().updateProficiencyBonus(characterId, proficiencyBonus)
         return getCharacter(characterId)

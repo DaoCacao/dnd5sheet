@@ -37,8 +37,8 @@ class SheetViewModel @Inject constructor(
                 it.copy(
                     isLoading = false,
                     name = sheet.character.characterName ?: "",
-                    characterRace = sheet.character.characterRace ?: "",
-                    characterClass = sheet.character.characterClass ?: "",
+                    characterRace = sheet.characterRace?.name ?: "",
+                    characterClass = sheet.characterClass?.name ?: "",
                     level = sheet.character.level ?: 0,
                     proficiencyBonus = sheet.character.proficiencyBonus ?: 0,
                     abilities = sheet.abilities.map { it.map() },
@@ -74,14 +74,14 @@ class SheetViewModel @Inject constructor(
     fun onCharacterRaceChange(characterRace: String) {
         state.update { it.copy(characterRace = characterRace) }
         viewModelScope.launch {
-            characterRepository.updateCharacterRace(args.sheetId, characterRace)
+//            characterRepository.updateCharacterRace(args.sheetId, characterRace)
         }
     }
 
     fun onCharacterClassChange(characterClass: String) {
         state.update { it.copy(characterClass = characterClass) }
         viewModelScope.launch {
-            characterRepository.updateCharacterClass(args.sheetId, characterClass)
+//            characterRepository.updateCharacterClass(args.sheetId, characterClass)
         }
     }
 

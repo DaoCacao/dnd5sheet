@@ -34,11 +34,11 @@ fun SelectRaceScreen(
             )
         }
     ) {
-        when (state) {
-            SelectRaceState.Loading -> {
+        when {
+            state.isLoading -> {
                 ScaffoldLoadingState(paddingValues = it)
             }
-            is SelectRaceState.Content -> {
+            else -> {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -62,7 +62,10 @@ fun SelectRaceScreen(
 private fun Preview1() {
     AppTheme {
         SelectRaceScreen(
-            state = SelectRaceState.Loading,
+            state = SelectRaceState(
+                isLoading = true,
+                races = emptyList(),
+            ),
         )
     }
 }
@@ -72,7 +75,8 @@ private fun Preview1() {
 private fun Preview2() {
     AppTheme {
         SelectRaceScreen(
-            state = SelectRaceState.Content(
+            state = SelectRaceState(
+                isLoading = false,
                 races = List(5) {
                     Race(0, 0, "Race $it")
                 },

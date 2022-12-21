@@ -9,7 +9,5 @@ fun CharacterEntity.map() = Character(
     id = this.characterId,
     level = this.level,
     characterName = this.characterName,
-    characterRace = this.characterRace,
-    characterClass = this.characterClass,
     proficiencyBonus = this.proficiencyBonus,
 )

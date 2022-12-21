@@ -20,14 +20,8 @@ interface CharacterDao : BaseDao<CharacterEntity> {
     @Query("UPDATE character SET character_name = :characterName WHERE character_id == :characterId")
     suspend fun updateCharacterName(characterId: Long, characterName: String)
 
-    @Query("UPDATE character SET character_race = :characterRace WHERE character_id == :characterId")
-    suspend fun updateCharacterRace(characterId: Long, characterRace: String)
-
     @Query("UPDATE character SET proficiency_bonus = :proficiencyBonus WHERE character_id == :characterId")
     suspend fun updateProficiencyBonus(characterId: Long, proficiencyBonus: Int)
-
-    @Query("UPDATE character SET character_class = :characterClass WHERE character_id == :characterId")
-    suspend fun updateCharacterClass(characterId: Long, characterClass: String)
 
     @Query("DELETE FROM character WHERE character_id == :characterId")
     suspend fun deleteById(characterId: Long)
