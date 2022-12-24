@@ -37,8 +37,8 @@ fun SheetScreen(
     onPageChange: (SheetState.SheetScreenPages) -> Unit = {},
     onLevelChange: (Int) -> Unit = {},
     onCharacterNameChange: (String) -> Unit = {},
-    onCharacterRaceChange: (String) -> Unit = {},
-    onCharacterClassChange: (String) -> Unit = {},
+    onCharacterRaceClick: () -> Unit = {},
+    onCharacterClassClick: () -> Unit = {},
     onProficiencyBonusChange: (Int) -> Unit = {},
     onAbilityScoreChange: (abilityId: Long, value: Int) -> Unit = { _, _ -> },
     onSkillProficiencyChange: (skillId: Long, proficiency: Boolean) -> Unit = { _, _ -> },
@@ -70,8 +70,8 @@ fun SheetScreen(
                                     proficiencyBonus = state.proficiencyBonus,
                                     onLevelChange = onLevelChange,
                                     onCharacterNameChange = onCharacterNameChange,
-                                    onCharacterRaceChange = onCharacterRaceChange,
-                                    onCharacterClassChange = onCharacterClassChange,
+                                    onCharacterRaceClick = onCharacterRaceClick,
+                                    onCharacterClassClick = onCharacterClassClick,
                                     onProficiencyBonusChange = onProficiencyBonusChange,
                                 )
                             }

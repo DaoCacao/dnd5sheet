@@ -9,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
+import dao.cacao.dnd5sheet.presentation.ext.collectAsEvent
 
 private const val SHEET_ID = "sheet_id"
 
@@ -37,17 +38,22 @@ object SelectNameRoute : RouteWithArgs<SelectNameRoute.Args>(
 
 fun NavGraphBuilder.selectNameRoute(
     onNavigateUp: (() -> Unit)?,
-    onNavigateNext: (name: String) -> Unit,
+    onNavigateNext: () -> Unit,
 ) = composable(
     route = SelectNameRoute.route,
     arguments = SelectNameRoute.navArguments,
 ) {
     val viewModel: SelectNameViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
+    viewModel.event.collectAsEvent {
+        when (it) {
+            SelectName.Event.NavigateToNext -> onNavigateNext()
+        }
+    }
     SelectNameScreen(
         state = state,
         onNameChange = viewModel::onNameChange,
-        onSaveClick = { onNavigateNext(state.name) },
+        onSaveClick = viewModel::onSaveClick,
         onNavigateUp = onNavigateUp,
     )
 }

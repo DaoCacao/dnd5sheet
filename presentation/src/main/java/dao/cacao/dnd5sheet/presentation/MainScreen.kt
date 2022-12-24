@@ -32,6 +32,8 @@ fun MainScreen(
         )
         sheetRoute(
             onNavigateUp = navController::navigateUp,
+            onNavigateToSelectRace = { sheetId -> navController.navigate(SelectRaceRoute.route(SelectRaceRoute.Args(sheetId))) },
+            onNavigateToSelectClass = { sheetId -> navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId))) },
         )
         documentScreen(
             onNavigateUp = navController::navigateUp,

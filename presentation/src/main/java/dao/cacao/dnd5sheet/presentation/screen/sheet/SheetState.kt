@@ -68,3 +68,8 @@ data class SheetState(
         )
     }
 }
+
+sealed class SheetEvent {
+    class NavigateToSelectRace(val sheetId: Long) : SheetEvent()
+    class NavigateToSelectClass(val sheetId: Long) : SheetEvent()
+}

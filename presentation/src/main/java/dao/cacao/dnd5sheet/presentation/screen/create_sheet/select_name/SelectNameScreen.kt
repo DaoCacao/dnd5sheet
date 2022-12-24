@@ -19,7 +19,7 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
 fun SelectNameScreen(
-    state: SelectNameState,
+    state: SelectName.State,
     onNameChange: (String) -> Unit = {},
     onSaveClick: () -> Unit = {},
     onNavigateUp: (() -> Unit)? = null,
@@ -62,7 +62,9 @@ fun SelectNameScreen(
 private fun PreviewLoading() {
     AppTheme {
         SelectNameScreen(
-            state = SelectNameState.loading(),
+            state = SelectName.State(
+                isLoading = true,
+            ),
         )
     }
 }
@@ -72,7 +74,8 @@ private fun PreviewLoading() {
 private fun PreviewContent() {
     AppTheme {
         SelectNameScreen(
-            state = SelectNameState.content(
+            state = SelectName.State(
+                isLoading = false,
                 name = "Character name",
             ),
         )

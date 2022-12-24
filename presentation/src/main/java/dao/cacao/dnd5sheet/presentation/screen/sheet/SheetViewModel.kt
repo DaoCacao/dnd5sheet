@@ -1,6 +1,7 @@
 package dao.cacao.dnd5sheet.presentation.screen.sheet
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.AbilityRepository
@@ -11,7 +12,8 @@ import dao.cacao.dnd5sheet.domain.model.Ability
 import dao.cacao.dnd5sheet.domain.model.Skill
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateAbilityModifierUseCase
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateSkillModifierUseCase
-import dao.cacao.dnd5sheet.presentation.base.BaseViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,9 +28,11 @@ class SheetViewModel @Inject constructor(
     private val skillRepository: SkillRepository,
     private val calculateAbilityModifierUseCase: CalculateAbilityModifierUseCase,
     private val calculateSkillModifierUseCase: CalculateSkillModifierUseCase,
-) : BaseViewModel<SheetState, Unit>(SheetState.loading()) {
+) : ViewModel() {
 
     private val args = SheetRoute.args(savedStateHandle)
+    val state = MutableStateFlow<SheetState>(SheetState.loading())
+    val event = MutableSharedFlow<SheetEvent>()
 
     init {
         viewModelScope.launch {
@@ -71,17 +75,15 @@ class SheetViewModel @Inject constructor(
         }
     }
 
-    fun onCharacterRaceChange(characterRace: String) {
-        state.update { it.copy(characterRace = characterRace) }
+    fun onCharacterRaceClick() {
         viewModelScope.launch {
-//            characterRepository.updateCharacterRace(args.sheetId, characterRace)
+            event.emit(SheetEvent.NavigateToSelectRace(args.sheetId))
         }
     }
 
-    fun onCharacterClassChange(characterClass: String) {
-        state.update { it.copy(characterClass = characterClass) }
+    fun onCharacterClassClick() {
         viewModelScope.launch {
-//            characterRepository.updateCharacterClass(args.sheetId, characterClass)
+            event.emit(SheetEvent.NavigateToSelectClass(args.sheetId))
         }
     }
 

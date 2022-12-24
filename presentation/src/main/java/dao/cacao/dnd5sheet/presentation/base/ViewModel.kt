@@ -1,10 +1,10 @@
 package dao.cacao.dnd5sheet.presentation.base
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
+import dao.cacao.dnd5sheet.presentation.ext.event
+import dao.cacao.dnd5sheet.presentation.ext.state
 
 abstract class BaseViewModel<S, E>(initial: S) : ViewModel() {
-    val state = MutableStateFlow(initial)
-    val event = MutableSharedFlow<E>()
+    val state = state(initial)
+    val event = event<E>()
 }
