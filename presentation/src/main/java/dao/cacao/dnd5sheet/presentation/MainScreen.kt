@@ -1,9 +1,12 @@
 package dao.cacao.dnd5sheet.presentation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_class.SelectClassRoute
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_class.selectClassRoute
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_name.SelectNameRoute
@@ -19,10 +22,11 @@ import dao.cacao.dnd5sheet.presentation.screen.sheet_list.sheetListRoute
 
 
 @Composable
+@OptIn(ExperimentalAnimationApi::class)
 fun MainScreen(
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController = rememberAnimatedNavController(),
 ) {
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
         startDestination = SheetListRoute.route,
     ) {

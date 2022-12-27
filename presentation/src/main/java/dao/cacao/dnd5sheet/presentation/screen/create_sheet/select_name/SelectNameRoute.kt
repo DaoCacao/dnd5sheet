@@ -6,10 +6,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
 import dao.cacao.dnd5sheet.presentation.ext.collectAsEvent
+import dao.cacao.dnd5sheet.presentation.ext.route
 
 private const val SHEET_ID = "sheet_id"
 private const val POP_BACK_STACK = "pop_back_stack"
@@ -50,7 +50,7 @@ fun NavGraphBuilder.selectNameRoute(
     onNavigateUp: (() -> Unit)?,
     onNavigateBack: () -> Unit,
     onNavigateNext: () -> Unit,
-) = composable(
+) = route(
     route = SelectNameRoute.route,
     arguments = SelectNameRoute.navArguments,
 ) {

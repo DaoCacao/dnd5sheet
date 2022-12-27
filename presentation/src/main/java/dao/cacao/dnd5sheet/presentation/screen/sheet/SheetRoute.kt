@@ -6,10 +6,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
 import dao.cacao.dnd5sheet.presentation.ext.collectAsEvent
+import dao.cacao.dnd5sheet.presentation.ext.route
 
 private const val sheetId = "sheet_id"
 
@@ -37,7 +37,7 @@ fun NavGraphBuilder.sheetRoute(
     onNavigateToSelectRace: (sheetId: Long) -> Unit,
     onNavigateToSelectClass: (sheetId: Long) -> Unit,
     onNavigateToSelectName: (sheetId: Long, name: String) -> Unit,
-) = composable(
+) = route(
     route = SheetRoute.route,
     arguments = SheetRoute.navArguments,
 ) {

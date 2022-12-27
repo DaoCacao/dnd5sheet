@@ -6,9 +6,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
+import dao.cacao.dnd5sheet.presentation.ext.route
 
 private const val documentId = "document_id"
 
@@ -33,7 +33,7 @@ object DocumentRoute : RouteWithArgs<DocumentRoute.Args>(
 
 fun NavGraphBuilder.documentScreen(
     onNavigateUp: (() -> Unit)?,
-) = composable(
+) = route(
     route = DocumentRoute.route,
     arguments = DocumentRoute.navArguments,
 ) {

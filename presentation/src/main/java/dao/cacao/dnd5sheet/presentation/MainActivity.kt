@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
@@ -15,9 +14,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             AppTheme {
-                MainScreen(
-                    navController = rememberNavController()
-                )
+                MainScreen()
             }
         }
     }
