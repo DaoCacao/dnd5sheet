@@ -36,6 +36,7 @@ fun NavGraphBuilder.sheetRoute(
     onNavigateUp: (() -> Unit)?,
     onNavigateToSelectRace: (sheetId: Long) -> Unit,
     onNavigateToSelectClass: (sheetId: Long) -> Unit,
+    onNavigateToSelectName: (sheetId: Long, name: String) -> Unit,
 ) = composable(
     route = SheetRoute.route,
     arguments = SheetRoute.navArguments,
@@ -46,6 +47,7 @@ fun NavGraphBuilder.sheetRoute(
         when (it) {
             is Sheet.Event.NavigateToSelectRace -> onNavigateToSelectRace(it.sheetId)
             is Sheet.Event.NavigateToSelectClass -> onNavigateToSelectClass(it.sheetId)
+            is Sheet.Event.NavigateToSelectName -> onNavigateToSelectName(it.sheetId, it.name)
         }
     }
     SheetScreen(
@@ -53,7 +55,7 @@ fun NavGraphBuilder.sheetRoute(
         onNavigateUp = onNavigateUp,
         onPageChange = viewModel::onPageChange,
         onLevelChange = viewModel::onLevelChange,
-        onCharacterNameChange = viewModel::onCharacterNameChange,
+        onCharacterNameClick = viewModel::onCharacterNameClick,
         onCharacterRaceClick = viewModel::onCharacterRaceClick,
         onCharacterClassClick = viewModel::onCharacterClassClick,
         onProficiencyBonusChange = viewModel::onProficiencyBonusChange,

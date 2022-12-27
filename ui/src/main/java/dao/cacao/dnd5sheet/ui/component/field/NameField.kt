@@ -6,14 +6,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
-fun ClassField(
+fun NameField(
     modifier: Modifier = Modifier,
     value: String,
     onClick: () -> Unit,
 ) {
     ClickableField(
         modifier = modifier,
-        label = "Class",
+        label = "Name",
         value = value,
         onClick = onClick,
     )
@@ -23,8 +23,8 @@ fun ClassField(
 @Preview
 private fun Preview() {
     AppTheme {
-        ClassField(
-            value = "Wizzard",
+        NameField(
+            value = "Alokozay",
             onClick = {},
         )
     }

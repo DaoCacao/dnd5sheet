@@ -12,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import dao.cacao.dnd5sheet.ui.component.field.ClassField
 import dao.cacao.dnd5sheet.ui.component.field.CounterField
 import dao.cacao.dnd5sheet.ui.component.field.LevelField
+import dao.cacao.dnd5sheet.ui.component.field.NameField
 import dao.cacao.dnd5sheet.ui.component.field.RaceField
-import dao.cacao.dnd5sheet.ui.component.field.TextField
 
 @Composable
 fun CommonBlock(
@@ -23,7 +23,7 @@ fun CommonBlock(
     characterClass: String = "",
     proficiencyBonus: Int = 0,
     onLevelChange: (Int) -> Unit = {},
-    onCharacterNameChange: (String) -> Unit = {},
+    onCharacterNameClick: () -> Unit = {},
     onCharacterRaceClick: () -> Unit = {},
     onCharacterClassClick: () -> Unit = {},
     onProficiencyBonusChange: (Int) -> Unit = {},
@@ -32,11 +32,10 @@ fun CommonBlock(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        TextField(
+        NameField(
             modifier = Modifier.fillMaxWidth(),
             value = characterName,
-            onValueChange = onCharacterNameChange,
-            label = "Name"
+            onClick = onCharacterNameClick,
         )
         RaceField(
             modifier = Modifier.fillMaxWidth(),

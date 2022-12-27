@@ -39,7 +39,10 @@ class SelectRaceViewModel @Inject constructor(
     fun onRaceClick(race: Race) {
         viewModelScope.launch {
             raceRepository.updateCharacterRace(sheetId = args.sheetId, raceId = race.id)
-            event.emit(SelectRace.Event.NavigateToNext(sheetId = args.sheetId))
+            if (args.popBackStack)
+                event.emit(SelectRace.Event.NavigateBack)
+            else
+                event.emit(SelectRace.Event.NavigateToNext(sheetId = args.sheetId))
         }
     }
 

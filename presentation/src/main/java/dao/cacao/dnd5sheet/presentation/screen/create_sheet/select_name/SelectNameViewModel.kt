@@ -23,7 +23,12 @@ class SelectNameViewModel @Inject constructor(
     val event = event<SelectName.Event>()
 
     init {
-        state.update { it.copy(isLoading = false) }
+        state.update {
+            it.copy(
+                isLoading = false,
+                name = args.name,
+            )
+        }
     }
 
     fun onNameChange(name: String) {
@@ -36,7 +41,10 @@ class SelectNameViewModel @Inject constructor(
                 characterId = args.sheetId,
                 characterName = state.value.name,
             )
-            event.emit(SelectName.Event.NavigateToNext)
+            if (args.popBackStack)
+                event.emit(SelectName.Event.NavigateBack)
+            else
+                event.emit(SelectName.Event.NavigateToNext)
         }
     }
 }

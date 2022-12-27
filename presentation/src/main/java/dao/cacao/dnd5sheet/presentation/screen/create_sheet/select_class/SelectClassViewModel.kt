@@ -39,7 +39,10 @@ class SelectClassViewModel @Inject constructor(
     fun onClassClick(characterClass: CharacterClass) {
         viewModelScope.launch {
             classRepository.updateCharacterClass(sheetId = args.sheetId, classId = characterClass.id)
-            event.emit(SelectClass.Event.NavigateToNext(sheetId = args.sheetId))
+            if (args.popBackStack)
+                event.emit(SelectClass.Event.NavigateBack)
+            else
+                event.emit(SelectClass.Event.NavigateToNext(sheetId = args.sheetId))
         }
     }
 

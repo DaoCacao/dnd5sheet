@@ -12,32 +12,43 @@ import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
 import dao.cacao.dnd5sheet.presentation.ext.collectAsEvent
 
 private const val SHEET_ID = "sheet_id"
+private const val POP_BACK_STACK = "pop_back_stack"
+private const val NAME = "name"
 
 object SelectNameRoute : RouteWithArgs<SelectNameRoute.Args>(
     path = "select_name",
     navArguments = listOf(
         navArgument(SHEET_ID) { type = NavType.LongType },
+        navArgument(POP_BACK_STACK) { type = NavType.BoolType },
+        navArgument(NAME) { type = NavType.StringType },
     ),
 ) {
     data class Args(
         val sheetId: Long,
+        val popBackStack: Boolean,
+        val name: String = "",
     )
 
     override fun args(savedStateHandle: SavedStateHandle): Args {
         return Args(
-            sheetId = checkNotNull(savedStateHandle[SHEET_ID])
+            sheetId = checkNotNull(savedStateHandle[SHEET_ID]),
+            popBackStack = checkNotNull(savedStateHandle[POP_BACK_STACK]),
+            name = checkNotNull(savedStateHandle[NAME]),
         )
     }
 
     override fun argsToMap(args: Args): Map<String, Any> {
         return mapOf(
             SHEET_ID to args.sheetId,
+            POP_BACK_STACK to args.popBackStack,
+            NAME to args.name,
         )
     }
 }
 
 fun NavGraphBuilder.selectNameRoute(
     onNavigateUp: (() -> Unit)?,
+    onNavigateBack: () -> Unit,
     onNavigateNext: () -> Unit,
 ) = composable(
     route = SelectNameRoute.route,
@@ -48,6 +59,7 @@ fun NavGraphBuilder.selectNameRoute(
     viewModel.event.collectAsEvent {
         when (it) {
             SelectName.Event.NavigateToNext -> onNavigateNext()
+            SelectName.Event.NavigateBack -> onNavigateBack()
         }
     }
     SelectNameScreen(

@@ -15,7 +15,7 @@ import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateSkillModifierUse
 import dao.cacao.dnd5sheet.presentation.ext.args
 import dao.cacao.dnd5sheet.presentation.ext.event
 import dao.cacao.dnd5sheet.presentation.ext.state
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,23 +37,24 @@ class SheetViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val sheet = sheetRepository.getSheet(args.sheetId).first()
-            state.update {
-                it.copy(
-                    isLoading = false,
-                    name = sheet.character.characterName ?: "",
-                    characterRace = sheet.characterRace?.name ?: "",
-                    characterClass = sheet.characterClass?.name ?: "",
-                    level = sheet.character.level ?: 0,
-                    proficiencyBonus = sheet.character.proficiencyBonus ?: 0,
-                    abilities = sheet.abilities.map { it.map() },
-                    skills = sheet.skills.map {
-                        it.map(
-                            sheet.abilities.first { ability -> ability.id == it.abilityId },
-                            sheet.character.proficiencyBonus,
-                        )
-                    }
-                )
+            sheetRepository.getSheet(args.sheetId).collectLatest { sheet ->
+                state.update {
+                    it.copy(
+                        isLoading = false,
+                        name = sheet.character.characterName ?: "",
+                        characterRace = sheet.characterRace?.name ?: "",
+                        characterClass = sheet.characterClass?.name ?: "",
+                        level = sheet.character.level ?: 0,
+                        proficiencyBonus = sheet.character.proficiencyBonus ?: 0,
+                        abilities = sheet.abilities.map { it.map() },
+                        skills = sheet.skills.map {
+                            it.map(
+                                sheet.abilities.first { ability -> ability.id == it.abilityId },
+                                sheet.character.proficiencyBonus,
+                            )
+                        }
+                    )
+                }
             }
         }
     }
@@ -69,10 +70,9 @@ class SheetViewModel @Inject constructor(
         }
     }
 
-    fun onCharacterNameChange(characterName: String) {
-        state.update { it.copy(name = characterName) }
+    fun onCharacterNameClick() {
         viewModelScope.launch {
-            characterRepository.updateCharacterName(args.sheetId, characterName)
+            event.emit(Sheet.Event.NavigateToSelectName(args.sheetId, state.value.name))
         }
     }
 

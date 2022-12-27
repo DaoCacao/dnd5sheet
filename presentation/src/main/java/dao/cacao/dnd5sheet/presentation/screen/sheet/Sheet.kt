@@ -36,6 +36,7 @@ object Sheet {
     }
 
     sealed class Event {
+        class NavigateToSelectName(val sheetId: Long, val name: String) : Event()
         class NavigateToSelectRace(val sheetId: Long) : Event()
         class NavigateToSelectClass(val sheetId: Long) : Event()
     }

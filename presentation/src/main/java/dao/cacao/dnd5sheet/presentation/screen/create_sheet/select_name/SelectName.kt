@@ -9,5 +9,6 @@ object SelectName {
 
     sealed class Event {
         object NavigateToNext : Event()
+        object NavigateBack : Event()
     }
 }

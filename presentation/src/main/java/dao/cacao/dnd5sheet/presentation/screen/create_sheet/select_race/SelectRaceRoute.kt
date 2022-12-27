@@ -11,32 +11,38 @@ import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
 import dao.cacao.dnd5sheet.presentation.ext.collectAsEvent
 
 private const val SHEET_ID = "sheet_id"
+private const val POP_BACK_STACK = "pop_back_stack"
 
 object SelectRaceRoute : RouteWithArgs<SelectRaceRoute.Args>(
     path = "select_race",
     navArguments = listOf(
         navArgument(SHEET_ID) { type = NavType.LongType },
+        navArgument(POP_BACK_STACK) { type = NavType.BoolType },
     ),
 ) {
     data class Args(
         val sheetId: Long,
+        val popBackStack: Boolean,
     )
 
     override fun args(savedStateHandle: SavedStateHandle): Args {
         return Args(
-            sheetId = checkNotNull(savedStateHandle[SHEET_ID])
+            sheetId = checkNotNull(savedStateHandle[SHEET_ID]),
+            popBackStack = checkNotNull(savedStateHandle[POP_BACK_STACK]),
         )
     }
 
     override fun argsToMap(args: Args): Map<String, Any> {
         return mapOf(
             SHEET_ID to args.sheetId,
+            POP_BACK_STACK to args.popBackStack,
         )
     }
 }
 
 fun NavGraphBuilder.selectRaceRoute(
     onNavigateUp: (() -> Unit)?,
+    onNavigateBack: () -> Unit,
     onNavigateToNext: (sheetId: Long) -> Unit,
     onNavigateToDocument: (documentId: Long) -> Unit,
 ) = composable(
@@ -48,6 +54,7 @@ fun NavGraphBuilder.selectRaceRoute(
         when (it) {
             is SelectRace.Event.NavigateToDocument -> onNavigateToDocument(it.documentId)
             is SelectRace.Event.NavigateToNext -> onNavigateToNext(it.sheetId)
+            SelectRace.Event.NavigateBack -> onNavigateBack()
         }
     }
     SelectRaceScreen(

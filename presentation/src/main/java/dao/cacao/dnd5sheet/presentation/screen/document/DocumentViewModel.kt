@@ -27,6 +27,7 @@ class DocumentViewModel @Inject constructor(
                 val document = documentRepository.getDocument(args.documentId).first()
                 state.update {
                     it.copy(
+                        isLoading = false,
                         name = document.name,
                         text = document.text,
                     )
@@ -34,6 +35,7 @@ class DocumentViewModel @Inject constructor(
             } catch (e: Exception) {
                 state.update {
                     it.copy(
+                        isLoading = false,
                         isError = true,
                     )
                 }

@@ -27,30 +27,78 @@ fun MainScreen(
         startDestination = SheetListRoute.route,
     ) {
         sheetListRoute(
-            onNavigateToCharacter = { navController.navigate(SheetRoute.route(SheetRoute.Args(it))) },
-            onNavigateToCreateCharacter = { sheetId -> navController.navigate(SelectRaceRoute.route(SelectRaceRoute.Args(sheetId))) }
+            onNavigateToCharacter = {
+                navController.navigate(SheetRoute.route(SheetRoute.Args(it)))
+            },
+            onNavigateToCreateCharacter = { sheetId ->
+                navController.navigate(SelectRaceRoute.route(SelectRaceRoute.Args(sheetId, false)))
+            }
         )
         sheetRoute(
-            onNavigateUp = navController::navigateUp,
-            onNavigateToSelectRace = { sheetId -> navController.navigate(SelectRaceRoute.route(SelectRaceRoute.Args(sheetId))) },
-            onNavigateToSelectClass = { sheetId -> navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId))) },
+            onNavigateUp = {
+                navController.navigateUp()
+            },
+            onNavigateToSelectRace = { sheetId ->
+                navController.navigate(SelectRaceRoute.route(SelectRaceRoute.Args(sheetId, true)))
+            },
+            onNavigateToSelectClass = { sheetId ->
+                navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId, true)))
+            },
+            onNavigateToSelectName = { sheetId, name ->
+                navController.navigate(
+                    route = SelectNameRoute.route(
+                        args = SelectNameRoute.Args(
+                            sheetId = sheetId,
+                            popBackStack = true,
+                            name = name,
+                        ),
+                    ),
+                )
+            }
         )
         documentScreen(
-            onNavigateUp = navController::navigateUp,
+            onNavigateUp = {
+                navController.navigateUp()
+            },
         )
         selectRaceRoute(
-            onNavigateUp = navController::navigateUp,
-            onNavigateToNext = { sheetId -> navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId))) },
-            onNavigateToDocument = { navController.navigate(DocumentRoute.route(DocumentRoute.Args(it))) },
+            onNavigateUp = {
+                navController.navigateUp()
+            },
+            onNavigateBack = {
+                navController.popBackStack()
+            },
+            onNavigateToNext = { sheetId ->
+                navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId, false)))
+            },
+            onNavigateToDocument = {
+                navController.navigate(DocumentRoute.route(DocumentRoute.Args(it)))
+            },
         )
         selectClassRoute(
-            onNavigateUp = navController::navigateUp,
-            onNavigateToNext = { sheetId -> navController.navigate(SelectNameRoute.route(SelectNameRoute.Args(sheetId))) },
-            onNavigateToDocument = { navController.navigate(DocumentRoute.route(DocumentRoute.Args(it))) },
+            onNavigateUp = {
+                navController.navigateUp()
+            },
+            onNavigateBack = {
+                navController.popBackStack()
+            },
+            onNavigateToNext = { sheetId ->
+                navController.navigate(SelectNameRoute.route(SelectNameRoute.Args(sheetId, false)))
+            },
+            onNavigateToDocument = {
+                navController.navigate(DocumentRoute.route(DocumentRoute.Args(it)))
+            },
         )
         selectNameRoute(
-            onNavigateUp = navController::navigateUp,
-            onNavigateNext = { navController.popBackStack(SheetListRoute.route(), false) },
+            onNavigateUp = {
+                navController.navigateUp()
+            },
+            onNavigateBack = {
+                navController.popBackStack()
+            },
+            onNavigateNext = {
+                navController.popBackStack(SheetListRoute.route(), false)
+            },
         )
     }
 }
