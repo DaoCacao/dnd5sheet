@@ -1,10 +1,9 @@
 package dao.cacao.dnd5sheet.domain.model.players_handbook
 
-import dao.cacao.dnd5sheet.domain.model.Ability
-
 sealed class PlayersHandbookTrait {
     class AbilityScoreIncrease(
-        val ability: Ability,
+        val race: PlayersHandbookRace,
+        val ability: PlayersHandbookAbility,
         val value: Int,
     ) : PlayersHandbookTrait()
 

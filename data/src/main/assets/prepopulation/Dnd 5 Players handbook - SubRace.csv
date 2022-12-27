@@ -1,0 +1,10 @@
+sub_race_id,race_id,name
+hill-dwarf,dwarf,Hill dwarf
+mountain-dwarf,dwarf,Mountain dwarf
+high-elf,elf,High elf
+wood-elf,elf,Wood elf
+dark-elf,elf,Dark elf
+lightfoot,halfling,Lightfoot
+stout,halfling,Stout
+forrest-gnome,gnome,Forest gnome
+rock-gnome,gnome,Rock gnome

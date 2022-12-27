@@ -3,8 +3,6 @@ package dao.cacao.dnd5sheet.presentation
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_class.SelectClassRoute
@@ -72,7 +70,7 @@ fun MainScreen(
             onNavigateBack = {
                 navController.popBackStack()
             },
-            onNavigateToNext = { sheetId ->
+            onNavigateToSheetList = { sheetId ->
                 navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId, false)))
             },
             onNavigateToDocument = {
