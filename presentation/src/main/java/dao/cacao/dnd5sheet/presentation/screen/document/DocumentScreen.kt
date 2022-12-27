@@ -26,7 +26,7 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
 fun DocumentScreen(
-    state: DocumentState,
+    state: Document.State,
     onNavigateUp: (() -> Unit)? = null,
 ) {
     Screen(
@@ -78,7 +78,7 @@ fun DocumentScreen(
 
 @Composable
 @Preview
-private fun Preview(@PreviewParameter(StatePreviewProvider::class) state: DocumentState) {
+private fun Preview(@PreviewParameter(StatePreviewProvider::class) state: Document.State) {
     AppTheme {
         DocumentScreen(
             state = state,
@@ -86,45 +86,17 @@ private fun Preview(@PreviewParameter(StatePreviewProvider::class) state: Docume
     }
 }
 
-@Composable
-@Preview
-private fun PreviewLoading() {
-    AppTheme {
-        DocumentScreen(
-            state = DocumentState.loading(),
-        )
-    }
-}
 
-@Composable
-@Preview
-private fun PreviewContent() {
-    AppTheme {
-        DocumentScreen(
-            state = DocumentState.content(
-                "Document name",
-                text = "Document text",
-            ),
-        )
-    }
-}
-
-@Composable
-@Preview
-private fun PreviewError() {
-    AppTheme {
-        DocumentScreen(
-            state = DocumentState.error(),
-        )
-    }
-}
-
-class StatePreviewProvider : PreviewParameterProvider<DocumentState> {
+class StatePreviewProvider : PreviewParameterProvider<Document.State> {
     override val values = sequenceOf(
-        DocumentState.loading(),
-        DocumentState.error(),
-        DocumentState.content(
-            "Document name",
+        Document.State(
+            isLoading = true,
+        ),
+        Document.State(
+            isError = true,
+        ),
+        Document.State(
+            name = "Document name",
             text = "Document text",
         ),
     )

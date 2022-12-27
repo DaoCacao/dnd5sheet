@@ -20,7 +20,7 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SelectClassScreen(
-    state: SelectClassState,
+    state: SelectClass.State,
     onNavigateUp: (() -> Unit)? = null,
     onClassClick: (CharacterClass) -> Unit = {},
     onClassInfoClick: (CharacterClass) -> Unit = {},
@@ -62,8 +62,8 @@ fun SelectClassScreen(
 private fun Preview1() {
     AppTheme {
         SelectClassScreen(
-            state = SelectClassState(
-                isLoading = false,
+            state = SelectClass.State(
+                isLoading = true,
                 classes = emptyList(),
             ),
         )
@@ -75,7 +75,7 @@ private fun Preview1() {
 private fun Preview2() {
     AppTheme {
         SelectClassScreen(
-            state = SelectClassState(
+            state = SelectClass.State(
                 isLoading = false,
                 classes = List(5) {
                     CharacterClass(0, 0, "Class $it")

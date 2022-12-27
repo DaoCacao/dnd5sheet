@@ -6,8 +6,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.ClassRepository
 import dao.cacao.dnd5sheet.domain.model.CharacterClass
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
+import dao.cacao.dnd5sheet.presentation.ext.args
+import dao.cacao.dnd5sheet.presentation.ext.event
+import dao.cacao.dnd5sheet.presentation.ext.state
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,9 +20,9 @@ class SelectClassViewModel @Inject constructor(
     private val classRepository: ClassRepository,
 ) : ViewModel() {
 
-    private val args = SelectClassRoute.args(savedStateHandle)
-    val state = MutableStateFlow(SelectClassState.loading())
-    val event = MutableSharedFlow<SelectClassEvent>()
+    val args = args(SelectClassRoute, savedStateHandle)
+    val state = state(SelectClass.State(isLoading = true))
+    val event = event<SelectClass.Event>()
 
     init {
         viewModelScope.launch {
@@ -38,13 +39,13 @@ class SelectClassViewModel @Inject constructor(
     fun onClassClick(characterClass: CharacterClass) {
         viewModelScope.launch {
             classRepository.updateCharacterClass(sheetId = args.sheetId, classId = characterClass.id)
-            event.emit(SelectClassEvent.NavigateToNext(sheetId = args.sheetId))
+            event.emit(SelectClass.Event.NavigateToNext(sheetId = args.sheetId))
         }
     }
 
     fun onClassInfoClick(characterClass: CharacterClass) {
         viewModelScope.launch {
-            event.emit(SelectClassEvent.NavigateToDocument(documentId = characterClass.documentId))
+            event.emit(SelectClass.Event.NavigateToDocument(documentId = characterClass.documentId))
         }
     }
 }

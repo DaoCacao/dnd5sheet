@@ -6,8 +6,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
 import dao.cacao.dnd5sheet.domain.model.Race
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
+import dao.cacao.dnd5sheet.presentation.ext.args
+import dao.cacao.dnd5sheet.presentation.ext.event
+import dao.cacao.dnd5sheet.presentation.ext.state
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,9 +20,9 @@ class SelectRaceViewModel @Inject constructor(
     private val raceRepository: RaceRepository,
 ) : ViewModel() {
 
-    private val args = SelectRaceRoute.args(savedStateHandle)
-    val state = MutableStateFlow(SelectRaceState.loading())
-    val event = MutableSharedFlow<SelectRaceEvent>()
+    val args = args(SelectRaceRoute, savedStateHandle)
+    val state = state(SelectRace.State(isLoading = true))
+    val event = event<SelectRace.Event>()
 
     init {
         viewModelScope.launch {
@@ -38,13 +39,13 @@ class SelectRaceViewModel @Inject constructor(
     fun onRaceClick(race: Race) {
         viewModelScope.launch {
             raceRepository.updateCharacterRace(sheetId = args.sheetId, raceId = race.id)
-            event.emit(SelectRaceEvent.NavigateToNext(sheetId = args.sheetId))
+            event.emit(SelectRace.Event.NavigateToNext(sheetId = args.sheetId))
         }
     }
 
     fun onRaceInfoClick(race: Race) {
         viewModelScope.launch {
-            event.emit(SelectRaceEvent.NavigateToDocument(documentId = race.documentId))
+            event.emit(SelectRace.Event.NavigateToDocument(documentId = race.documentId))
         }
     }
 }

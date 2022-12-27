@@ -1,6 +1,5 @@
 package dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race
 
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
@@ -9,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dao.cacao.dnd5sheet.presentation.base.RouteWithArgs
-import kotlinx.coroutines.flow.collectLatest
+import dao.cacao.dnd5sheet.presentation.ext.collectAsEvent
 
 private const val SHEET_ID = "sheet_id"
 
@@ -45,12 +44,10 @@ fun NavGraphBuilder.selectRaceRoute(
     arguments = SelectRaceRoute.navArguments,
 ) {
     val viewModel: SelectRaceViewModel = hiltViewModel()
-    LaunchedEffect(viewModel.event) {
-        viewModel.event.collectLatest {
-            when (it) {
-                is SelectRaceEvent.NavigateToDocument -> onNavigateToDocument(it.documentId)
-                is SelectRaceEvent.NavigateToNext -> onNavigateToNext(it.sheetId)
-            }
+    viewModel.event.collectAsEvent {
+        when (it) {
+            is SelectRace.Event.NavigateToDocument -> onNavigateToDocument(it.documentId)
+            is SelectRace.Event.NavigateToNext -> onNavigateToNext(it.sheetId)
         }
     }
     SelectRaceScreen(

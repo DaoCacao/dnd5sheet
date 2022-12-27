@@ -19,7 +19,7 @@ class SelectNameViewModel @Inject constructor(
 ) : ViewModel() {
 
     val args = args(SelectNameRoute, savedStateHandle)
-    val state = state(SelectName.State())
+    val state = state(SelectName.State(isLoading = true))
     val event = event<SelectName.Event>()
 
     init {
@@ -28,7 +28,6 @@ class SelectNameViewModel @Inject constructor(
 
     fun onNameChange(name: String) {
         state.update { it.copy(name = name) }
-
     }
 
     fun onSaveClick() {

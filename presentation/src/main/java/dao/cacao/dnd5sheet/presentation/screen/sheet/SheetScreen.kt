@@ -32,9 +32,9 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @Composable
 fun SheetScreen(
-    state: SheetState,
+    state: Sheet.State,
     onNavigateUp: (() -> Unit)? = null,
-    onPageChange: (SheetState.SheetScreenPages) -> Unit = {},
+    onPageChange: (Sheet.State.SheetScreenPages) -> Unit = {},
     onLevelChange: (Int) -> Unit = {},
     onCharacterNameChange: (String) -> Unit = {},
     onCharacterRaceClick: () -> Unit = {},
@@ -61,7 +61,7 @@ fun SheetScreen(
                             .verticalScroll(rememberScrollState()),
                     ) {
                         when (state.page) {
-                            SheetState.SheetScreenPages.Common -> {
+                            Sheet.State.SheetScreenPages.Common -> {
                                 CommonBlock(
                                     level = state.level,
                                     characterName = state.name,
@@ -75,7 +75,7 @@ fun SheetScreen(
                                     onProficiencyBonusChange = onProficiencyBonusChange,
                                 )
                             }
-                            SheetState.SheetScreenPages.Abilities -> {
+                            Sheet.State.SheetScreenPages.Abilities -> {
                                 AbilitiesBlock(
                                     items = state.abilities,
                                     content = { ability ->
@@ -89,7 +89,7 @@ fun SheetScreen(
                                     }
                                 )
                             }
-                            SheetState.SheetScreenPages.Skills -> {
+                            Sheet.State.SheetScreenPages.Skills -> {
                                 SkillsBlock(
                                     items = state.skills,
                                     content = { skill ->
@@ -107,15 +107,15 @@ fun SheetScreen(
                         }
                     }
                     NavigationBar {
-                        for (page in SheetState.SheetScreenPages.values()) {
+                        for (page in Sheet.State.SheetScreenPages.values()) {
                             NavigationBarItem(
                                 selected = state.page == page,
                                 onClick = { onPageChange(page) },
                                 icon = {
                                     val icon = when (page) {
-                                        SheetState.SheetScreenPages.Common -> Icons.Default.Person
-                                        SheetState.SheetScreenPages.Abilities -> Icons.Default.Abc
-                                        SheetState.SheetScreenPages.Skills -> Icons.Default.SoupKitchen
+                                        Sheet.State.SheetScreenPages.Common -> Icons.Default.Person
+                                        Sheet.State.SheetScreenPages.Abilities -> Icons.Default.Abc
+                                        Sheet.State.SheetScreenPages.Skills -> Icons.Default.SoupKitchen
                                     }
                                     Icon(
                                         imageVector = icon,
@@ -124,9 +124,9 @@ fun SheetScreen(
                                 },
                                 label = {
                                     val text = when (page) {
-                                        SheetState.SheetScreenPages.Common -> stringResource(R.string.text_common)
-                                        SheetState.SheetScreenPages.Abilities -> stringResource(R.string.text_abilities)
-                                        SheetState.SheetScreenPages.Skills -> stringResource(R.string.text_skills)
+                                        Sheet.State.SheetScreenPages.Common -> stringResource(R.string.text_common)
+                                        Sheet.State.SheetScreenPages.Abilities -> stringResource(R.string.text_abilities)
+                                        Sheet.State.SheetScreenPages.Skills -> stringResource(R.string.text_skills)
                                     }
                                     Text(
                                         text = text,
@@ -143,7 +143,7 @@ fun SheetScreen(
 
 @Composable
 @Preview
-private fun Preview(@PreviewParameter(StatePreviewProvider::class) state: SheetState) {
+private fun Preview(@PreviewParameter(StatePreviewProvider::class) state: Sheet.State) {
     AppTheme {
         SheetScreen(
             state = state,
@@ -151,11 +151,11 @@ private fun Preview(@PreviewParameter(StatePreviewProvider::class) state: SheetS
     }
 }
 
-class StatePreviewProvider : PreviewParameterProvider<SheetState> {
+class StatePreviewProvider : PreviewParameterProvider<Sheet.State> {
     override val values = sequenceOf(
-        SheetState.loading(),
-    ) + SheetState.SheetScreenPages.values().map {
-        SheetState.content(
+        Sheet.State(isLoading = true),
+    ) + Sheet.State.SheetScreenPages.values().map {
+        Sheet.State(
             page = it,
             name = "name",
             level = 1,
@@ -163,7 +163,7 @@ class StatePreviewProvider : PreviewParameterProvider<SheetState> {
             characterClass = "class",
             proficiencyBonus = 2,
             abilities = List(3) {
-                SheetState.AbilityItem(
+                Sheet.State.AbilityItem(
                     id = 0,
                     name = "Ability #$it",
                     score = 10,
@@ -171,7 +171,7 @@ class StatePreviewProvider : PreviewParameterProvider<SheetState> {
                 )
             },
             skills = List(3) {
-                SheetState.SkillItem(
+                Sheet.State.SkillItem(
                     id = 0,
                     abilityId = 0,
                     name = "Skill #$it",

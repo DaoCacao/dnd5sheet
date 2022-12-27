@@ -20,7 +20,7 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SelectRaceScreen(
-    state: SelectRaceState,
+    state: SelectRace.State,
     onNavigateUp: (() -> Unit)? = null,
     onRaceClick: (Race) -> Unit = {},
     onRaceInfoClick: (Race) -> Unit = {},
@@ -62,7 +62,7 @@ fun SelectRaceScreen(
 private fun Preview1() {
     AppTheme {
         SelectRaceScreen(
-            state = SelectRaceState(
+            state = SelectRace.State(
                 isLoading = true,
                 races = emptyList(),
             ),
@@ -75,7 +75,7 @@ private fun Preview1() {
 private fun Preview2() {
     AppTheme {
         SelectRaceScreen(
-            state = SelectRaceState(
+            state = SelectRace.State(
                 isLoading = false,
                 races = List(5) {
                     Race(0, 0, "Race $it")

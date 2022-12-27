@@ -36,7 +36,7 @@ import dao.cacao.dnd5sheet.ui.theme.AppTheme
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SheetListScreen(
-    state: SheetListState,
+    state: SheetList.State,
     onCreateNewSheetClick: () -> Unit = {},
     onDeleteSheetClick: (sheetId: Long) -> Unit = {},
     onSheetClick: (sheetId: Long) -> Unit = {},
@@ -161,7 +161,7 @@ fun SheetListItem(
 private fun PreviewLoading() {
     AppTheme {
         SheetListScreen(
-            state = SheetListState.loading(),
+            state = SheetList.State(isLoading = true),
         )
     }
 }
@@ -172,9 +172,9 @@ private fun PreviewLoading() {
 private fun PreviewContent() {
     AppTheme {
         SheetListScreen(
-            state = SheetListState.content(
+            state = SheetList.State(
                 items = List(5) {
-                    SheetListState.Item(
+                    SheetList.State.Item(
                         id = it.toLong(),
                         level = it,
                         characterName = "CharacterName",
@@ -193,7 +193,7 @@ private fun PreviewContent() {
 private fun PreviewEmpty() {
     AppTheme {
         SheetListScreen(
-            state = SheetListState.content(
+            state = SheetList.State(
                 items = emptyList(),
             ),
         )

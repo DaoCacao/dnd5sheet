@@ -1,10 +1,12 @@
 package dao.cacao.dnd5sheet.presentation.screen.document
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.DocumentRepository
-import dao.cacao.dnd5sheet.presentation.base.BaseViewModel
+import dao.cacao.dnd5sheet.presentation.ext.args
+import dao.cacao.dnd5sheet.presentation.ext.state
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -14,23 +16,26 @@ import javax.inject.Inject
 class DocumentViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val documentRepository: DocumentRepository,
-) : BaseViewModel<DocumentState, Unit>(DocumentState.loading()) {
+) : ViewModel() {
 
-    private val args = DocumentRoute.args(savedStateHandle)
+    val args = args(DocumentRoute, savedStateHandle)
+    val state = state(Document.State(isLoading = true))
 
     init {
         viewModelScope.launch {
             try {
                 val document = documentRepository.getDocument(args.documentId).first()
                 state.update {
-                    DocumentState.content(
+                    it.copy(
                         name = document.name,
                         text = document.text,
                     )
                 }
             } catch (e: Exception) {
                 state.update {
-                    DocumentState.error()
+                    it.copy(
+                        isError = true,
+                    )
                 }
             }
         }

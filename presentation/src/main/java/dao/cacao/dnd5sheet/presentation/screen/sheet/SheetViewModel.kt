@@ -12,8 +12,9 @@ import dao.cacao.dnd5sheet.domain.model.Ability
 import dao.cacao.dnd5sheet.domain.model.Skill
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateAbilityModifierUseCase
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateSkillModifierUseCase
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
+import dao.cacao.dnd5sheet.presentation.ext.args
+import dao.cacao.dnd5sheet.presentation.ext.event
+import dao.cacao.dnd5sheet.presentation.ext.state
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -30,9 +31,9 @@ class SheetViewModel @Inject constructor(
     private val calculateSkillModifierUseCase: CalculateSkillModifierUseCase,
 ) : ViewModel() {
 
-    private val args = SheetRoute.args(savedStateHandle)
-    val state = MutableStateFlow<SheetState>(SheetState.loading())
-    val event = MutableSharedFlow<SheetEvent>()
+    val args = args(SheetRoute, savedStateHandle)
+    val state = state(Sheet.State(isLoading = true))
+    val event = event<Sheet.Event>()
 
     init {
         viewModelScope.launch {
@@ -57,7 +58,7 @@ class SheetViewModel @Inject constructor(
         }
     }
 
-    fun onPageChange(page: SheetState.SheetScreenPages) {
+    fun onPageChange(page: Sheet.State.SheetScreenPages) {
         state.update { it.copy(page = page) }
     }
 
@@ -77,13 +78,13 @@ class SheetViewModel @Inject constructor(
 
     fun onCharacterRaceClick() {
         viewModelScope.launch {
-            event.emit(SheetEvent.NavigateToSelectRace(args.sheetId))
+            event.emit(Sheet.Event.NavigateToSelectRace(args.sheetId))
         }
     }
 
     fun onCharacterClassClick() {
         viewModelScope.launch {
-            event.emit(SheetEvent.NavigateToSelectClass(args.sheetId))
+            event.emit(Sheet.Event.NavigateToSelectClass(args.sheetId))
         }
     }
 
@@ -153,14 +154,14 @@ class SheetViewModel @Inject constructor(
         return map { if (predicate(it)) update(it) else it }
     }
 
-    private fun Ability.map() = SheetState.AbilityItem(
+    private fun Ability.map() = Sheet.State.AbilityItem(
         id = id,
         name = name,
         score = score,
         modifier = calculateAbilityModifierUseCase(score),
     )
 
-    private fun Skill.map(ability: Ability, proficiencyBonus: Int?) = SheetState.SkillItem(
+    private fun Skill.map(ability: Ability, proficiencyBonus: Int?) = Sheet.State.SkillItem(
         id = id,
         abilityId = ability.id,
         name = name,
