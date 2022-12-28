@@ -1,4 +1,4 @@
-package dao.cacao.dnd5sheet.domain.use_case.`class`
+package dao.cacao.dnd5sheet.domain.use_case.clazz
 
 import dao.cacao.dnd5sheet.domain.boundary.ClassRepository
 import dao.cacao.dnd5sheet.domain.model.CharacterClass

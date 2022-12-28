@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.model.CharacterClass
-import dao.cacao.dnd5sheet.domain.use_case.`class`.GetPlayersHandbookClassesUseCase
+import dao.cacao.dnd5sheet.domain.use_case.clazz.GetPlayersHandbookClassesUseCase
 import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateClassUseCase
 import dao.cacao.dnd5sheet.presentation.ext.args
 import dao.cacao.dnd5sheet.presentation.ext.event
