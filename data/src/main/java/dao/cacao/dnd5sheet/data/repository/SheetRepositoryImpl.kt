@@ -39,8 +39,8 @@ class SheetRepositoryImpl @Inject constructor(
         database.sheetDao().updateRaceId(sheetId = sheetId, raceId = raceId)
     }
 
-    override suspend fun updateCharacterSubRace(sheetId: Long, subRaceId: String) {
-        database.sheetDao().updateSubRaceId(sheetId = sheetId, subRaceId = subRaceId)
+    override suspend fun updateCharacterSubrace(sheetId: Long, subraceId: String) {
+        database.sheetDao().updateSubraceId(sheetId = sheetId, subraceId = subraceId)
     }
 
     override suspend fun updateCharacterClass(sheetId: Long, classId: String) {

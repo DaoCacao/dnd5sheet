@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.model.Race
 import dao.cacao.dnd5sheet.domain.use_case.race.GetPlayersHandbookRacesUseCase
 import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateRaceUseCase
+import dao.cacao.dnd5sheet.domain.use_case.subrace.HasSubracesUseCase
 import dao.cacao.dnd5sheet.presentation.ext.args
 import dao.cacao.dnd5sheet.presentation.ext.event
 import dao.cacao.dnd5sheet.presentation.ext.state
@@ -20,6 +21,7 @@ class SelectRaceViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getPlayersHandbookRacesUseCase: GetPlayersHandbookRacesUseCase,
     private val updateRaceUseCase: UpdateRaceUseCase,
+    private val hasSubracesUseCase: HasSubracesUseCase,
 ) : ViewModel() {
 
     val args = args(SelectRaceRoute, savedStateHandle)
@@ -40,11 +42,12 @@ class SelectRaceViewModel @Inject constructor(
 
     fun onRaceClick(race: Race) {
         viewModelScope.launch {
-            updateRaceUseCase(sheetId = args.sheetId, raceId = race.id)
-            if (args.popBackStack)
-                event.emit(SelectRace.Event.NavigateBack)
-            else
-                event.emit(SelectRace.Event.NavigateToNext(sheetId = args.sheetId))
+            updateRaceUseCase(args.sheetId, race.id)
+            when {
+                args.popBackStack -> event.emit(SelectRace.Event.NavigateBack)
+                hasSubracesUseCase(race.id) -> event.emit(SelectRace.Event.NavigateToSelectSubrace(args.sheetId, race.id))
+                else -> event.emit(SelectRace.Event.NavigateToSelectClass(args.sheetId))
+            }
         }
     }
 

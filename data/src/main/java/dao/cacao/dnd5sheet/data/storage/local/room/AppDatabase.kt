@@ -10,7 +10,7 @@ import dao.cacao.dnd5sheet.data.storage.local.room.dao.players_handbook.PlayersH
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.players_handbook.PlayersHandbookAbilityIncreaseDao
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.players_handbook.PlayersHandbookClassDao
 import dao.cacao.dnd5sheet.data.storage.local.room.dao.players_handbook.PlayersHandbookRaceDao
-import dao.cacao.dnd5sheet.data.storage.local.room.dao.players_handbook.PlayersHandbookSubRaceDao
+import dao.cacao.dnd5sheet.data.storage.local.room.dao.players_handbook.PlayersHandbookSubraceDao
 import dao.cacao.dnd5sheet.data.storage.local.room.model.AbilityEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.DocumentEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.SheetEntity
@@ -19,13 +19,13 @@ import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.Player
 import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookAbilityIncreaseEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookClassEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookRaceEntity
-import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookSubRaceEntity
+import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookSubraceEntity
 
 @Database(
     entities = [
         // PlayersHandbook
         PlayersHandbookRaceEntity::class,
-        PlayersHandbookSubRaceEntity::class,
+        PlayersHandbookSubraceEntity::class,
         PlayersHandbookClassEntity::class,
         PlayersHandbookAbilityEntity::class,
         PlayersHandbookAbilityIncreaseEntity::class,
@@ -45,7 +45,7 @@ import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.Player
 abstract class AppDatabase : RoomDatabase() {
     // PlayersHandbook
     abstract fun playersHandbookRaceDao(): PlayersHandbookRaceDao
-    abstract fun playersHandbookSubRaceDao(): PlayersHandbookSubRaceDao
+    abstract fun playersHandbookSubraceDao(): PlayersHandbookSubraceDao
     abstract fun playersHandbookClassDao(): PlayersHandbookClassDao
     abstract fun playersHandbookAbilityDao(): PlayersHandbookAbilityDao
     abstract fun playersHandbookAbilityIncreaseDao(): PlayersHandbookAbilityIncreaseDao

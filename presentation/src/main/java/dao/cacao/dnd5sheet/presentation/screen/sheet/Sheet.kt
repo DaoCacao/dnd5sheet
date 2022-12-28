@@ -5,7 +5,11 @@ object Sheet {
         val isLoading: Boolean = false,
         val page: SheetScreenPages = SheetScreenPages.Common,
         val name: String = "",
+        val raceId: String = "",
+        val subRaceId: String = "",
+        val classId: String = "",
         val characterRace: String = "",
+        val characterSubrace: String = "",
         val characterClass: String = "",
         val level: Int = 0,
         val proficiencyBonus: Int = 0,
@@ -37,7 +41,8 @@ object Sheet {
 
     sealed class Event {
         class NavigateToSelectName(val sheetId: Long, val name: String) : Event()
-        class NavigateToSelectRace(val sheetId: Long) : Event()
-        class NavigateToSelectClass(val sheetId: Long) : Event()
+        class NavigateToSelectRace(val sheetId: Long, val raceId: String) : Event()
+        class NavigateToSelectSubrace(val sheetId: Long, val raceId: String, val subRaceId: String) : Event()
+        class NavigateToSelectClass(val sheetId: Long, val classId: String) : Event()
     }
 }

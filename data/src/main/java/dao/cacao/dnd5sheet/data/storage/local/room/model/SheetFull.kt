@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookClassEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookRaceEntity
-import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookSubRaceEntity
+import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookSubraceEntity
 
 data class SheetFull(
     @Embedded
@@ -26,10 +26,10 @@ data class SheetFull(
     )
     val characterRace: PlayersHandbookRaceEntity?,
     @Relation(
-        parentColumn = "sub_race_id",
-        entityColumn = "sub_race_id",
+        parentColumn = "subrace_id",
+        entityColumn = "subrace_id",
     )
-    val characterSubRace: PlayersHandbookSubRaceEntity?,
+    val characterSubrace: PlayersHandbookSubraceEntity?,
     @Relation(
         parentColumn = "class_id",
         entityColumn = "class_id",

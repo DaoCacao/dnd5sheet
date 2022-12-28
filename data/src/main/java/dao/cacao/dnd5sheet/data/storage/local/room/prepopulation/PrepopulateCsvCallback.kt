@@ -9,7 +9,7 @@ import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.Player
 import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookAbilityIncreaseEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookClassEntity
 import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookRaceEntity
-import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookSubRaceEntity
+import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookSubraceEntity
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Executors
 import javax.inject.Inject
@@ -23,8 +23,8 @@ class PrepopulateCsvCallback @Inject constructor(
             runBlocking {
                 database.get().playersHandbookRaceDao()
                     .insert("prepopulation/Dnd 5 Players handbook - Race.csv".asCsv().mapRace())
-                database.get().playersHandbookSubRaceDao()
-                    .insert("prepopulation/Dnd 5 Players handbook - SubRace.csv".asCsv().mapSubRace())
+                database.get().playersHandbookSubraceDao()
+                    .insert("prepopulation/Dnd 5 Players handbook - Subrace.csv".asCsv().mapSubrace())
                 database.get().playersHandbookClassDao()
                     .insert("prepopulation/Dnd 5 Players handbook - Class.csv".asCsv().mapClass())
                 database.get().playersHandbookAbilityDao()
@@ -54,10 +54,10 @@ class PrepopulateCsvCallback @Inject constructor(
         }
     }
 
-    private fun List<List<String>>.mapSubRace(): List<PlayersHandbookSubRaceEntity> {
+    private fun List<List<String>>.mapSubrace(): List<PlayersHandbookSubraceEntity> {
         return map {
-            PlayersHandbookSubRaceEntity(
-                subRaceId = it[0],
+            PlayersHandbookSubraceEntity(
+                subraceId = it[0],
                 raceId = it[1],
                 name = it[2],
             )

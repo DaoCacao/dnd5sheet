@@ -14,17 +14,20 @@ import dao.cacao.dnd5sheet.ui.component.field.CounterField
 import dao.cacao.dnd5sheet.ui.component.field.LevelField
 import dao.cacao.dnd5sheet.ui.component.field.NameField
 import dao.cacao.dnd5sheet.ui.component.field.RaceField
+import dao.cacao.dnd5sheet.ui.component.field.SubraceField
 
 @Composable
 fun CommonBlock(
     level: Int = 0,
     characterName: String = "",
     characterRace: String = "",
+    characterSubrace: String = "",
     characterClass: String = "",
     proficiencyBonus: Int = 0,
     onLevelChange: (Int) -> Unit = {},
     onCharacterNameClick: () -> Unit = {},
     onCharacterRaceClick: () -> Unit = {},
+    onCharacterSubraceClick: () -> Unit = {},
     onCharacterClassClick: () -> Unit = {},
     onProficiencyBonusChange: (Int) -> Unit = {},
 ) {
@@ -42,6 +45,13 @@ fun CommonBlock(
             value = characterRace,
             onClick = onCharacterRaceClick,
         )
+        if (characterSubrace.isNotBlank()) {
+            SubraceField(
+                modifier = Modifier.fillMaxWidth(),
+                value = characterSubrace,
+                onClick = onCharacterSubraceClick,
+            )
+        }
         ClassField(
             modifier = Modifier.fillMaxWidth(),
             value = characterClass,

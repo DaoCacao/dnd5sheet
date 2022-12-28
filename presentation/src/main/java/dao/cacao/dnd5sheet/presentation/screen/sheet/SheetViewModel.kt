@@ -45,7 +45,11 @@ class SheetViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         name = sheet.characterName ?: "",
+                        raceId = sheet.characterRace?.id ?: "",
+                        subRaceId = sheet.characterSubrace?.id ?: "",
+                        classId = sheet.characterClass?.id ?: "",
                         characterRace = sheet.characterRace?.name ?: "",
+                        characterSubrace = sheet.characterSubrace?.name ?: "",
                         characterClass = sheet.characterClass?.name ?: "",
                         level = sheet.level ?: 0,
                         proficiencyBonus = sheet.proficiencyBonus ?: 0,
@@ -81,13 +85,29 @@ class SheetViewModel @Inject constructor(
 
     fun onCharacterRaceClick() {
         viewModelScope.launch {
-            event.emit(Sheet.Event.NavigateToSelectRace(args.sheetId))
+            event.emit(Sheet.Event.NavigateToSelectRace(
+                sheetId = args.sheetId,
+                raceId = state.value.raceId,
+            ))
+        }
+    }
+
+    fun onCharacterSubraceClick() {
+        viewModelScope.launch {
+            event.emit(Sheet.Event.NavigateToSelectSubrace(
+                sheetId = args.sheetId,
+                raceId = state.value.raceId,
+                subRaceId = state.value.subRaceId,
+            ))
         }
     }
 
     fun onCharacterClassClick() {
         viewModelScope.launch {
-            event.emit(Sheet.Event.NavigateToSelectClass(args.sheetId))
+            event.emit(Sheet.Event.NavigateToSelectClass(
+                sheetId = args.sheetId,
+                classId = state.value.classId,
+            ))
         }
     }
 

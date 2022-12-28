@@ -35,6 +35,7 @@ object SheetRoute : RouteWithArgs<SheetRoute.Args>(
 fun NavGraphBuilder.sheetRoute(
     onNavigateUp: (() -> Unit)?,
     onNavigateToSelectRace: (sheetId: Long) -> Unit,
+    onNavigateToSelectSubrace: (sheetId: Long, raceId: String) -> Unit,
     onNavigateToSelectClass: (sheetId: Long) -> Unit,
     onNavigateToSelectName: (sheetId: Long, name: String) -> Unit,
 ) = route(
@@ -46,6 +47,7 @@ fun NavGraphBuilder.sheetRoute(
     viewModel.event.collectAsEvent {
         when (it) {
             is Sheet.Event.NavigateToSelectRace -> onNavigateToSelectRace(it.sheetId)
+            is Sheet.Event.NavigateToSelectSubrace -> onNavigateToSelectSubrace(it.sheetId, it.raceId)
             is Sheet.Event.NavigateToSelectClass -> onNavigateToSelectClass(it.sheetId)
             is Sheet.Event.NavigateToSelectName -> onNavigateToSelectName(it.sheetId, it.name)
         }
@@ -57,6 +59,7 @@ fun NavGraphBuilder.sheetRoute(
         onLevelChange = viewModel::onLevelChange,
         onCharacterNameClick = viewModel::onCharacterNameClick,
         onCharacterRaceClick = viewModel::onCharacterRaceClick,
+        onCharacterSubraceClick = viewModel::onCharacterSubraceClick,
         onCharacterClassClick = viewModel::onCharacterClassClick,
         onProficiencyBonusChange = viewModel::onProficiencyBonusChange,
         onAbilityScoreChange = viewModel::onAbilityScoreChange,

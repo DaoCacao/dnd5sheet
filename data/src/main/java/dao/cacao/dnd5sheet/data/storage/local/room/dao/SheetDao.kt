@@ -21,8 +21,8 @@ interface SheetDao : BaseDao<SheetEntity> {
     @Query("UPDATE sheet SET race_id = :raceId WHERE sheet_id = :sheetId")
     suspend fun updateRaceId(sheetId: Long, raceId: String)
 
-    @Query("UPDATE sheet SET sub_race_id = :subRaceId WHERE sheet_id = :sheetId")
-    suspend fun updateSubRaceId(sheetId: Long, subRaceId: String)
+    @Query("UPDATE sheet SET subrace_id = :subraceId WHERE sheet_id = :sheetId")
+    suspend fun updateSubraceId(sheetId: Long, subraceId: String)
 
     @Query("UPDATE sheet SET class_id = :classId WHERE sheet_id = :sheetId")
     suspend fun updateClassId(sheetId: Long, classId: String)

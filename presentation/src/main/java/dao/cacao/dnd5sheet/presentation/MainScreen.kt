@@ -11,6 +11,8 @@ import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_name.SelectNa
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_name.selectNameRoute
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race.SelectRaceRoute
 import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_race.selectRaceRoute
+import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_subrace.SelectSubraceRoute
+import dao.cacao.dnd5sheet.presentation.screen.create_sheet.select_subrace.selectSubraceRoute
 import dao.cacao.dnd5sheet.presentation.screen.document.DocumentRoute
 import dao.cacao.dnd5sheet.presentation.screen.document.documentScreen
 import dao.cacao.dnd5sheet.presentation.screen.sheet.SheetRoute
@@ -43,6 +45,9 @@ fun MainScreen(
             onNavigateToSelectRace = { sheetId ->
                 navController.navigate(SelectRaceRoute.route(SelectRaceRoute.Args(sheetId, true)))
             },
+            onNavigateToSelectSubrace = { sheetId, raceId ->
+                navController.navigate(SelectSubraceRoute.route(SelectSubraceRoute.Args(sheetId, raceId, true)))
+            },
             onNavigateToSelectClass = { sheetId ->
                 navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId, true)))
             },
@@ -70,7 +75,24 @@ fun MainScreen(
             onNavigateBack = {
                 navController.popBackStack()
             },
-            onNavigateToSheetList = { sheetId ->
+            onNavigateToSelectClass = { sheetId ->
+                navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId, false)))
+            },
+            onNavigateToSelectSubrace = { sheetId, raceId ->
+                navController.navigate(SelectSubraceRoute.route(SelectSubraceRoute.Args(sheetId, raceId, false)))
+            },
+            onNavigateToDocument = {
+                navController.navigate(DocumentRoute.route(DocumentRoute.Args(it)))
+            },
+        )
+        selectSubraceRoute(
+            onNavigateUp = {
+                navController.navigateUp()
+            },
+            onNavigateBack = {
+                navController.popBackStack()
+            },
+            onNavigateToSelectClass = { sheetId ->
                 navController.navigate(SelectClassRoute.route(SelectClassRoute.Args(sheetId, false)))
             },
             onNavigateToDocument = {
@@ -98,7 +120,7 @@ fun MainScreen(
             onNavigateBack = {
                 navController.popBackStack()
             },
-            onNavigateNext = {
+            onNavigateToNext = {
                 navController.popBackStack(SheetListRoute.route(), false)
             },
         )

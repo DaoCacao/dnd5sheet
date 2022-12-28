@@ -43,7 +43,8 @@ object SelectRaceRoute : RouteWithArgs<SelectRaceRoute.Args>(
 fun NavGraphBuilder.selectRaceRoute(
     onNavigateUp: (() -> Unit)?,
     onNavigateBack: () -> Unit,
-    onNavigateToSheetList: (sheetId: Long) -> Unit,
+    onNavigateToSelectClass: (sheetId: Long) -> Unit,
+    onNavigateToSelectSubrace: (sheetId: Long, raceId: String) -> Unit,
     onNavigateToDocument: (documentId: Long) -> Unit,
 ) = route(
     route = SelectRaceRoute.route,
@@ -53,7 +54,8 @@ fun NavGraphBuilder.selectRaceRoute(
     viewModel.event.collectAsEvent {
         when (it) {
             is SelectRace.Event.NavigateToDocument -> onNavigateToDocument(it.documentId)
-            is SelectRace.Event.NavigateToNext -> onNavigateToSheetList(it.sheetId)
+            is SelectRace.Event.NavigateToSelectClass -> onNavigateToSelectClass(it.sheetId)
+            is SelectRace.Event.NavigateToSelectSubrace -> onNavigateToSelectSubrace(it.sheetId, it.raceId)
             SelectRace.Event.NavigateBack -> onNavigateBack()
         }
     }

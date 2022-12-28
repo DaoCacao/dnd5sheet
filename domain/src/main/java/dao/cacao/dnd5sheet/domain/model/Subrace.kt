@@ -1,6 +1,7 @@
 package dao.cacao.dnd5sheet.domain.model
 
-data class SubRace(
+data class Subrace(
     val id: String,
+    val raceId: String,
     val name: String,
 )

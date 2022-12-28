@@ -3,7 +3,7 @@ package dao.cacao.dnd5sheet.domain.model
 data class Sheet(
     val id: Long,
     val characterRace: Race?,
-    val characterSubRace: SubRace?,
+    val characterSubrace: Subrace?,
     val characterClass: CharacterClass?,
     val level: Int?,
     val characterName: String?,

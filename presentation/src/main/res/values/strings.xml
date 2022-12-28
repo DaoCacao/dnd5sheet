@@ -7,6 +7,7 @@
     <string name="text_create_character">Create character</string>
     <string name="text_select_class">Select class</string>
     <string name="text_select_race">Select race</string>
+    <string name="text_select_subrace">Select subrace</string>
     <string name="text_select_name">Select name</string>
     <string name="text_document">Document</string>
     <string name="text_abilities">Abilities</string>

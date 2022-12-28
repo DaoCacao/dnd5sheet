@@ -10,14 +10,14 @@ import dao.cacao.dnd5sheet.data.repository.DocumentRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.RaceRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.SheetRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.SkillRepositoryImpl
-import dao.cacao.dnd5sheet.data.repository.SubRaceRepositoryImpl
+import dao.cacao.dnd5sheet.data.repository.SubraceRepositoryImpl
 import dao.cacao.dnd5sheet.domain.boundary.AbilityRepository
 import dao.cacao.dnd5sheet.domain.boundary.ClassRepository
 import dao.cacao.dnd5sheet.domain.boundary.DocumentRepository
 import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.boundary.SkillRepository
-import dao.cacao.dnd5sheet.domain.boundary.SubRaceRepository
+import dao.cacao.dnd5sheet.domain.boundary.SubraceRepository
 import javax.inject.Singleton
 
 @Module
@@ -33,7 +33,7 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun subRaceRepository(impl: SubRaceRepositoryImpl): SubRaceRepository
+    fun subRaceRepository(impl: SubraceRepositoryImpl): SubraceRepository
 
     @Binds
     @Singleton

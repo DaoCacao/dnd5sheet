@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class SheetEntity(
     @ColumnInfo(name = "sheet_id") @PrimaryKey(autoGenerate = true) val sheetId: Long = 0,
     @ColumnInfo(name = "race_id") val raceId: String? = null,
-    @ColumnInfo(name = "sub_race_id") val subRaceId: String? = null,
+    @ColumnInfo(name = "subrace_id") val subraceId: String? = null,
     @ColumnInfo(name = "class_id") val classId: String? = null,
     @ColumnInfo(name = "level") val level: Int? = null,
     @ColumnInfo(name = "character_name") val characterName: String? = null,

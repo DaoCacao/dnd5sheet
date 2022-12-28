@@ -10,7 +10,7 @@ interface SheetRepository {
     fun getSheet(sheetId: Long): Flow<Sheet>
 
     suspend fun updateCharacterRace(sheetId: Long, raceId: String)
-    suspend fun updateCharacterSubRace(sheetId: Long, subRaceId: String)
+    suspend fun updateCharacterSubrace(sheetId: Long, subraceId: String)
     suspend fun updateCharacterClass(sheetId: Long, classId: String)
 
     suspend fun updateLevel(sheetId: Long, level: Int)

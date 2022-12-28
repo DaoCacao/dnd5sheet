@@ -2,30 +2,30 @@ package dao.cacao.dnd5sheet.data.repository
 
 import dao.cacao.dnd5sheet.data.mapper.map
 import dao.cacao.dnd5sheet.data.storage.local.room.AppDatabase
-import dao.cacao.dnd5sheet.domain.boundary.SubRaceRepository
-import dao.cacao.dnd5sheet.domain.model.SubRace
+import dao.cacao.dnd5sheet.domain.boundary.SubraceRepository
+import dao.cacao.dnd5sheet.domain.model.Subrace
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class SubRaceRepositoryImpl @Inject constructor(
+class SubraceRepositoryImpl @Inject constructor(
     private val database: AppDatabase,
-) : SubRaceRepository {
-    override fun getSubRaces(): Flow<List<SubRace>> {
-        return database.playersHandbookSubRaceDao().getAll()
+) : SubraceRepository {
+    override fun getSubraces(): Flow<List<Subrace>> {
+        return database.playersHandbookSubraceDao().getAll()
             .map { it.map { it.map() } }
             .distinctUntilChanged()
     }
 
-    override fun getSubRaces(raceId: String): Flow<List<SubRace>> {
-        return database.playersHandbookSubRaceDao().getAllByRaceId(raceId)
+    override fun getSubraces(raceId: String): Flow<List<Subrace>> {
+        return database.playersHandbookSubraceDao().getAllByRaceId(raceId)
             .map { it.map { it.map() } }
             .distinctUntilChanged()
     }
 
-    override fun getSubRace(subRaceId: String): Flow<SubRace> {
-        return database.playersHandbookSubRaceDao().getBySubRaceId(subRaceId)
+    override fun getSubrace(subraceId: String): Flow<Subrace> {
+        return database.playersHandbookSubraceDao().getBySubraceId(subraceId)
             .map { it.map() }
             .distinctUntilChanged()
     }
