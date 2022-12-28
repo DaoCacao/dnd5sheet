@@ -1,10 +1,9 @@
 package dao.cacao.dnd5sheet.data.mapper
 
-import dao.cacao.dnd5sheet.data.storage.local.room.model.RaceEntity
+import dao.cacao.dnd5sheet.data.storage.local.room.model.players_handbook.PlayersHandbookRaceEntity
 import dao.cacao.dnd5sheet.domain.model.Race
 
-fun RaceEntity.map() = Race(
+fun PlayersHandbookRaceEntity.map() = Race(
     id = raceId,
-    documentId = documentId,
-    name = name ?: "",
+    name = name,
 )

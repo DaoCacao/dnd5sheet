@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.ClassRepository
+import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.model.CharacterClass
 import dao.cacao.dnd5sheet.presentation.ext.args
 import dao.cacao.dnd5sheet.presentation.ext.event
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class SelectClassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val classRepository: ClassRepository,
+    private val sheetRepository: SheetRepository,
 ) : ViewModel() {
 
     val args = args(SelectClassRoute, savedStateHandle)
@@ -38,7 +40,7 @@ class SelectClassViewModel @Inject constructor(
 
     fun onClassClick(characterClass: CharacterClass) {
         viewModelScope.launch {
-            classRepository.updateCharacterClass(sheetId = args.sheetId, classId = characterClass.id)
+            sheetRepository.updateCharacterClass(sheetId = args.sheetId, classId = characterClass.id)
             if (args.popBackStack)
                 event.emit(SelectClass.Event.NavigateBack)
             else
@@ -48,7 +50,7 @@ class SelectClassViewModel @Inject constructor(
 
     fun onClassInfoClick(characterClass: CharacterClass) {
         viewModelScope.launch {
-            event.emit(SelectClass.Event.NavigateToDocument(documentId = characterClass.documentId))
+            event.emit(SelectClass.Event.NavigateToDocument(documentId = 0))
         }
     }
 }

@@ -5,10 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dao.cacao.dnd5sheet.domain.boundary.AbilityRepository
-import dao.cacao.dnd5sheet.domain.boundary.CharacterRepository
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.boundary.SkillRepository
-import dao.cacao.dnd5sheet.domain.model.Ability
+import dao.cacao.dnd5sheet.domain.model.AbilityWithScore
 import dao.cacao.dnd5sheet.domain.model.Skill
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateAbilityModifierUseCase
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateSkillModifierUseCase
@@ -24,7 +23,6 @@ import javax.inject.Inject
 class SheetViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val sheetRepository: SheetRepository,
-    private val characterRepository: CharacterRepository,
     private val abilityRepository: AbilityRepository,
     private val skillRepository: SkillRepository,
     private val calculateAbilityModifierUseCase: CalculateAbilityModifierUseCase,
@@ -41,18 +39,18 @@ class SheetViewModel @Inject constructor(
                 state.update {
                     it.copy(
                         isLoading = false,
-                        name = sheet.character.characterName ?: "",
+                        name = sheet.characterName ?: "",
                         characterRace = sheet.characterRace?.name ?: "",
                         characterClass = sheet.characterClass?.name ?: "",
-                        level = sheet.character.level ?: 0,
-                        proficiencyBonus = sheet.character.proficiencyBonus ?: 0,
-                        abilities = sheet.abilities.map { it.map() },
-                        skills = sheet.skills.map {
-                            it.map(
-                                sheet.abilities.first { ability -> ability.id == it.abilityId },
-                                sheet.character.proficiencyBonus,
-                            )
-                        }
+                        level = sheet.level ?: 0,
+                        proficiencyBonus = sheet.proficiencyBonus ?: 0,
+                        abilities = emptyList(), // sheet.abilities.map { it.map() },
+                        skills = emptyList() // sheet.skills.map {
+                        // it.map(
+                        //        sheet.abilities.first { ability -> ability.id == it.abilityId },
+                        //        sheet.character.proficiencyBonus,
+                        //    )
+                        //}
                     )
                 }
             }
@@ -66,7 +64,7 @@ class SheetViewModel @Inject constructor(
     fun onLevelChange(level: Int) {
         state.update { it.copy(level = level) }
         viewModelScope.launch {
-            characterRepository.updateLevel(args.sheetId, level)
+            sheetRepository.updateLevel(args.sheetId, level)
         }
     }
 
@@ -103,7 +101,7 @@ class SheetViewModel @Inject constructor(
             )
         }
         viewModelScope.launch {
-            characterRepository.updateProficiencyBonus(args.sheetId, proficiencyBonus)
+            sheetRepository.updateProficiencyBonus(args.sheetId, proficiencyBonus)
         }
     }
 
@@ -154,14 +152,14 @@ class SheetViewModel @Inject constructor(
         return map { if (predicate(it)) update(it) else it }
     }
 
-    private fun Ability.map() = Sheet.State.AbilityItem(
+    private fun AbilityWithScore.map() = Sheet.State.AbilityItem(
         id = id,
         name = name,
         score = score,
         modifier = calculateAbilityModifierUseCase(score),
     )
 
-    private fun Skill.map(ability: Ability, proficiencyBonus: Int?) = Sheet.State.SkillItem(
+    private fun Skill.map(ability: AbilityWithScore, proficiencyBonus: Int?) = Sheet.State.SkillItem(
         id = id,
         abilityId = ability.id,
         name = name,

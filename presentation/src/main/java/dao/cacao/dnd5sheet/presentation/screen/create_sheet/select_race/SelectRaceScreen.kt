@@ -78,7 +78,7 @@ private fun Preview2() {
             state = SelectRace.State(
                 isLoading = false,
                 races = List(5) {
-                    Race(0, 0, "Race $it")
+                    Race("0", "Race $it")
                 },
             ),
         )

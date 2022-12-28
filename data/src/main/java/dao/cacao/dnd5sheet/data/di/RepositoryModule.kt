@@ -5,19 +5,19 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dao.cacao.dnd5sheet.data.repository.AbilityRepositoryImpl
-import dao.cacao.dnd5sheet.data.repository.CharacterRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.ClassRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.DocumentRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.RaceRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.SheetRepositoryImpl
 import dao.cacao.dnd5sheet.data.repository.SkillRepositoryImpl
+import dao.cacao.dnd5sheet.data.repository.SubRaceRepositoryImpl
 import dao.cacao.dnd5sheet.domain.boundary.AbilityRepository
-import dao.cacao.dnd5sheet.domain.boundary.CharacterRepository
 import dao.cacao.dnd5sheet.domain.boundary.ClassRepository
 import dao.cacao.dnd5sheet.domain.boundary.DocumentRepository
 import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.boundary.SkillRepository
+import dao.cacao.dnd5sheet.domain.boundary.SubRaceRepository
 import javax.inject.Singleton
 
 @Module
@@ -29,11 +29,11 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun characterRepository(impl: CharacterRepositoryImpl): CharacterRepository
+    fun raceRepository(impl: RaceRepositoryImpl): RaceRepository
 
     @Binds
     @Singleton
-    fun raceRepository(impl: RaceRepositoryImpl): RaceRepository
+    fun subRaceRepository(impl: SubRaceRepositoryImpl): SubRaceRepository
 
     @Binds
     @Singleton

@@ -78,7 +78,7 @@ private fun Preview2() {
             state = SelectClass.State(
                 isLoading = false,
                 classes = List(5) {
-                    CharacterClass(0, 0, "Class $it")
+                    CharacterClass("0", "Class $it")
                 },
             ),
         )

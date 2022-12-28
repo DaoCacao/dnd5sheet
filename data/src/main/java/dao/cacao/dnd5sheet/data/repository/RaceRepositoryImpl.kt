@@ -2,7 +2,6 @@ package dao.cacao.dnd5sheet.data.repository
 
 import dao.cacao.dnd5sheet.data.mapper.map
 import dao.cacao.dnd5sheet.data.storage.local.room.AppDatabase
-import dao.cacao.dnd5sheet.data.storage.local.room.model.cross_ref.SheetToRaceCrossRef
 import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
 import dao.cacao.dnd5sheet.domain.model.Race
 import kotlinx.coroutines.flow.Flow
@@ -14,13 +13,14 @@ class RaceRepositoryImpl @Inject constructor(
     private val database: AppDatabase,
 ) : RaceRepository {
     override fun getRaces(): Flow<List<Race>> {
-        return database.raceDao().getAll()
+        return database.playersHandbookRaceDao().getAll()
             .map { it.map { it.map() } }
             .distinctUntilChanged()
     }
 
-    override suspend fun updateCharacterRace(sheetId: Long, raceId: Long) {
-        val crossRef = SheetToRaceCrossRef(sheetId = sheetId, raceId = raceId)
-        database.sheetToRaceDao().insertReplace(crossRef)
+    override fun getRace(raceId: String): Flow<Race> {
+        return database.playersHandbookRaceDao().getByRaceId(raceId)
+            .map { it.map() }
+            .distinctUntilChanged()
     }
 }

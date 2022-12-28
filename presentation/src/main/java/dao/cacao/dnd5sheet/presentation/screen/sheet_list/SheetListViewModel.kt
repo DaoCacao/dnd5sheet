@@ -56,8 +56,8 @@ class SheetListViewModel @Inject constructor(
 
     private fun Sheet.map() = SheetList.State.Item(
         id = id,
-        level = character.level ?: 0,
-        characterName = character.characterName ?: "",
+        level = level ?: 0,
+        characterName = characterName ?: "",
         characterRace = characterRace?.name ?: "",
         characterClass = characterClass?.name ?: "",
     )

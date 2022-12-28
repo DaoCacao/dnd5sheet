@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ClassRepository {
     fun getClasses(): Flow<List<CharacterClass>>
-    suspend fun updateCharacterClass(sheetId: Long, classId: Long)
+    fun getClass(classId: String): Flow<CharacterClass>
 }

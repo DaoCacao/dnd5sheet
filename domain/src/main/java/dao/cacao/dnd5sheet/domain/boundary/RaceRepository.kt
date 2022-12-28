@@ -5,5 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RaceRepository {
     fun getRaces(): Flow<List<Race>>
-    suspend fun updateCharacterRace(sheetId: Long, raceId: Long)
+
+    fun getRace(raceId: String): Flow<Race>
 }

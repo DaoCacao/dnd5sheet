@@ -1,14 +1,11 @@
 package dao.cacao.dnd5sheet.data.repository
 
 import androidx.room.withTransaction
-import dao.cacao.dnd5sheet.data.mapper.createCharacterDraft
 import dao.cacao.dnd5sheet.data.mapper.createDraftSheet
 import dao.cacao.dnd5sheet.data.mapper.map
 import dao.cacao.dnd5sheet.data.storage.local.room.AppDatabase
 import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.model.Sheet
-import dao.cacao.dnd5sheet.domain.model.players_handbook.PlayersHandbookAbility
-import dao.cacao.dnd5sheet.domain.model.players_handbook.PlayersHandbookSkill
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -20,22 +17,10 @@ class SheetRepositoryImpl @Inject constructor(
 ) : SheetRepository {
 
     override suspend fun createSheet(): Sheet {
-        val abilities = PlayersHandbookAbility.values()
-        val skills = PlayersHandbookSkill.values()
         return database.withTransaction {
             val sheetId = database.sheetDao().insert(createDraftSheet())
-            val characterId = database.characterDao().insert(createCharacterDraft(sheetId))
-            val abilityIds = database.abilityDao().insert(abilities.map { it.map(characterId) })
-            val abilityToId = abilities.mapIndexed { index, ability -> ability to abilityIds[index] }.toMap()
-            val skillIds = database.skillDao().insert(skills.map { it.map(characterId, abilityToId[it.ability]!!) })
             getSheet(sheetId).first()
         }
-    }
-
-    override fun getSheet(characterId: Long): Flow<Sheet> {
-        return database.sheetDao().getById(characterId)
-            .map { it.map() }
-            .distinctUntilChanged()
     }
 
     override fun getSheets(): Flow<List<Sheet>> {
@@ -44,15 +29,42 @@ class SheetRepositoryImpl @Inject constructor(
             .distinctUntilChanged()
     }
 
+    override fun getSheet(sheetId: Long): Flow<Sheet> {
+        return database.sheetDao().getBySheetId(sheetId)
+            .map { it.map() }
+            .distinctUntilChanged()
+    }
+
+    override suspend fun updateCharacterRace(sheetId: Long, raceId: String) {
+        database.sheetDao().updateRaceId(sheetId = sheetId, raceId = raceId)
+    }
+
+    override suspend fun updateCharacterSubRace(sheetId: Long, subRaceId: String) {
+        database.sheetDao().updateSubRaceId(sheetId = sheetId, subRaceId = subRaceId)
+    }
+
+    override suspend fun updateCharacterClass(sheetId: Long, classId: String) {
+        database.sheetDao().updateClassId(sheetId = sheetId, classId = classId)
+    }
+
+    override suspend fun updateLevel(characterId: Long, level: Int) {
+        database.sheetDao().updateLevel(characterId, level)
+    }
+
+    override suspend fun updateCharacterName(characterId: Long, characterName: String) {
+        database.sheetDao().updateCharacterName(characterId, characterName)
+    }
+
+    override suspend fun updateProficiencyBonus(characterId: Long, proficiencyBonus: Int) {
+        database.sheetDao().updateProficiencyBonus(characterId, proficiencyBonus)
+    }
+
     override suspend fun deleteSheet(sheetId: Long) {
         database.withTransaction {
-            database.sheetDao().deleteById(sheetId)
-            database.characterDao().deleteBySheetId(sheetId)
+            database.sheetDao().deleteBySheetId(sheetId)
+
             database.abilityDao().deleteBySheetId(sheetId)
             database.skillDao().deleteBySheetId(sheetId)
-            database.characterDao().deleteBySheetId(sheetId)
-            database.sheetToRaceDao().deleteBySheetId(sheetId)
-            database.sheetToClassDao().deleteBySheetId(sheetId)
         }
     }
 }

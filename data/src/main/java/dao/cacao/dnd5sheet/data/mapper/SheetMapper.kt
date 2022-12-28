@@ -8,9 +8,12 @@ fun createDraftSheet() = SheetEntity()
 
 fun SheetFull.map() = Sheet(
     id = sheet.sheetId,
-    character = character.map(),
     characterRace = characterRace?.map(),
+    characterSubRace = characterSubRace?.map(),
     characterClass = characterClass?.map(),
-    abilities = abilities.map { it.map() },
-    skills = skills.map { it.map() },
+    level = sheet.level,
+    characterName = sheet.characterName,
+    proficiencyBonus = sheet.proficiencyBonus,
+    abilities = emptyList(), // abilities.map { it.map() },
+    skills = emptyList(), // skills.map { it.map() },
 )

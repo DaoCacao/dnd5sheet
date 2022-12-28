@@ -8,9 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dao.cacao.dnd5sheet.data.storage.local.room.AppDatabase
-import dao.cacao.dnd5sheet.data.storage.local.room.prepopulation.PrepopulateClassesCallback
 import dao.cacao.dnd5sheet.data.storage.local.room.prepopulation.PrepopulateCsvCallback
-import dao.cacao.dnd5sheet.data.storage.local.room.prepopulation.PrepopulateRacesCallback
 import javax.inject.Singleton
 
 @Module
@@ -20,13 +18,9 @@ class RoomModule {
     @Singleton
     fun database(
         @ApplicationContext context: Context,
-        prepopulateRacesCallback: PrepopulateRacesCallback,
-        prepopulateClassesCallback: PrepopulateClassesCallback,
         prepopulateCsvCallback: PrepopulateCsvCallback,
     ): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "db")
-            .addCallback(prepopulateRacesCallback)
-            .addCallback(prepopulateClassesCallback)
             .addCallback(prepopulateCsvCallback)
             .fallbackToDestructiveMigration()
             .build()
