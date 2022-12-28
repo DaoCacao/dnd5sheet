@@ -96,7 +96,7 @@ fun SheetListScreen(
                                 val showLevel = item.level > 0
 
                                 if (showRace) append(item.characterRace)
-                                if (showRace && showClass) append("-")
+                                if (showRace && showClass) append(", ")
                                 if (showClass) append(item.characterClass)
                                 if ((showRace || showClass) && showLevel) append(", ")
                                 if (showLevel) append(stringResource(id = R.string.text_n_level, item.level))

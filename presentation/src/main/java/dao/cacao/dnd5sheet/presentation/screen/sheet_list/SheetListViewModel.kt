@@ -60,7 +60,7 @@ class SheetListViewModel @Inject constructor(
         id = id,
         level = level ?: 0,
         characterName = characterName ?: "",
-        characterRace = characterRace?.name ?: "",
+        characterRace = characterSubrace?.name ?: characterRace?.name ?: "",
         characterClass = characterClass?.name ?: "",
     )
 }
