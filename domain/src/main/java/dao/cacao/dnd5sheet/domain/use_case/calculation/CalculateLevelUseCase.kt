@@ -2,9 +2,9 @@ package dao.cacao.dnd5sheet.domain.use_case.calculation
 
 import javax.inject.Inject
 
-class CalculateLevelUseCase @Inject constructor() : (Int) -> Int? {
-    override fun invoke(expirience: Int): Int? {
-        return when (expirience) {
+class CalculateLevelUseCase @Inject constructor() {
+    operator fun invoke(experience: Int): Int? {
+        return when (experience) {
             0 -> 1
             300 -> 2
             900 -> 3

@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dao.cacao.dnd5sheet.domain.boundary.RaceRepository
-import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.model.Race
+import dao.cacao.dnd5sheet.domain.use_case.race.GetPlayersHandbookRacesUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateRaceUseCase
 import dao.cacao.dnd5sheet.presentation.ext.args
 import dao.cacao.dnd5sheet.presentation.ext.event
 import dao.cacao.dnd5sheet.presentation.ext.state
@@ -18,8 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectRaceViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val raceRepository: RaceRepository,
-    private val sheetRepository: SheetRepository,
+    private val getPlayersHandbookRacesUseCase: GetPlayersHandbookRacesUseCase,
+    private val updateRaceUseCase: UpdateRaceUseCase,
 ) : ViewModel() {
 
     val args = args(SelectRaceRoute, savedStateHandle)
@@ -28,7 +28,7 @@ class SelectRaceViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val races = raceRepository.getRaces().first()
+            val races = getPlayersHandbookRacesUseCase().first()
             state.update {
                 it.copy(
                     isLoading = false,
@@ -40,7 +40,7 @@ class SelectRaceViewModel @Inject constructor(
 
     fun onRaceClick(race: Race) {
         viewModelScope.launch {
-            sheetRepository.updateCharacterRace(sheetId = args.sheetId, raceId = race.id)
+            updateRaceUseCase(sheetId = args.sheetId, raceId = race.id)
             if (args.popBackStack)
                 event.emit(SelectRace.Event.NavigateBack)
             else

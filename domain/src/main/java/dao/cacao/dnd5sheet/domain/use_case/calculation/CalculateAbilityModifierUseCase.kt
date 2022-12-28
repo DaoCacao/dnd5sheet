@@ -2,8 +2,8 @@ package dao.cacao.dnd5sheet.domain.use_case.calculation
 
 import javax.inject.Inject
 
-class CalculateAbilityModifierUseCase @Inject constructor() : (Int) -> Int? {
-    override fun invoke(abilityScore: Int): Int? {
+class CalculateAbilityModifierUseCase @Inject constructor() {
+    operator fun invoke(abilityScore: Int): Int? {
         return when (abilityScore) {
             1 -> -5
             2, 3 -> -4

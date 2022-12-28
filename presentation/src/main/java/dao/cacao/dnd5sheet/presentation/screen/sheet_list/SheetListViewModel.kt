@@ -3,8 +3,10 @@ package dao.cacao.dnd5sheet.presentation.screen.sheet_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.model.Sheet
+import dao.cacao.dnd5sheet.domain.use_case.sheet.CreateSheetUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.DeleteSheetUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.GetSheetsUseCase
 import dao.cacao.dnd5sheet.presentation.ext.event
 import dao.cacao.dnd5sheet.presentation.ext.state
 import kotlinx.coroutines.flow.collectLatest
@@ -14,7 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SheetListViewModel @Inject constructor(
-    private val sheetRepository: SheetRepository,
+    private val getSheetsUseCase: GetSheetsUseCase,
+    private val createSheetUseCase: CreateSheetUseCase,
+    private val deleteSheetUseCase: DeleteSheetUseCase,
 ) : ViewModel() {
 
     val state = state(SheetList.State(isLoading = true))
@@ -22,16 +26,14 @@ class SheetListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            sheetRepository
-                .getSheets()
-                .collectLatest { list ->
-                    state.update {
-                        it.copy(
-                            isLoading = false,
-                            items = list.map { it.map() },
-                        )
-                    }
+            getSheetsUseCase().collectLatest { list ->
+                state.update {
+                    it.copy(
+                        isLoading = false,
+                        items = list.map { it.map() },
+                    )
                 }
+            }
         }
     }
 
@@ -43,14 +45,14 @@ class SheetListViewModel @Inject constructor(
 
     fun onCreateNewSheetClick() {
         viewModelScope.launch {
-            val sheet = sheetRepository.createSheet()
+            val sheet = createSheetUseCase()
             event.emit(SheetList.Event.NavigateToCreateSheet(sheet.id))
         }
     }
 
     fun onDeleteSheetClick(sheetId: Long) {
         viewModelScope.launch {
-            sheetRepository.deleteSheet(sheetId)
+            deleteSheetUseCase(sheetId)
         }
     }
 

@@ -47,16 +47,16 @@ class SheetRepositoryImpl @Inject constructor(
         database.sheetDao().updateClassId(sheetId = sheetId, classId = classId)
     }
 
-    override suspend fun updateLevel(characterId: Long, level: Int) {
-        database.sheetDao().updateLevel(characterId, level)
+    override suspend fun updateLevel(sheetId: Long, level: Int) {
+        database.sheetDao().updateLevel(sheetId, level)
     }
 
-    override suspend fun updateCharacterName(characterId: Long, characterName: String) {
-        database.sheetDao().updateCharacterName(characterId, characterName)
+    override suspend fun updateCharacterName(sheetId: Long, characterName: String) {
+        database.sheetDao().updateCharacterName(sheetId, characterName)
     }
 
-    override suspend fun updateProficiencyBonus(characterId: Long, proficiencyBonus: Int) {
-        database.sheetDao().updateProficiencyBonus(characterId, proficiencyBonus)
+    override suspend fun updateProficiencyBonus(sheetId: Long, proficiencyBonus: Int) {
+        database.sheetDao().updateProficiencyBonus(sheetId, proficiencyBonus)
     }
 
     override suspend fun deleteSheet(sheetId: Long) {

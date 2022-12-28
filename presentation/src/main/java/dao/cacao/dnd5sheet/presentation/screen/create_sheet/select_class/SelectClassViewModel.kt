@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dao.cacao.dnd5sheet.domain.boundary.ClassRepository
-import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
 import dao.cacao.dnd5sheet.domain.model.CharacterClass
+import dao.cacao.dnd5sheet.domain.use_case.`class`.GetPlayersHandbookClassesUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateClassUseCase
 import dao.cacao.dnd5sheet.presentation.ext.args
 import dao.cacao.dnd5sheet.presentation.ext.event
 import dao.cacao.dnd5sheet.presentation.ext.state
@@ -18,8 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectClassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val classRepository: ClassRepository,
-    private val sheetRepository: SheetRepository,
+    private val getPlayersHandbookClassesUseCase: GetPlayersHandbookClassesUseCase,
+    private val updateClassUseCase: UpdateClassUseCase,
 ) : ViewModel() {
 
     val args = args(SelectClassRoute, savedStateHandle)
@@ -28,7 +28,7 @@ class SelectClassViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val classes = classRepository.getClasses().first()
+            val classes = getPlayersHandbookClassesUseCase().first()
             state.update {
                 it.copy(
                     isLoading = false,
@@ -40,7 +40,7 @@ class SelectClassViewModel @Inject constructor(
 
     fun onClassClick(characterClass: CharacterClass) {
         viewModelScope.launch {
-            sheetRepository.updateCharacterClass(sheetId = args.sheetId, classId = characterClass.id)
+            updateClassUseCase(sheetId = args.sheetId, classId = characterClass.id)
             if (args.popBackStack)
                 event.emit(SelectClass.Event.NavigateBack)
             else

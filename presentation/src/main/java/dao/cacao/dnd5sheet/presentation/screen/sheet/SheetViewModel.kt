@@ -4,13 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dao.cacao.dnd5sheet.domain.boundary.AbilityRepository
-import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
-import dao.cacao.dnd5sheet.domain.boundary.SkillRepository
 import dao.cacao.dnd5sheet.domain.model.AbilityWithScore
 import dao.cacao.dnd5sheet.domain.model.Skill
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateAbilityModifierUseCase
 import dao.cacao.dnd5sheet.domain.use_case.calculation.CalculateSkillModifierUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.GetSheetUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateAbilityScoreUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateLevelUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateProficiencyBonusUseCase
+import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateSkillProficiencyUseCase
 import dao.cacao.dnd5sheet.presentation.ext.args
 import dao.cacao.dnd5sheet.presentation.ext.event
 import dao.cacao.dnd5sheet.presentation.ext.state
@@ -22,9 +24,12 @@ import javax.inject.Inject
 @HiltViewModel
 class SheetViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val sheetRepository: SheetRepository,
-    private val abilityRepository: AbilityRepository,
-    private val skillRepository: SkillRepository,
+    private val getSheetUseCase: GetSheetUseCase,
+    private val updateLevelUseCase: UpdateLevelUseCase,
+    private val updateProficiencyBonusUseCase: UpdateProficiencyBonusUseCase,
+    private val updateAbilityScoreUseCase: UpdateAbilityScoreUseCase,
+    private val updateSkillProficiencyUseCase: UpdateSkillProficiencyUseCase,
+
     private val calculateAbilityModifierUseCase: CalculateAbilityModifierUseCase,
     private val calculateSkillModifierUseCase: CalculateSkillModifierUseCase,
 ) : ViewModel() {
@@ -35,7 +40,7 @@ class SheetViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            sheetRepository.getSheet(args.sheetId).collectLatest { sheet ->
+            getSheetUseCase(args.sheetId).collectLatest { sheet ->
                 state.update {
                     it.copy(
                         isLoading = false,
@@ -64,7 +69,7 @@ class SheetViewModel @Inject constructor(
     fun onLevelChange(level: Int) {
         state.update { it.copy(level = level) }
         viewModelScope.launch {
-            sheetRepository.updateLevel(args.sheetId, level)
+            updateLevelUseCase(args.sheetId, level)
         }
     }
 
@@ -101,7 +106,7 @@ class SheetViewModel @Inject constructor(
             )
         }
         viewModelScope.launch {
-            sheetRepository.updateProficiencyBonus(args.sheetId, proficiencyBonus)
+//            updateProficiencyBonusUseCase(args.sheetId, proficiencyBonus)
         }
     }
 
@@ -125,7 +130,7 @@ class SheetViewModel @Inject constructor(
             )
         }
         viewModelScope.launch {
-            abilityRepository.updateAbilityScore(abilityId, score)
+//            updateAbilityScoreUseCase(args.sheetId, abilityId, score)
         }
     }
 
@@ -144,7 +149,7 @@ class SheetViewModel @Inject constructor(
             )
         }
         viewModelScope.launch {
-            skillRepository.updateSkillProficiency(skillId, proficiency)
+//            updateSkillProficiencyUseCase(skillId, proficiency)
         }
     }
 

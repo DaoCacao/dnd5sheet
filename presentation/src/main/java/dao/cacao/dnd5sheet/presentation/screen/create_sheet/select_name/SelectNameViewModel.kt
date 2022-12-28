@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dao.cacao.dnd5sheet.domain.boundary.SheetRepository
+import dao.cacao.dnd5sheet.domain.use_case.sheet.UpdateNameUseCase
 import dao.cacao.dnd5sheet.presentation.ext.args
 import dao.cacao.dnd5sheet.presentation.ext.event
 import dao.cacao.dnd5sheet.presentation.ext.state
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectNameViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val sheetRepository: SheetRepository,
+    private val updateNameUseCase: UpdateNameUseCase,
 ) : ViewModel() {
 
     val args = args(SelectNameRoute, savedStateHandle)
@@ -37,9 +37,9 @@ class SelectNameViewModel @Inject constructor(
 
     fun onSaveClick() {
         viewModelScope.launch {
-            sheetRepository.updateCharacterName(
-                characterId = args.sheetId,
-                characterName = state.value.name,
+            updateNameUseCase(
+                sheetId = args.sheetId,
+                name = state.value.name,
             )
             if (args.popBackStack)
                 event.emit(SelectName.Event.NavigateBack)
