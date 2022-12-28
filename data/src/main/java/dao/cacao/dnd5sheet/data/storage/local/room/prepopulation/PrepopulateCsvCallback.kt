@@ -35,7 +35,7 @@ class PrepopulateCsvCallback @Inject constructor(
         }
     }
 
-    private fun String.asCsv(): List<String> {
+    private fun String.asCsv(): List<List<String>> {
         return context.assets.open(this)
             .reader()
             .readLines()
@@ -43,69 +43,53 @@ class PrepopulateCsvCallback @Inject constructor(
             .drop(1)
             // split rows by ','
             .map { it.split(',') }
-            .flatten()
     }
 
-    private fun List<String>.mapRace(): MutableList<PlayersHandbookRaceEntity> {
-        val iterator = iterator()
-        val entities = mutableListOf<PlayersHandbookRaceEntity>()
-        while (iterator.hasNext()) {
-            entities += PlayersHandbookRaceEntity(
-                raceId = iterator.next(),
-                name = iterator.next(),
+    private fun List<List<String>>.mapRace(): List<PlayersHandbookRaceEntity> {
+        return map {
+            PlayersHandbookRaceEntity(
+                raceId = it[0],
+                name = it[1],
             )
         }
-        return entities
     }
 
-    private fun List<String>.mapSubRace(): MutableList<PlayersHandbookSubRaceEntity> {
-        val iterator = iterator()
-        val entities = mutableListOf<PlayersHandbookSubRaceEntity>()
-        while (iterator.hasNext()) {
-            entities += PlayersHandbookSubRaceEntity(
-                subRaceId = iterator.next(),
-                raceId = iterator.next(),
-                name = iterator.next(),
+    private fun List<List<String>>.mapSubRace(): List<PlayersHandbookSubRaceEntity> {
+        return map {
+            PlayersHandbookSubRaceEntity(
+                subRaceId = it[0],
+                raceId = it[1],
+                name = it[2],
             )
         }
-        return entities
     }
 
-    private fun List<String>.mapClass(): MutableList<PlayersHandbookClassEntity> {
-        val iterator = iterator()
-        val entities = mutableListOf<PlayersHandbookClassEntity>()
-        while (iterator.hasNext()) {
-            entities += PlayersHandbookClassEntity(
-                classId = iterator.next(),
-                name = iterator.next(),
+    private fun List<List<String>>.mapClass(): List<PlayersHandbookClassEntity> {
+        return map {
+            PlayersHandbookClassEntity(
+                classId = it[0],
+                name = it[1],
             )
         }
-        return entities
     }
 
-    private fun List<String>.mapAbility(): MutableList<PlayersHandbookAbilityEntity> {
-        val iterator = iterator()
-        val entities = mutableListOf<PlayersHandbookAbilityEntity>()
-        while (iterator.hasNext()) {
-            entities += PlayersHandbookAbilityEntity(
-                abilityId = iterator.next(),
-                name = iterator.next(),
+    private fun List<List<String>>.mapAbility(): List<PlayersHandbookAbilityEntity> {
+        return map {
+            PlayersHandbookAbilityEntity(
+                abilityId = it[0],
+                name = it[1],
             )
         }
-        return entities
     }
 
-    private fun List<String>.mapAbilityIncrease(): MutableList<PlayersHandbookAbilityIncreaseEntity> {
-        val iterator = iterator()
-        val entities = mutableListOf<PlayersHandbookAbilityIncreaseEntity>()
-        while (iterator.hasNext()) {
-            entities += PlayersHandbookAbilityIncreaseEntity(
-                abilityId = iterator.next(),
-                raceId = iterator.next(),
-                subRaceId = iterator.next(),
-                value = iterator.next().toInt(),
+    private fun List<List<String>>.mapAbilityIncrease(): List<PlayersHandbookAbilityIncreaseEntity> {
+        return map {
+            PlayersHandbookAbilityIncreaseEntity(
+                abilityId = it[0],
+                raceId = it[1],
+                subRaceId = it[2],
+                value = it[3].toInt(),
             )
         }
-        return entities
     }
 }
