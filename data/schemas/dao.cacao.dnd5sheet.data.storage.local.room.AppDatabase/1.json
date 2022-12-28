@@ -1,0 +1,334 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "e9b0025c426795af1838d68e4044dcbc",
+    "entities": [
+      {
+        "tableName": "players_handbook_race",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`race_id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`race_id`))",
+        "fields": [
+          {
+            "fieldPath": "raceId",
+            "columnName": "race_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "race_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "players_handbook_subrace",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`subrace_id` TEXT NOT NULL, `race_id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`subrace_id`))",
+        "fields": [
+          {
+            "fieldPath": "subraceId",
+            "columnName": "subrace_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceId",
+            "columnName": "race_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "subrace_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "players_handbook_class",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`class_id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`class_id`))",
+        "fields": [
+          {
+            "fieldPath": "classId",
+            "columnName": "class_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "class_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "players_handbook_ability",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ability_id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`ability_id`))",
+        "fields": [
+          {
+            "fieldPath": "abilityId",
+            "columnName": "ability_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ability_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "players_handbook_ability_increase",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ability_id` TEXT NOT NULL, `race_id` TEXT NOT NULL, `sub_race_id` TEXT NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`ability_id`, `race_id`, `sub_race_id`))",
+        "fields": [
+          {
+            "fieldPath": "abilityId",
+            "columnName": "ability_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceId",
+            "columnName": "race_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subRaceId",
+            "columnName": "sub_race_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ability_id",
+            "race_id",
+            "sub_race_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "sheet",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sheet_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `race_id` TEXT, `subrace_id` TEXT, `class_id` TEXT, `level` INTEGER, `character_name` TEXT, `proficiency_bonus` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "sheetId",
+            "columnName": "sheet_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raceId",
+            "columnName": "race_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subraceId",
+            "columnName": "subrace_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "classId",
+            "columnName": "class_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "level",
+            "columnName": "level",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "characterName",
+            "columnName": "character_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "proficiencyBonus",
+            "columnName": "proficiency_bonus",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "sheet_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ability",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ability_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sheet_id` INTEGER NOT NULL, `name` TEXT, `score` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "abilityId",
+            "columnName": "ability_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sheetId",
+            "columnName": "sheet_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "score",
+            "columnName": "score",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "ability_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "skill",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`skill_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sheet_id` INTEGER NOT NULL, `ability_id` INTEGER NOT NULL, `name` TEXT, `proficiency` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "skillId",
+            "columnName": "skill_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sheetId",
+            "columnName": "sheet_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "abilityId",
+            "columnName": "ability_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "proficiency",
+            "columnName": "proficiency",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "skill_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "document",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`document_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `text` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "documentId",
+            "columnName": "document_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "document_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e9b0025c426795af1838d68e4044dcbc')"
+    ]
+  }
+}
