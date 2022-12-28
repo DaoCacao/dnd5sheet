@@ -8,7 +8,7 @@ dexterity,halfling,,2
 dexterity,,forest-gnome,1
 dexterity,human,,1
 constitution,dwarf,,2
-constitution,,stout,1
+constitution,,stout-halfling,1
 constitution,,rock-gnome,1
 constitution,half-ork,,1
 constitution,human,,1
@@ -21,7 +21,7 @@ wisdom,,wood-elf,1
 wisdom,human,,1
 charisma,half-elf,,2
 charisma,,dark-elf,1
-charisma,,lightfoot,1
+charisma,,lightfoot-halfling,1
 charisma,dragonborn,,1
 charisma,human,,1
 charisma,tiefling,,2

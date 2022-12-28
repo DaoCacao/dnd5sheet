@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
+import dao.cacao.dnd5sheet.presentation.screen.MainScreen
 import dao.cacao.dnd5sheet.ui.theme.AppTheme
 
 @AndroidEntryPoint
